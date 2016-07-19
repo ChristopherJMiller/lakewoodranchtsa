@@ -1,14 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Lakewoodranchtsa</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <title>Lakewood Ranch TSA</title>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag params[:controller], media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag params[:controller], 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
+  <nav class="navbar navbar-dark bg-faded nav-margin-bottom" style="background-color: #0a442e;">
+    <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">&#9776;</button>
+    <div class="collapse navbar-toggleable-xs" id="exCollapsingNavbar">
+      <a class="navbar-brand" href="/">Lakewood Ranch TSA</a>
+      <ul class="nav navbar-nav">
+        <li class="nav-item">
+          <%= link_to users_path, class: 'nav-link' do %>
+            <i class="fa fa-user" aria-hidden="true"></i> Members
+          <% end %>
+        </li>
+        <div class="btn-group pull-xs-right">
+          <div class='hidden-sm-down'>
+        <a class="dropdown-toggle nav-link" href="#" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <%= (logged_in && User.find(session[:user_id]).email) || 'Guest' %>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right dropdown-width" aria-labelledby="userDropdown">
+          <% if logged_in then %>
+            <%= render 'layouts/loggedin' %>
+          <% else %>
+            <%= render 'layouts/loggedout' %>
+          <% end %>
+        </div>
+      </div>
+      <div class='hidden-md-up'>
+        <% if logged_in then %>
+          <li class='nav-item'>
+            <%= link_to 'Log Out', {controller: :sessions, action: :destroy}, method: 'delete', remote: true, class: 'nav-link', id: 'navbar_logout' %>
+          </li>
+        <% else %>
+          <li class='nav-item'>
+            <%= link_to log_in_path, class: 'nav-link', id: 'navbar_login' do %>
+              <i class="fa fa-sign-in"></i> Log In
+            <% end %>
+          </li>
+          <li class='nav-item'>
+            <%= link_to register_path, class: 'nav-link' do %>
+              <i class="fa fa-pencil-square-o"></i> Register
+            <% end %>
+          </li>
+        <% end %>
+      </div>
+    </div>
+  </nav>
+  <%= yield %>
 
 </body>
 </html>

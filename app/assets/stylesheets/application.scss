@@ -1,0 +1,62 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_self
+ */
+
+ @import "bootstrap";
+ @import "font-awesome";
+
+ .dropdown-width {
+   width: 300px;
+   top: 120%;
+ }
+
+ .dropdown-menu:before {
+   position: absolute;
+   top: -7px;
+   right: 9px;
+   display: inline-block;
+   border-right: 11px solid transparent;
+   border-bottom: 11px solid #ccc;
+   border-left: 11px solid transparent;
+   border-bottom-color: rgba(0, 0, 0, 0.2);
+   content: '';
+ }
+
+ .dropdown-menu:after {
+   position: absolute;
+   top: -6px;
+   right: 10px;
+   display: inline-block;
+   border-right: 10px solid transparent;
+   border-bottom: 10px solid #ffffff;
+   border-left: 10px solid transparent;
+   content: '';
+ }
+
+ nav.nav-margin-bottom {
+   margin-bottom: 1rem;
+ }
+
+ div.main-div {
+   margin-left: 0%;
+   margin-right: 0%;
+ }
+
+ /* Medium devices (desktops, 992px and up) @screen-md-min*/
+ @media (min-width: 992px) {
+   div.main-div {
+     margin-left: 16.6666667%;
+     margin-right: 16.6666667%;
+   }
+ }
