@@ -4,7 +4,7 @@ redirect = () ->
 String::capitalizeFirstLetter = () ->
   return this.charAt(0).toUpperCase() + this.slice(1);
 
-$(document).ready ->
+$(document).on 'turbolinks:load' ->
   $('#navbar_logout').parent().on 'ajax:success', ->
     setTimeout redirect, 250
   $('#navbar_logout').parent().on 'ajax:error', ->
