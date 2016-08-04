@@ -1,0 +1,15 @@
+<div class="main-div">
+  <% if logged_in %>
+    <% if User.find_by_id(session[:user_id]).is_admin %>
+      <%= link_to new_event_path, class: 'btn btn-info pull-xs-right' do %>
+        <i class="fa fa-plus"></i> Create a New Sign Up Sheet
+      <% end %>
+    <% end %>
+  <% end %>
+  <h1>All Sign Up Sheets</h1>
+  <table class="table table-striped">
+    <tbody>
+      <%= render @sign_up_sheets %>
+    </tbody>
+  </table>
+</div>
