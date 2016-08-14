@@ -1,0 +1,28 @@
+<div class="main-div">
+  <h1>Edit <%= @user.email %></h1>
+  <%= form_for @user, remote: true do |f| %>
+
+    <fieldset class="form-group">
+      <%= f.label :name, class: 'form-control-label' %>
+      <%= f.text_field :name, class: 'form-control', placeholder: 'New Name' %>
+    </fieldset>
+
+    <%= f.submit 'Update', class: 'btn btn-primary' %>
+  <% end %>
+
+  <h2>Change Password</h2>
+  <%= form_for @user, url: user_change_password_path(params[:id]), remote: true do |f| %>
+
+    <fieldset class="form-group">
+      <%= f.label :password, class: 'form-control-label' %>
+      <%= f.password_field :password, class: 'form-control', placeholder: 'New Password' %>
+    </fieldset>
+
+    <fieldset class="form-group">
+      <%= f.label :password_confirmation, class: 'form-control-label' %>
+      <%= f.password_field :password_confirmation, class: 'form-control', placeholder: 'Password confirmation' %>
+    </fieldset>
+
+    <%= f.submit 'Update', class: 'btn btn-primary' %>
+  <% end %>
+</div>

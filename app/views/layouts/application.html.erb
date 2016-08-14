@@ -22,7 +22,7 @@
         <div class="btn-group pull-xs-right">
           <div class='hidden-sm-down'>
         <a class="dropdown-toggle nav-link" href="#" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <%= (logged_in && User.find(session[:user_id]).email) || 'Guest' %>
+          <%= (logged_in && User.find(session[:user_id]).name) || 'Guest' %>
         </a>
         <div class="dropdown-menu dropdown-menu-right dropdown-width" aria-labelledby="userDropdown">
           <% if logged_in then %>
