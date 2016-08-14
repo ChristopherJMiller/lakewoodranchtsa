@@ -1,0 +1,21 @@
+<div class="main-div">
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-3"><%= @user.name %></h1>
+      <p class="lead"><%= @user.created_at.strftime('Site User Since %Y')%></p>
+    </div>
+  </div>
+  <div class='row'>
+    <div class='col-sm-12 col-md-4 col-md-push-8'>
+      <div class="card">
+        <div class="card-block">
+          <h4 class="card-title"><%= @user.rank_title %></h4>
+          <p class="card-text"></p>
+        </div>
+      </div>
+    </div>
+    <div class='col-sm-12 col-md-8 col-md-pull-4'>
+      <p>Filler</p>
+    </div>
+  </div>
+</div>

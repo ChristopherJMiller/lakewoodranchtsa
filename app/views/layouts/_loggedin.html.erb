@@ -1,8 +1,19 @@
-<%= link_to user_path(session[:user_id]), class: 'dropdown-item' do %>
+<%
+  user_id = session[:user_id]
+  user = User.find_by_id(user_id)
+%>
+<h3 class="dropdown-header"><%= user.rank_title %></h3>
+<% if user.is_admin %>
+  <%= link_to sign_up_sheets_path, class: 'dropdown-item' do %>
+    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Sign In Sheets
+  <% end %>
+  <div class='dropdown-divider'></div>
+<% end %>
+<%= link_to user_path(user_id), class: 'dropdown-item' do %>
   <i class='fa fa-user' aria-hidden='true'></i> Your Profile
 <% end %>
 <div class='dropdown-divider'></div>
-<%= link_to edit_user_path(session[:user_id]), class: 'dropdown-item' do %>
+<%= link_to edit_user_path(user_id), class: 'dropdown-item' do %>
   <i class='fa fa-cog' aria-hidden='true'></i> Account Settings
 <% end %>
 <%= link_to 'Log Out', {controller: :sessions, action: :destroy}, method: 'delete', remote: true, class: 'dropdown-item', id: 'navbar_logout' %>
