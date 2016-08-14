@@ -5,7 +5,9 @@ Rails.application.routes.draw do
     put '/change_password', to: 'users#change_password'
   end
 
-  resources :sign_up_sheets
+  resources :sign_up_sheets do
+    resources :attendees, only: [:index, :create, :destroy]
+  end
 
   get '/verify_email/:token', to: 'users#verify_email'
 
