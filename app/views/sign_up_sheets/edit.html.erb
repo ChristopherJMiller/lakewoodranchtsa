@@ -1,0 +1,17 @@
+<div class="main-div">
+  <h1>Edit <%= @sign_up_sheet.name %></h1>
+
+  <%= form_for @sign_up_sheet, remote: true do |f| %>
+    <fieldset class="form-group">
+      <%= f.label :name, class: 'form-control-label' %>
+      <%= f.text_field :name, class: 'form-control', placeholder: 'Name' %>
+    </fieldset>
+
+    <fieldset class="form-group">
+      <%= f.label :date, class: 'form-control-label' %>
+      <%= f.date_select :date %>
+    </fieldset>
+
+    <%= f.submit 'Update', class: 'btn btn-primary' %>
+  <% end %>
+</div>

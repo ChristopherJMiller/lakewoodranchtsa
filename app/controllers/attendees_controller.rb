@@ -7,10 +7,10 @@ class AttendeesController < ApplicationController
   end
 
   def create
-    if session[:user_id].nil? or params[:attendee][:user_id] != session[:user_id].to_s
+    if session[:user_id].nil?
       head status: :forbidden and return
     end
-    if !User.find_by_id(session[:user_id]).is_member
+    if !User.find_by_id(session[:user_id]).is_admin
       head status: :forbidden and return
     end
     if Attendee.find_by_sign_up_sheet_id_and_user_id(params[:sign_up_sheet_id], params[:attendee][:user_id])

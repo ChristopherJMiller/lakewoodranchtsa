@@ -1,0 +1,4 @@
+<tr>
+  <td class='member_name'><%= member.name %></td>
+  <td class='member_view'><%= button_to 'Sign In', {sign_up_sheet_id: SignUpSheet.find_by_id(params[:sign_up_sheet_id]), attendee: { user_id: member.id}, controller: :attendees, action: :create}, remote: true, method: :create, class: 'btn btn-success' %></td>
+</tr>

@@ -1,0 +1,23 @@
+<div class="main-div">
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-3"><%= SignUpSheet.find_by_id(params[:sign_up_sheet_id]).name %></h1>
+      <p class="lead"><%= format_date SignUpSheet.find_by_id(params[:sign_up_sheet_id]).date %></p>
+    </div>
+  </div>
+  <% if logged_in && User.find_by_id(session[:user_id]).is_admin %>
+  <h1>Check In</h1>
+  <table class="table table-striped">
+    <tbody>
+      <%= render partial: 'member', collection: User.where("rank > ?", 0).select {|user| @attendees.find_by_user_id(user.id).present? == false }, as: :member or 'No other members to check in.' %>
+    </tbody>
+  </table>
+  <hr>
+  <% end %>
+  <h1>Checked In</h1>
+  <table class="table table-striped" id="checked_in">
+    <tbody>
+      <%= render @attendees or 'No members checked in.' %>
+    </tbody>
+  </table>
+</div>

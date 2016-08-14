@@ -64,32 +64,32 @@ RSpec.describe AttendeesController, type: :controller do
     describe 'POST #create' do
       context 'with valid parameters' do
         context 'as a logged in user' do
-          context 'when the user is a member' do
+          context 'when the user is an admin' do
             context 'while the user is not a attendee' do
               it 'returns HTTP status 201 (Created)' do
-                post :create, {sign_up_sheet_id: sign_up_sheet.id, attendee: valid_parameters_member}, valid_session_member
+                post :create, {sign_up_sheet_id: sign_up_sheet.id, attendee: valid_parameters_member}, valid_session_admin
                 expect(response).to have_http_status(:created)
               end
 
               it 'creates a new attendee' do
                 expect {
-                  post :create, {sign_up_sheet_id: sign_up_sheet.id, attendee: valid_parameters_member}, valid_session_member
+                  post :create, {sign_up_sheet_id: sign_up_sheet.id, attendee: valid_parameters_member}, valid_session_admin
                 }.to change(Attendee, :count).by(1)
               end
             end
 
             context 'while the user is a attendee' do
               it 'returns HTTP status 409 (Conflict)' do
-                post :create, {sign_up_sheet_id: sign_up_sheet.id, attendee: valid_parameters_member}, valid_session_member
-                post :create, {sign_up_sheet_id: sign_up_sheet.id, attendee: valid_parameters_member}, valid_session_member
+                post :create, {sign_up_sheet_id: sign_up_sheet.id, attendee: valid_parameters_member}, valid_session_admin
+                post :create, {sign_up_sheet_id: sign_up_sheet.id, attendee: valid_parameters_member}, valid_session_admin
                 expect(response).to have_http_status(:conflict)
               end
             end
           end
 
-          context 'when the user is not a member' do
+          context 'when the user is not an admin' do
             it 'returns a HTTP status 403 (Forbidden)' do
-              post :create, {sign_up_sheet_id: sign_up_sheet.id, attendee: valid_parameters}, valid_session
+              post :create, {sign_up_sheet_id: sign_up_sheet.id, attendee: valid_parameters}, valid_session_member
               expect(response).to have_http_status(:forbidden)
             end
           end
@@ -105,8 +105,8 @@ RSpec.describe AttendeesController, type: :controller do
 
       context 'with invalid parameters' do
         it 'returns HTTP status 403 (Forbidden)' do
-          post :create, {sign_up_sheet_id: sign_up_sheet.id, attendee: invalid_parameters}, valid_session_member
-          expect(response).to have_http_status(:forbidden)
+          post :create, {sign_up_sheet_id: sign_up_sheet.id, attendee: invalid_parameters}, valid_session_admin
+          expect(response).to have_http_status(:bad_request)
         end
       end
     end
