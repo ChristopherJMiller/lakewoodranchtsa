@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 
   resource :sessions, only: [:create, :destroy]
 
+  resources :announcements
+
   get 'log_in', to: 'sessions#new'
   get 'register', to: 'users#new'
   get 'log_out', to: 'sessions#destroy'
