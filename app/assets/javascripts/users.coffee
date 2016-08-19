@@ -10,6 +10,14 @@ String::capitalizeFirstLetter = () ->
 $(document).on 'turbolinks:load', ->
   $('[name="user[rank]"]').change ->
     $(this).parent().submit()
+  $('#user_search').change ->
+    text = $(this).val()
+    re =  RegExp(text ,"i");
+    $(".user_name").filter ->
+      if re.test($(this).html())
+        $(this).parent().fadeIn("fast")
+      else
+        $(this).parent().fadeOut("fast")
   $('form[data-remote]').on 'ajax:send', ->
     $(this).children('fieldset').attr 'class', 'form-group'
     $(this).children('fieldset').children('div').remove()
