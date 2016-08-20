@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :event do
-    name "MyString"
-    description "MyText"
-    max_members_per_team 1
+    name "Test Event"
+    description "Hello World!"
+    max_members_per_team 6
   end
 end
