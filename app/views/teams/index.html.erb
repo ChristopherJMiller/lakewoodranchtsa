@@ -1,0 +1,8 @@
+<div class="main-div">
+  <h1>All Teams for <%= Event.find_by_id(params[:event_id]).name %></h1>
+  <table class="table table-striped">
+    <tbody>
+      <%= render @teams %>
+    </tbody>
+  </table>
+</div>

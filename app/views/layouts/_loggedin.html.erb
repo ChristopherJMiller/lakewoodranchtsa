@@ -1,6 +1,8 @@
 <%
   user_id = session[:user_id]
   user = User.find_by_id(user_id)
+
+  #TODO: Add teams via team members
 %>
 <h3 class="dropdown-header"><%= user.rank_title %></h3>
 <% if user.is_admin %>
