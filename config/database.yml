@@ -21,5 +21,13 @@ test:
   database: db/test.sqlite3
 
 production:
-  <<: *default
-  database: db/production.sqlite3
+  adapter: mysql2
+  encoding: utf8
+  database: <%= ENV["MYSQL_DATABASE"] %>
+  pool: 5
+  timeout: 5000
+  host: mariadb
+  port: 3306
+  username: <%= ENV["MYSQL_USERNAME"] %>
+  password: <%= ENV["MYSQL_PASSWORD"] %>
+  socket: /tmp/mysql.sock
