@@ -13,7 +13,11 @@ Rails.application.routes.draw do
 
   resource :sessions, only: [:create, :destroy]
 
-  resources :events
+  resources :events do
+    resources :teams do
+      resources :team_members, only: [:index, :create, :destroy]
+    end
+  end
 
   resources :announcements
 
