@@ -13,6 +13,8 @@ Rails.application.routes.draw do
 
   resource :sessions, only: [:create, :destroy]
 
+  resources :events
+
   resources :announcements
 
   get 'log_in', to: 'sessions#new'
