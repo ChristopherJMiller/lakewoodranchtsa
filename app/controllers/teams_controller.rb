@@ -80,10 +80,12 @@ class TeamsController < ApplicationController
   def team_parameters_create
     parameters = params.require(:team).permit(:name)
     parameters[:event_id] = params[:event_id]
+    parameters[:closed] = false
     return parameters
   end
 
   def team_parameters_update
-    params.require(:team).permit(:name)
+    parameters = params.require(:team).permit(:name, :closed)
+    return parameters
   end
 end

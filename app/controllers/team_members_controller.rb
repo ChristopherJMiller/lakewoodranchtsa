@@ -10,7 +10,7 @@ class TeamMembersController < ApplicationController
     if session[:user_id].nil? or params[:team_member][:user_id] != session[:user_id].to_s
       head status: :forbidden and return
     end
-    if !User.find_by_id(session[:user_id]).is_member
+    if !User.find_by_id(session[:user_id]).is_member or Team.find_by_id(params[:team_id]).full
       head status: :forbidden and return
     end
     if TeamMember.find_by_team_id_and_user_id(params[:team_id], params[:team_member][:user_id])
