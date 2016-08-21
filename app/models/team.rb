@@ -7,4 +7,8 @@ class Team < ActiveRecord::Base
 
   has_many :team_members
   has_many :users, through: :team_members
+
+  def full
+    team_members.count >= event.max_members_per_team
+  end
 end

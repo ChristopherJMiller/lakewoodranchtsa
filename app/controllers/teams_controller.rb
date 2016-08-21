@@ -41,6 +41,7 @@ class TeamsController < ApplicationController
     end
     team = Team.new(team_parameters_create)
     if team.save
+      TeamMember.create(team_id: team.id, user_id: session[:user_id])
       head status: :created, location: event_team_path(team.event, team)
     else
       render json: {error: team.errors}, status: :bad_request
