@@ -11,7 +11,7 @@
   <h1>All Members</h1>
   <table class="table table-striped">
     <tbody>
-      <%= render partial: 'user', collection: User.where("rank = ? OR rank = ? OR rank = ?", 1, 2, 3), as: :user %>
+      <%= render partial: 'user', collection: User.where("rank > ?", 0), as: :user %>
     </tbody>
   </table>
 </div>
