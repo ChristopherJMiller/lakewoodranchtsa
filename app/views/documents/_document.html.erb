@@ -1,0 +1,9 @@
+<div class="card card-block">
+  <h4 class="card-title"><%= document.title %></h4>
+  <%= link_to 'View', document_path(document), class: 'btn btn-primary', target: "_blank" %>
+  <% if logged_in && current_user.is_admin %>
+    <hr>
+    <%= link_to 'Edit Document', edit_document_path(document), class: 'btn btn-sm btn-info' %>
+    <%= button_to 'Remove Document', { action: 'destroy', id: document.id }, method: :delete, remote: true, class: 'btn btn-sm btn-danger', data: { confirm: "Are you sure?" } %>
+  <% end %>
+</div>
