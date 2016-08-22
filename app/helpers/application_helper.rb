@@ -20,7 +20,7 @@ module ApplicationHelper
   end
 
   def rank_title(rank)
-    titles = ["Guest", "Member", "Seargent-At-Arms", "Reporter", "Treasurer", "Secretary", "Vice President", "President", "Advisor"]
+    titles = ["Guest", "Member", "Sergeant-at-Arms", "Reporter", "Treasurer", "Secretary", "Vice President", "President", "Advisor"]
     titles[rank]
   end
 end
