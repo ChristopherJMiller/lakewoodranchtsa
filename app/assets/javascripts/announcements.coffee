@@ -11,6 +11,10 @@ String::capitalizeFirstLetter = () ->
   return this.charAt(0).toUpperCase() + this.slice(1);
 
 $(document).on 'turbolinks:load', ->
+  $("#announcement_title").keyup ->
+    $("#preview_title").html($("#announcement_title").val())
+  $("#announcement_body").keyup ->
+    $("#preview_body").html(markdown.toHTML($("#announcement_body").val()))
   $('form[data-remote]').on 'ajax:send', ->
     $(this).children('fieldset').attr 'class', 'form-group'
     $(this).children('fieldset').children('div').remove()

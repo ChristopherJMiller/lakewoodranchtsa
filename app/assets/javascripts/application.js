@@ -16,4 +16,5 @@
 //= require bootstrap-sprockets
 //= require Chart
 //= require navbar
+//= require markdown
 //= require turbolinks

@@ -21,6 +21,7 @@ $(document).on 'turbolinks:load', ->
   $('form[data-remote]').on 'ajax:send', ->
     $(this).children('fieldset').attr 'class', 'form-group'
     $(this).children('fieldset').children('div').remove()
+    $( "input[name='commit']" ).prop("disabled",true);
   $('form[data-remote]').on 'ajax:success', ->
     $(this).children('fieldset').addClass 'form-group has-success'
     if $(this).hasClass('edit_user')
@@ -28,6 +29,7 @@ $(document).on 'turbolinks:load', ->
     else
       setTimeout redirect, 2000
   $('form[data-remote]').on 'ajax:error', (evt, xhr, status, error) ->
+    $( "input[name='commit']" ).prop("disabled",false);
     errors = xhr.responseJSON.error
     for form of errors
       fieldSet = $(this).find("#user_#{form}").parent()
