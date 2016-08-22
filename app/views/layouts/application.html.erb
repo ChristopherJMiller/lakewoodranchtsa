@@ -4,8 +4,8 @@
   <title>Lakewood Ranch TSA</title>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= stylesheet_link_tag params[:controller], media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag params[:controller], 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag params[:controller], media: 'all', 'data-turbolinks-track' => 'reload' %>
+  <%= javascript_include_tag params[:controller], 'data-turbolinks-track' => 'reload' %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -15,14 +15,24 @@
       <a class="navbar-brand" href="/">Lakewood Ranch TSA</a>
       <ul class="nav navbar-nav">
         <li class="nav-item">
+          <%= link_to announcements_path, class: 'nav-link' do %>
+            <i class="fa fa-bullhorn" aria-hidden="true"></i> Announcements
+          <% end %>
+        </li>
+        <li class="nav-item">
           <%= link_to users_path, class: 'nav-link' do %>
             <i class="fa fa-user" aria-hidden="true"></i> Members
+          <% end %>
+        </li>
+        <li class="nav-item">
+          <%= link_to events_path, class: 'nav-link' do %>
+            <i class="fa fa-list" aria-hidden="true"></i> Events
           <% end %>
         </li>
         <div class="btn-group pull-xs-right">
           <div class='hidden-sm-down'>
         <a class="dropdown-toggle nav-link" href="#" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <%= (logged_in && User.find(session[:user_id]).email) || 'Guest' %>
+          <%= (logged_in && User.find(session[:user_id]).name) || 'Guest' %>
         </a>
         <div class="dropdown-menu dropdown-menu-right dropdown-width" aria-labelledby="userDropdown">
           <% if logged_in then %>

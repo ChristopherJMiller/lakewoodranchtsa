@@ -1,0 +1,17 @@
+<div class="main-div">
+  <h1>Edit <%= @team.name %></h1>
+
+  <%= form_for @team, url: event_team_path(params[:event_id], params[:id]), remote: true do |f| %>
+    <fieldset class="form-group">
+      <%= f.label :name, class: 'form-control-label' %>
+      <%= f.text_field :name, class: 'form-control', placeholder: 'Team Name' %>
+    </fieldset>
+
+    <fieldset class="form-group">
+      <%= f.label :closed, class: 'form-control-label' %>
+      <%= f.check_box :closed, class: 'form-control-input' %>
+    </fieldset>
+
+    <%= f.submit 'Update', class: 'btn btn-primary' %>
+  <% end %>
+</div>

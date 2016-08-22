@@ -1,0 +1,14 @@
+<div class="media">
+  <div class="media-body">
+    <h4 class="media-heading"><%= announcement.title %>
+    <br>
+    <small class="text-muted">by <%= announcement.user.name %> <%= format_time announcement.created_at %></small></h4>
+    <%= truncate announcement.body, length: 500 %>
+    <% if announcement.created_at != announcement.updated_at %>
+      <br>
+      <small class="text-muted">Last Updated: <%= format_time announcement.updated_at %></small>
+    <% end %>
+    <%= link_to 'View', announcement_path(announcement), class: 'btn btn-primary pull-xs-right' %>
+  </div>
+</div>
+<hr>

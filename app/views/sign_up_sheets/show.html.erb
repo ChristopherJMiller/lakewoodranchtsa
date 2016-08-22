@@ -1,0 +1,21 @@
+<div class='main-div'>
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-3"><%= @sign_up_sheet.name %></h1>
+      <p class="lead"><%= format_date @sign_up_sheet.date %></p>
+      <hr class="m-y-2">
+      <p class="lead">
+        <%= link_to 'View Check In Page', sign_up_sheet_attendees_path(@sign_up_sheet.id), class: 'btn btn-primary btn-lg' %>
+        <% if logged_in && User.find_by_id(session[:user_id]).is_admin %>
+
+        <% end %>
+      </p>
+    </div>
+  </div>
+  <h2>Attendees</h2>
+  <table class="table table-striped">
+    <tbody>
+      <%= render partial: 'attendee', collection: @sign_up_sheet.attendees, as: :attendee or 'No attendees have signed up.'%>
+    </tbody>
+  </table>
+</div>

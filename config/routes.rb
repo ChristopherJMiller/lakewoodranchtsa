@@ -5,9 +5,21 @@ Rails.application.routes.draw do
     put '/change_password', to: 'users#change_password'
   end
 
+  resources :sign_up_sheets do
+    resources :attendees, only: [:index, :create, :destroy]
+  end
+
   get '/verify_email/:token', to: 'users#verify_email'
 
   resource :sessions, only: [:create, :destroy]
+
+  resources :events do
+    resources :teams do
+      resources :team_members, only: [:index, :create, :destroy]
+    end
+  end
+
+  resources :announcements
 
   get 'log_in', to: 'sessions#new'
   get 'register', to: 'users#new'

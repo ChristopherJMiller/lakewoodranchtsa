@@ -11,8 +11,13 @@
 # === Ranks
 # [0] Unpaid Member
 # [1] Member
-# [2] Officer
-# [3] Advisor
+# [2] Sergeant-at-Arms
+# [3] Reporter
+# [4] Treasurer
+# [5] Secretary
+# [6] Vice President
+# [7] President
+# [8] Advisor
 # == Attributes
 # * Adds a token before creation.
 # * Must have a secure password (At least 8 characters long and be present)
@@ -47,6 +52,16 @@ class User < ActiveRecord::Base
   # Returns if the user is an admin or not.
   def is_admin
     rank > 1
+  end
+
+  # Returns if the user is an advisor or not.
+  def is_advisor
+    rank > 7
+  end
+
+  def rank_title
+    titles = ["User", "Member", "Sergeant-at-Arms", "Reporter", "Treasurer", "Secretary", "Vice President", "President", "Advisor"]
+    titles[rank]
   end
 
   private

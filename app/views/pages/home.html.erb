@@ -1,0 +1,10 @@
+<%= image_tag "intro.jpg", class: "img-fluid opening hidden-sm-down" %>
+<div class='main-div'>
+  <h1 class='display-3' style="text-align: center">Lakewood Ranch TSA</h1>
+  
+  <h2>Recent Announcements</h2>
+  <hr>
+  <div class="card-columns">
+    <%= render partial: 'announcement', collection: Announcement.last(3).reverse!, as: :announcement or 'No recent announcements.'%>
+  </div>
+</div>

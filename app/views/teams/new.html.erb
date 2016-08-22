@@ -1,0 +1,12 @@
+<div class="main-div">
+  <h1>Create a New Team</h1>
+
+  <%= form_for @team, url: event_teams_path(Event.find_by_id(params[:event_id])), remote: true do |f| %>
+    <fieldset class="form-group">
+      <%= f.label :name, class: 'form-control-label' %>
+      <%= f.text_field :name, class: 'form-control', placeholder: 'Team Name' %>
+    </fieldset>
+
+    <%= f.submit 'Create', class: 'btn btn-primary' %>
+  <% end %>
+</div>
