@@ -2,7 +2,7 @@
   <h1 class="media-heading"><%= @announcement.title %></h1>
   <h2><small class="text-muted">by <%= @announcement.user.name %></small></h2>
   <hr>
-  <p><%= simple_format @announcement.body %></p>
+  <p><%= simple_format markdown.render @announcement.body %></p>
   <small class='text-muted'>Posted: <%= format_time @announcement.created_at %></small><br>
   <% if @announcement.created_at != @announcement.updated_at %>
     <small class='text-muted'>Last Updated: <%= format_time @announcement.updated_at %></small><br>

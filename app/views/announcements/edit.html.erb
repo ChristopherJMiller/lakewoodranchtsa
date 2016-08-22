@@ -15,4 +15,8 @@
     <%= f.submit 'Update', class: 'btn btn-primary' %>
   <% end %>
   <%= button_to 'Remove Announcement', { action: 'destroy', id: @announcement.id }, method: :delete, remote: true, class: 'btn btn-danger', data: { confirm: "Are you sure?" } %>
+  <hr>
+  <h1 class="display-3">Preview</h1>
+  <h1 class="media-heading" id="preview_title"></h1>
+  <p id="preview_body"></p>
 </div>

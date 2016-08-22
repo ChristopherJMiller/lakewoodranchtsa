@@ -11,6 +11,10 @@ module ApplicationHelper
     date.to_formatted_s(:long)
   end
 
+  def markdown
+    Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true)
+  end
+
   def format_time(time)
     time.strftime('%b %d, %Y %I:%M %p')
   end

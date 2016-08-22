@@ -23,7 +23,13 @@ gem 'coffee-rails', '~> 4.1.0'
 # Use chartjs on the asset pipeline
 gem 'chart-js-rails'
 
+#Use mysql2 as the database adapter
 gem 'mysql2'
+
+#Use redcarpet for Markdown Parser
+gem 'redcarpet'
+gem 'markdownjs-rails'
+
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
