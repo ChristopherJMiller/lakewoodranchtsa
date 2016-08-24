@@ -24,6 +24,21 @@ class TeamMembersController < ApplicationController
     end
   end
 
+  def update
+    team_member = TeamMember.find_by_team_id_and_id(params[:team_id], params[:id])
+    if !team_member
+      head status: :not_found and return
+    end
+    if session[:user_id].nil? or (TeamMember.find_by_team_id_and_user_id(params[:team_id], session[:user_id]).nil? and !User.find_by_id(session[:user_id]).is_admin) or ((!TeamMember.find_by_team_id_and_user_id(params[:team_id], session[:user_id]).nil? and !TeamMember.find_by_team_id_and_user_id(params[:team_id], session[:user_id]).admin) and !User.find_by_id(session[:user_id]).is_admin) then
+      head status: :forbidden and return
+    end
+    if team_member.update(team_member_parameters_update)
+      head status: :ok
+    else
+      render json: {error: team_member.errors}, status: :bad_request
+    end
+  end
+
   def destroy
     team_member = TeamMember.find_by_team_id_and_id(params[:team_id], params[:id])
     if !team_member
@@ -41,6 +56,12 @@ class TeamMembersController < ApplicationController
   def team_member_parameters_create
     parameters = params.require(:team_member).permit(:user_id)
     parameters[:team_id] = params[:team_id]
+    parameters[:admin] = false
+    return parameters
+  end
+
+  def team_member_parameters_update
+    parameters = params.require(:team_member).permit(:admin)
     return parameters
   end
 end
