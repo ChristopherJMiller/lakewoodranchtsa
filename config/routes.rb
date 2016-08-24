@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   resources :events do
     resources :teams do
-      resources :team_members, only: [:index, :edit, :create, :update, :destroy]
+      resources :team_members, only: [:index, :new, :edit, :create, :update, :destroy]
     end
   end
 

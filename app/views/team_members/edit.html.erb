@@ -10,4 +10,5 @@
 
     <%= f.submit 'Update', class: 'btn btn-primary' %>
   <% end %>
+  <%= button_to 'Kick User', { action: 'destroy', id: @team_member.id }, method: :delete, remote: true, class: 'btn btn-danger', data: { confirm: "Are you sure?" } %>
 </div>

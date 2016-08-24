@@ -81,6 +81,13 @@ RSpec.describe TeamMembersController, type: :controller do
       end
     end
 
+    describe 'GET #new' do
+      it 'assigns a new team member as @team_member' do
+        get :new, {event_id: team_member.team.event.id, team_id: team_member.team.id, id: team_member.id}
+        expect(assigns(:team_member)).to be_a_new(TeamMember)
+      end
+    end
+
     describe 'GET #edit' do
       context 'with a valid team member' do
         before(:each) do

@@ -13,7 +13,10 @@ $(document).on 'turbolinks:load', ->
     $(this).children('fieldset').children('div').remove()
     $('input').attr('disabled', true)
   $('form[data-remote]').on 'ajax:success', ->
-    setTimeout (window.location.href = window.location.href), 0
+    if $(this).hasClass('new_team_member') || $(this).hasClass('button_to')
+      setTimeout (window.location.replace '../'), 0
+    else
+      setTimeout (window.location.href = window.location.href), 0
   $('form[data-remote]').on 'ajax:error', (evt, xhr, status, error) ->
     $('input').attr('disabled', false)
     errors = xhr.responseJSON.error

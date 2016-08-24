@@ -18,11 +18,16 @@ class TeamMembersController < ApplicationController
     end
   end
 
+  def new
+    @team_member = TeamMember.new
+    respond_to :html
+  end
+
   def create
-    if session[:user_id].nil? or params[:team_member][:user_id] != session[:user_id].to_s
+    if session[:user_id].nil?
       head status: :forbidden and return
     end
-    if !User.find_by_id(session[:user_id]).is_member or Team.find_by_id(params[:team_id]).full
+    if !User.find_by_id(session[:user_id]).is_admin or Team.find_by_id(params[:team_id]).full
       head status: :forbidden and return
     end
     if TeamMember.find_by_team_id_and_user_id(params[:team_id], params[:team_member][:user_id])
