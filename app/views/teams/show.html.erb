@@ -4,9 +4,11 @@
     <% if !session[:user_id].nil? and User.find_by_id(session[:user_id]).rank > 0 and !@team.full and !current_user_in_team and !@team.closed %>
         <%= button_to ((current_user_in_team && 'Signed Up') or 'Join Team'), {team_id: @team.id, team_member: {user_id: current_user.id}, controller: :team_members, action: :create}, disabled: current_user_in_team, remote: true, method: :post, class: 'btn btn-primary pull-xs-right', id: 'request_join' %>
     <% end %>
-    <% else if current_user_in_team %>
-      <%= button_to 'Leave Team', {team_id: @team.id, id: TeamMember.find_by_user_id(session[:user_id]).id, controller: :team_members, action: :destroy}, remote: true, method: :delete, class: 'btn btn-danger pull-xs-right' %>
+    <% else if current_user_in_team && @team.team_members.find_by_user_id(current_user).admin %>
       <%= link_to 'Edit Team', edit_event_team_path(params[:event_id], params[:id]), class: 'btn btn-secondary pull-xs-right' %>
+    <% end %>
+    <% if current_user_in_team %>
+      <%= button_to 'Leave Team', {team_id: @team.id, id: TeamMember.find_by_user_id(session[:user_id]).id, controller: :team_members, action: :destroy}, remote: true, method: :delete, class: 'btn btn-danger pull-xs-right' %>
     <% end %>
     <h1 class="display-3"><%= @team.name %></h1>
     <% if @team.full %>

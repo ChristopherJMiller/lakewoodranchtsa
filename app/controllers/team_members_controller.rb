@@ -6,6 +6,18 @@ class TeamMembersController < ApplicationController
     respond_with @team_members
   end
 
+  def edit
+    @team_member = TeamMember.find_by_team_id_and_id(params[:team_id], params[:id])
+    if @team_member
+      respond_with @team_member
+    else
+      respond_to do |format|
+        format.html { not_found }
+        format.json { head status: :not_found }
+      end
+    end
+  end
+
   def create
     if session[:user_id].nil? or params[:team_member][:user_id] != session[:user_id].to_s
       head status: :forbidden and return

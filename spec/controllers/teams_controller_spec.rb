@@ -118,29 +118,29 @@ RSpec.describe TeamsController, type: :controller do
 
   describe 'POST #create' do
     context 'while logged in' do
-      context 'as a member' do
+      context 'as a admin' do
         context 'with valid parameters' do
           it 'returns HTTP status 201 (Created)' do
-            post :create, {event_id: event.id, team: valid_parameters}, valid_session_member
+            post :create, {event_id: event.id, team: valid_parameters}, valid_session_admin
             expect(response).to have_http_status(:created)
           end
 
           it 'creates a new team' do
             expect {
-              post :create, {event_id: event.id, team: valid_parameters}, valid_session_member
+              post :create, {event_id: event.id, team: valid_parameters}, valid_session_admin
             }.to change(Team, :count).by(1)
           end
         end
 
         context 'with invalid parameters' do
           it 'returns HTTP status 400 (Bad Request)' do
-            post :create, {event_id: event.id, team: invalid_parameters}, valid_session_member
+            post :create, {event_id: event.id, team: invalid_parameters}, valid_session_admin
             expect(response).to have_http_status(:bad_request)
           end
         end
       end
 
-      context 'as not a member' do
+      context 'as not a admin' do
         it 'returns HTTP status 403 (Forbidden)' do
           post :create, {event_id: event.id, team: valid_parameters}, valid_session
           expect(response).to have_http_status(:forbidden)

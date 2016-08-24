@@ -1,0 +1,13 @@
+<div class="main-div">
+  <h1>Edit <%= @team_member.user.name %></h1>
+
+  <%= form_for @team_member, url: event_team_team_member_path(params[:event_id], params[:team_id], params[:id]), remote: true do |f| %>
+
+    <fieldset class="form-group">
+      <%= f.label :admin, class: 'form-control-label' %>
+      <%= f.check_box :admin, class: 'form-control-input' %>
+    </fieldset>
+
+    <%= f.submit 'Update', class: 'btn btn-primary' %>
+  <% end %>
+</div>

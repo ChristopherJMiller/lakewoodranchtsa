@@ -81,6 +81,30 @@ RSpec.describe TeamMembersController, type: :controller do
       end
     end
 
+    describe 'GET #edit' do
+      context 'with a valid team member' do
+        before(:each) do
+          get :edit, {event_id: team_member.team.event.id, team_id: team_member.team.id, id: team_member.id}
+        end
+
+        it 'returns HTTP status 200 (OK)' do
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'assigns the requested team member as @team_member' do
+          expect(assigns(:team_member)).to eq(team_member)
+        end
+      end
+
+      context 'with an invalid team' do
+        it 'returns HTTP status 404 (Not Found)' do
+          expect {
+            get :edit, {event_id: team_member.team.event.id, team_id: team_member.team.id, id: -1}
+          }.to raise_error(ActionController::RoutingError)
+        end
+      end
+    end
+
   describe 'POST #create' do
     context 'with valid parameters' do
       context 'as a logged in user' do
