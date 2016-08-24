@@ -60,7 +60,7 @@ class User < ActiveRecord::Base
   end
 
   def rank_title
-    titles = ["User", "Member", "Sergeant-at-Arms", "Reporter", "Treasurer", "Secretary", "Vice President", "President", "Advisor"]
+    titles = ["Guest", "Member", "Sergeant-at-Arms", "Reporter", "Treasurer", "Secretary", "Vice President", "President", "Advisor"]
     titles[rank]
   end
 
