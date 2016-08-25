@@ -115,32 +115,30 @@ RSpec.describe TeamMembersController, type: :controller do
   describe 'POST #create' do
     context 'with valid parameters' do
       context 'as a logged in user' do
-        context 'when the user is a member' do
-          context 'while the user is not a team member' do
-            it 'returns HTTP status 201 (Created)' do
-              post :create, {event_id: event.id, team_id: team.id, team_member: valid_parameters_member}, valid_session_member
-              expect(response).to have_http_status(:created)
-            end
-
-            it 'creates a new team member' do
-              expect {
-                post :create, {event_id: event.id, team_id: team.id, team_member: valid_parameters_member}, valid_session_member
-              }.to change(TeamMember, :count).by(1)
-            end
+        context 'when the user is a site admin' do
+          it 'returns HTTP status 201 (Created)' do
+            post :create, {event_id: event.id, team_id: team.id, team_member: valid_parameters_member}, valid_session_admin
+            expect(response).to have_http_status(:created)
           end
 
-          context 'while the user is a team member' do
-            it 'returns HTTP status 409 (Conflict)' do
-              post :create, {event_id: event.id, team_id: team.id, team_member: valid_parameters_member}, valid_session_member
-              post :create, {event_id: event.id, team_id: team.id, team_member: valid_parameters_member}, valid_session_member
-              expect(response).to have_http_status(:conflict)
-            end
+          it 'creates a new team member' do
+            expect {
+              post :create, {event_id: event.id, team_id: team.id, team_member: valid_parameters_member}, valid_session_admin
+            }.to change(TeamMember, :count).by(1)
           end
         end
 
-        context 'when the user is not a member' do
+        context 'while the user is already a team member' do
+          it 'returns HTTP status 409 (Conflict)' do
+            post :create, {event_id: event.id, team_id: team.id, team_member: valid_parameters_member}, valid_session_admin
+            post :create, {event_id: event.id, team_id: team.id, team_member: valid_parameters_member}, valid_session_admin
+            expect(response).to have_http_status(:conflict)
+          end
+        end
+
+        context 'when the user is not a site admin' do
           it 'returns a HTTP status 403 (Forbidden)' do
-            post :create, {event_id: event.id, team_id: team.id, team_member: valid_parameters}, valid_session
+            post :create, {event_id: event.id, team_id: team.id, team_member: valid_parameters}, valid_session_member
             expect(response).to have_http_status(:forbidden)
           end
         end
