@@ -1,0 +1,18 @@
+<div class="main-div">
+  <h1>Add a Team Member</h1>
+
+  <%= form_for @team_member, url: event_team_team_members_path(params[:event_id], params[:team_id]), remote: true do |f| %>
+
+    <fieldset class="form-group">
+      <%= f.label :user, class: 'form-control-label' %>
+      <%= f.collection_select :user_id, User.where("rank > ?", 0), :id, :name, { include_blank: true }, { class: 'form-control' } %>
+    </fieldset>
+
+    <fieldset class="form-group">
+      <%= f.label :admin, class: 'form-control-label' %>
+      <%= f.check_box :admin, class: 'form-control-input' %>
+    </fieldset>
+
+    <%= f.submit 'Create', class: 'btn btn-primary' %>
+  <% end %>
+</div>

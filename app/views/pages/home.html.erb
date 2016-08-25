@@ -1,7 +1,15 @@
+<% if logged_in && !current_user.verified %>
+  <div class="alert alert-warning alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Warning!</strong> Your email address is not verified. Please check your inbox or spam folder for the verification email in order to begin receiving email updates.
+  </div>
+<% end %>
 <%= image_tag "intro.jpg", class: "img-fluid opening hidden-sm-down" %>
 <div class='main-div'>
   <h1 class='display-3' style="text-align: center">Lakewood Ranch TSA</h1>
-  
+
   <h2>Recent Announcements</h2>
   <hr>
   <div class="card-columns">

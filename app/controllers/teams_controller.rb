@@ -36,7 +36,7 @@ class TeamsController < ApplicationController
   end
 
   def create
-    if session[:user_id].nil? or !User.find_by_id(session[:user_id]).is_member
+    if session[:user_id].nil? or !User.find_by_id(session[:user_id]).is_admin
       head status: :forbidden and return
     end
     team = Team.new(team_parameters_create)
