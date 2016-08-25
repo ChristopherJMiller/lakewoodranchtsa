@@ -1,0 +1,2 @@
+module AccountabilitylogsHelper
+end

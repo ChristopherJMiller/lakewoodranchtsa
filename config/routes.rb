@@ -21,6 +21,8 @@ Rails.application.routes.draw do
 
   resources :announcements
 
+  resources :accountabilitylogs
+
   resources :documents
 
   get 'log_in', to: 'sessions#new'
