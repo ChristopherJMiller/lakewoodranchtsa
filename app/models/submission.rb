@@ -8,4 +8,7 @@ class Submission < ActiveRecord::Base
   validates :tasks, length: { maximum: 2048 }
   validates :goals, presence: true
   validates :goals, length: { maximum: 2048 }
+
+  validates :user, presence: true
+  validates :accountabilitylog, presence: true
 end
