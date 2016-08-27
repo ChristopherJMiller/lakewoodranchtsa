@@ -1,6 +1,6 @@
-class CreateAccountabilitylogs < ActiveRecord::Migration
+class CreateAccountabilityLogs < ActiveRecord::Migration
   def change
-    create_table :accountabilitylogs do |t|
+    create_table :accountability_logs do |t|
       t.date :dueby
       t.date :closingdate
 

@@ -5,12 +5,12 @@ class SubmissionsController < ApplicationController
     if session[:user_id].nil? or !User.find_by_id(session[:user_id]).is_admin
       head status: :forbidden and return
     end
-    @submissions = Accountabilitylog.find_by_id(params[:accountabilitylog_id]).submissions
+    @submissions = AccountabilityLog.find_by_id(params[:accountability_log_id]).submissions
     respond_with @submissions
   end
 
   def edit
-    @submission = Submission.find_by_accountabilitylog_id_and_id(params[:accountabilitylog_id], params[:id])
+    @submission = Submission.find_by_accountability_log_id_and_id(params[:accountability_log_id], params[:id])
     if @submission
       respond_with @submission
     else
@@ -33,7 +33,7 @@ class SubmissionsController < ApplicationController
     if !User.find_by_id(session[:user_id]).is_member
       head status: :forbidden and return
     end
-    if Submission.find_by_accountabilitylog_id_and_user_id(params[:accountabilitylog_id], params[:submission][:user_id])
+    if Submission.find_by_accountability_log_id_and_user_id(params[:accountability_log_id], params[:submission][:user_id])
       head status: :conflict and return
     end
     submission = Submission.new(submission_parameters_create)
@@ -45,11 +45,11 @@ class SubmissionsController < ApplicationController
   end
 
   def destroy
-    submission = Submission.find_by_accountabilitylog_id_and_id(params[:accountabilitylog_id], params[:id])
+    submission = Submission.find_by_accountability_log_id_and_id(params[:accountability_log_id], params[:id])
     if !submission
       head status: :not_found and return
     end
-    if session[:user_id].nil? or (Submission.find_by_accountabilitylog_id_and_user_id(params[:accountabilitylog_id], session[:user_id]).nil? and !User.find_by_id(session[:user_id]).is_admin)
+    if session[:user_id].nil? or (Submission.find_by_accountability_log_id_and_user_id(params[:accountability_log_id], session[:user_id]).nil? and !User.find_by_id(session[:user_id]).is_admin)
       head status: :forbidden and return
     end
     submission.destroy
@@ -59,6 +59,6 @@ class SubmissionsController < ApplicationController
   private
 
   def submission_parameters_create
-    params.require(:submission).permit(:accountabilitylog_id, :user_id, :binderstatus, :tasks, :goals)
+    params.require(:submission).permit(:accountability_log_id, :user_id, :binderstatus, :tasks, :goals)
   end
 end

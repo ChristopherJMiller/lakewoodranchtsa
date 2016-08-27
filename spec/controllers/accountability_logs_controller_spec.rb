@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AccountabilitylogsController, type: :controller do
+RSpec.describe AccountabilityLogsController, type: :controller do
   let(:valid_parameters) do
     {dueby: '2016-08-24', closingdate: '2016-08-24'}
   end
@@ -9,8 +9,8 @@ RSpec.describe AccountabilitylogsController, type: :controller do
     {dueby: nil, closingdate: '2016-08-24'}
   end
 
-  let(:accountabilitylog) do
-    FactoryGirl.create(:accountabilitylog)
+  let(:accountability_log) do
+    FactoryGirl.create(:accountability_log)
   end
 
   let(:user) do
@@ -38,17 +38,17 @@ RSpec.describe AccountabilitylogsController, type: :controller do
   end
 
   describe 'GET #index' do
-    it 'assigns all accountability logs as @accountabilitylogs' do
-      accountabilitylog = FactoryGirl.create(:accountabilitylog)
+    it 'assigns all accountability logs as @accountability_logs' do
+      accountability_log = FactoryGirl.create(:accountability_log)
       get :index
-      expect(assigns(:accountabilitylogs)).to eq([accountabilitylog])
+      expect(assigns(:accountability_logs)).to eq([accountability_log])
     end
   end
 
   describe 'GET #show' do
     context 'with a valid accountability log' do
       before(:each) do
-        get :show, {id: accountabilitylog.id}
+        get :show, {id: accountability_log.id}
       end
 
       it 'returns HTTP status 200 (OK)' do
@@ -56,7 +56,7 @@ RSpec.describe AccountabilitylogsController, type: :controller do
       end
 
       it 'assigns the requested accountability log as @accountabilitylog' do
-        expect(assigns(:accountabilitylog)).to eq(accountabilitylog)
+        expect(assigns(:accountability_log)).to eq(accountability_log)
       end
     end
 
@@ -72,14 +72,14 @@ RSpec.describe AccountabilitylogsController, type: :controller do
   describe 'GET #new' do
     it 'assigns a new accountabilitylog as @accountabilitylog' do
       get :new
-      expect(assigns(:accountabilitylog)).to be_a_new(Accountabilitylog)
+      expect(assigns(:accountability_log)).to be_a_new(AccountabilityLog)
     end
   end
 
   describe 'GET #edit' do
     context 'with a valid accountability log' do
       before(:each) do
-        get :edit, {id: accountabilitylog.id}
+        get :edit, {id: accountability_log.id}
       end
 
       it 'returns HTTP status 200 (OK)' do
@@ -87,7 +87,7 @@ RSpec.describe AccountabilitylogsController, type: :controller do
       end
 
       it 'assigns the requested event as @accountabilitylog' do
-        expect(assigns(:accountabilitylog)).to eq(accountabilitylog)
+        expect(assigns(:accountability_log)).to eq(accountability_log)
       end
     end
 
@@ -105,20 +105,20 @@ RSpec.describe AccountabilitylogsController, type: :controller do
       context 'as an admin' do
         context 'with valid parameters' do
           it 'returns HTTP status 201 (Created)' do
-            post :create, {accountabilitylog: valid_parameters}, valid_session_admin
+            post :create, {accountability_log: valid_parameters}, valid_session_admin
             expect(response).to have_http_status(:created)
           end
 
           it 'creates a new accountabilitylog' do
             expect {
-              post :create, {accountabilitylog: valid_parameters}, valid_session_admin
-            }.to change(Accountabilitylog, :count).by(1)
+              post :create, {accountability_log: valid_parameters}, valid_session_admin
+            }.to change(AccountabilityLog, :count).by(1)
           end
         end
 
         context 'with invalid parameters' do
           it 'returns HTTP status 400 (Bad Request)' do
-            post :create, {accountabilitylog: invalid_parameters}, valid_session_admin
+            post :create, {accountability_log: invalid_parameters}, valid_session_admin
             expect(response).to have_http_status(:bad_request)
           end
         end
@@ -126,7 +126,7 @@ RSpec.describe AccountabilitylogsController, type: :controller do
 
       context 'as not an admin' do
         it 'returns HTTP status 403 (Forbidden)' do
-          post :create, {accountabilitylog: valid_parameters}, valid_session
+          post :create, {accountability_log: valid_parameters}, valid_session
           expect(response).to have_http_status(:forbidden)
         end
       end
@@ -134,7 +134,7 @@ RSpec.describe AccountabilitylogsController, type: :controller do
 
     context 'while logged out' do
       it 'returns HTTP status 403 (Forbidden)' do
-        post :create, {accountabilitylog: valid_parameters}
+        post :create, {accountability_log: valid_parameters}
         expect(response).to have_http_status(:forbidden)
       end
     end
@@ -145,7 +145,7 @@ RSpec.describe AccountabilitylogsController, type: :controller do
       context 'as an admin' do
         context 'with valid parameters' do
           before(:each) do
-            put :update, {id: accountabilitylog.id, accountabilitylog: valid_parameters}, valid_session_admin
+            put :update, {id: accountability_log.id, accountability_log: valid_parameters}, valid_session_admin
           end
 
           it 'returns HTTP status 200 (OK)' do
@@ -153,15 +153,15 @@ RSpec.describe AccountabilitylogsController, type: :controller do
           end
 
           it 'updates the requested accountability log' do
-            accountabilitylog.reload
-            expect(accountabilitylog.dueby.to_s(:db)).to eq(valid_parameters[:dueby])
-            expect(accountabilitylog.closingdate.to_s(:db)).to eq(valid_parameters[:closingdate])
+            accountability_log.reload
+            expect(accountability_log.dueby.to_s(:db)).to eq(valid_parameters[:dueby])
+            expect(accountability_log.closingdate.to_s(:db)).to eq(valid_parameters[:closingdate])
           end
         end
 
         context 'with invalid parameters' do
           it 'returns HTTP status 400 (Bad Request)' do
-            put :update, {id: accountabilitylog.id, accountabilitylog: invalid_parameters}, valid_session_admin
+            put :update, {id: accountability_log.id, accountability_log: invalid_parameters}, valid_session_admin
             expect(response).to have_http_status(:bad_request)
           end
         end
@@ -169,7 +169,7 @@ RSpec.describe AccountabilitylogsController, type: :controller do
 
       context 'not as an admin' do
         it 'returns HTTP status 403 (Forbidden)' do
-          put :update, {id: accountabilitylog.id, accountabilitylog: valid_parameters}, valid_session
+          put :update, {id: accountability_log.id, accountability_log: valid_parameters}, valid_session
           expect(response).to have_http_status(:forbidden)
         end
       end
@@ -177,7 +177,7 @@ RSpec.describe AccountabilitylogsController, type: :controller do
 
     context 'with an invalid accountability log' do
       it 'returns HTTP status 404 (Not Found)' do
-        put :update, {id: -1, accountabilitylog: valid_parameters}, valid_session_admin
+        put :update, {id: -1, accountability_log: valid_parameters}, valid_session_admin
         expect(response).to have_http_status(:not_found)
       end
     end
@@ -188,21 +188,21 @@ RSpec.describe AccountabilitylogsController, type: :controller do
       context 'as an admin' do
 
         it 'returns HTTP status 200 (OK)' do
-          delete :destroy, {id: accountabilitylog.id}, valid_session_admin
+          delete :destroy, {id: accountability_log.id}, valid_session_admin
           expect(response).to have_http_status(:ok)
         end
 
         it 'deletes the requested event' do
-          accountabilitylog_to_remove = FactoryGirl.create(:accountabilitylog)
+          accountability_log_to_remove = FactoryGirl.create(:accountability_log)
           expect {
-            delete :destroy, {id: accountabilitylog_to_remove.id}, valid_session_admin
-          }.to change { Accountabilitylog.count }.by(-1)
+            delete :destroy, {id: accountability_log_to_remove.id}, valid_session_admin
+          }.to change { AccountabilityLog.count }.by(-1)
         end
       end
 
       context 'not as an admin' do
         it 'returns HTTP status 403 (Forbidden)' do
-          put :destroy, {id: accountabilitylog.id}, valid_session
+          put :destroy, {id: accountability_log.id}, valid_session
           expect(response).to have_http_status(:forbidden)
         end
       end

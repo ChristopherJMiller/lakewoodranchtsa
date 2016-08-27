@@ -1,4 +1,4 @@
-class Accountabilitylog < ActiveRecord::Base
+class AccountabilityLog < ActiveRecord::Base
 
   validates :dueby, presence: true
   validates :closingdate, presence: true

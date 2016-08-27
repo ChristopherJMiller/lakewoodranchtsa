@@ -18,8 +18,8 @@ RSpec.describe SubmissionsController, type: :controller do
       FactoryGirl.create(:user, rank: 1, email: 'test2@test.com')
     end
 
-    let(:accountabilitylog) do
-      FactoryGirl.create(:accountabilitylog)
+    let(:accountability_log) do
+      FactoryGirl.create(:accountability_log)
     end
 
     let(:submission) do
@@ -43,24 +43,24 @@ RSpec.describe SubmissionsController, type: :controller do
     end
 
     let(:valid_parameters) do
-      {binderstatus: 'Binder', tasks: 'Tasks', goals: 'Goals', user_id: user_member, accountabilitylog_id: accountabilitylog.id}
+      {binderstatus: 'Binder', tasks: 'Tasks', goals: 'Goals', user_id: user_member, accountability_log_id: accountability_log.id}
     end
 
     let(:invalid_parameters) do
-      {binderstatus: nil, tasks: 'Tasks', goals: 'Goals', user_id: user_member, accountabilitylog_id: accountabilitylog.id}
+      {binderstatus: nil, tasks: 'Tasks', goals: 'Goals', user_id: user_member, accountability_log_id: accountability_log.id}
     end
 
     describe 'GET #index' do
       context 'as an admin' do
         it 'assigns all submissions of a acconutability log to @submissions' do
-          get :index, {accountabilitylog_id: submission.accountabilitylog.id}, valid_session_admin
+          get :index, {accountability_log_id: submission.accountability_log.id}, valid_session_admin
           expect(assigns(:submissions)).to eq([submission])
         end
       end
 
       context 'not as an admin' do
         it 'returns HTTP status 403 (Forbiden)' do
-          get :index, {accountabilitylog_id: accountabilitylog.id}
+          get :index, {accountability_log_id: accountability_log.id}
           expect(response).to have_http_status(:forbidden)
         end
       end
@@ -68,7 +68,7 @@ RSpec.describe SubmissionsController, type: :controller do
 
     describe 'GET #new' do
       it 'assigns a new submission as @submission' do
-        get :new, {accountabilitylog_id: accountabilitylog.id}
+        get :new, {accountability_log_id: accountability_log.id}
         expect(assigns(:submission)).to be_a_new(Submission)
       end
     end
@@ -78,28 +78,28 @@ RSpec.describe SubmissionsController, type: :controller do
         context 'as a logged in user' do
           context 'when the user is a site member' do
             it 'returns HTTP status 201 (Created)' do
-              post :create, {accountabilitylog_id: accountabilitylog.id, submission: valid_parameters}, valid_session_member
+              post :create, {accountability_log_id: accountability_log.id, submission: valid_parameters}, valid_session_member
               expect(response).to have_http_status(:created)
             end
 
             it 'creates a new submission' do
               expect {
-                post :create, {accountabilitylog_id: accountabilitylog.id, submission: valid_parameters}, valid_session_member
+                post :create, {accountability_log_id: accountability_log.id, submission: valid_parameters}, valid_session_member
               }.to change(Submission, :count).by(1)
             end
           end
 
           context 'while the user already submitted to the accountability log' do
             it 'returns HTTP status 409 (Conflict)' do
-              post :create, {accountabilitylog_id: accountabilitylog.id, submission: valid_parameters}, valid_session_member
-              post :create, {accountabilitylog_id: accountabilitylog.id, submission: valid_parameters}, valid_session_member
+              post :create, {accountability_log_id: accountability_log.id, submission: valid_parameters}, valid_session_member
+              post :create, {accountability_log_id: accountability_log.id, submission: valid_parameters}, valid_session_member
               expect(response).to have_http_status(:conflict)
             end
           end
 
           context 'when the user is not a site member' do
             it 'returns a HTTP status 403 (Forbidden)' do
-              post :create, {accountabilitylog_id: accountabilitylog.id, submission: valid_parameters}, valid_session
+              post :create, {accountability_log_id: accountability_log.id, submission: valid_parameters}, valid_session
               expect(response).to have_http_status(:forbidden)
             end
           end
@@ -107,7 +107,7 @@ RSpec.describe SubmissionsController, type: :controller do
 
         context 'as a logged out user' do
           it 'returns HTTP status 403 (Forbidden)' do
-            post :create, {accountabilitylog_id: accountabilitylog.id, submission: valid_parameters}
+            post :create, {accountability_log_id: accountability_log.id, submission: valid_parameters}
             expect(response).to have_http_status(:forbidden)
           end
         end
@@ -115,7 +115,7 @@ RSpec.describe SubmissionsController, type: :controller do
 
       context 'with invalid parameters' do
         it 'returns HTTP status 403 (Forbidden)' do
-          post :create, {accountabilitylog_id: accountabilitylog.id, submission: invalid_parameters}, valid_session_member
+          post :create, {accountability_log_id: accountability_log.id, submission: invalid_parameters}, valid_session_member
           expect(response).to have_http_status(:bad_request)
         end
       end
@@ -125,14 +125,14 @@ RSpec.describe SubmissionsController, type: :controller do
       context 'with a valid accountability log' do
         context 'as an admin' do
           it 'returns HTTP status 200 (OK)' do
-            delete :destroy, {accountabilitylog_id: submission.accountabilitylog.id, id: submission.id}, valid_session_admin
+            delete :destroy, {accountability_log_id: submission.accountability_log.id, id: submission.id}, valid_session_admin
             expect(response).to have_http_status(:ok)
           end
 
           it 'deletes the requested submission' do
             submission_to_delete = FactoryGirl.create(:submission, user_id: user_member.id)
             expect {
-              delete :destroy, {accountabilitylog_id: submission_to_delete.accountabilitylog.id, id: submission_to_delete.id}, valid_session_admin
+              delete :destroy, {accountability_log_id: submission_to_delete.accountability_log.id, id: submission_to_delete.id}, valid_session_admin
             }.to change(Submission, :count).by(-1)
           end
         end
@@ -140,14 +140,14 @@ RSpec.describe SubmissionsController, type: :controller do
         context 'not as an admin' do
           context 'as the requested user' do
             it 'returns HTTP status 200 (OK)' do
-              delete :destroy, {accountabilitylog_id: submission.accountabilitylog.id, id: submission.id}, valid_session_owning_user
+              delete :destroy, {accountability_log_id: submission.accountability_log.id, id: submission.id}, valid_session_owning_user
               expect(response).to have_http_status(:ok)
             end
 
             it 'deletes the requested submission' do
               submission_to_delete = FactoryGirl.create(:submission, user_id: user_member.id)
               expect {
-                delete :destroy, {accountabilitylog_id: submission_to_delete.accountabilitylog.id, id: submission_to_delete.id}, {user_id: user_member.id}
+                delete :destroy, {accountability_log_id: submission_to_delete.accountability_log.id, id: submission_to_delete.id}, {user_id: user_member.id}
               }.to change(Submission, :count).by(-1)
             end
           end
@@ -155,7 +155,7 @@ RSpec.describe SubmissionsController, type: :controller do
           context 'not as the requested user' do
             it 'returns HTTP status 403 (Forbidden)' do
               submission_to_delete = FactoryGirl.create(:submission, user_id: user_member.id)
-              delete :destroy, {accountabilitylog_id: submission_to_delete.accountabilitylog.id, id: submission_to_delete.id}, {user_id: different_user.id}
+              delete :destroy, {accountability_log_id: submission_to_delete.accountability_log.id, id: submission_to_delete.id}, {user_id: different_user.id}
               expect(response).to have_http_status(:forbidden)
             end
           end
@@ -164,7 +164,7 @@ RSpec.describe SubmissionsController, type: :controller do
 
       context 'with an invalid user' do
         it 'returns HTTP status 404 (Not Found)' do
-          delete :destroy, {accountabilitylog_id: submission.accountabilitylog.id, id: -1}, valid_session_owning_user
+          delete :destroy, {accountability_log_id: submission.accountability_log.id, id: -1}, valid_session_owning_user
           expect(response).to have_http_status(:not_found)
         end
       end

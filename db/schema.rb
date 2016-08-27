@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20160825005626) do
 
-  create_table "accountabilitylogs", force: :cascade do |t|
+  create_table "accountability_logs", force: :cascade do |t|
     t.date     "dueby"
     t.date     "closingdate"
     t.datetime "created_at",  null: false
@@ -63,16 +63,16 @@ ActiveRecord::Schema.define(version: 20160825005626) do
   end
 
   create_table "submissions", force: :cascade do |t|
-    t.integer  "accountabilitylog_id"
+    t.integer  "accountability_log_id"
     t.integer  "user_id"
     t.text     "binderstatus"
     t.text     "tasks"
     t.text     "goals"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
-  add_index "submissions", ["accountabilitylog_id"], name: "index_submissions_on_accountabilitylog_id"
+  add_index "submissions", ["accountability_log_id"], name: "index_submissions_on_accountability_log_id"
   add_index "submissions", ["user_id"], name: "index_submissions_on_user_id"
 
   create_table "team_members", force: :cascade do |t|

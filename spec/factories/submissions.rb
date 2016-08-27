@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :submission do
-    association :accountabilitylog
+    association :accountability_log
     association :user
     binderstatus "Binder Status"
     tasks "Tasks"

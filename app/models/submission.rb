@@ -1,5 +1,5 @@
 class Submission < ActiveRecord::Base
-  belongs_to :accountabilitylog
+  belongs_to :accountability_log
   belongs_to :user
 
   validates :binderstatus, presence: true
@@ -10,5 +10,5 @@ class Submission < ActiveRecord::Base
   validates :goals, length: { maximum: 2048 }
 
   validates :user, presence: true
-  validates :accountabilitylog, presence: true
+  validates :accountability_log, presence: true
 end
