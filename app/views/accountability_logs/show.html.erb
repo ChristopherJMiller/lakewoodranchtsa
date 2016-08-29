@@ -1,0 +1,19 @@
+<div class='main-div'>
+  <h1><%= format_date @accountability_log.dueby %><br>
+  <small class='text-muted'>posted <%= format_time @accountability_log.created_at %></small></h1>
+  <hr>
+  <h2>Submissions</h2>
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th>User</th>
+        <th>Created At Timestamp</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: 'submission', collection: User.where("rank < ? AND rank > ?", 8, 0), as: :user or 'No submissions have been posted for this accountability log.'%>
+    </tbody>
+  </table>
+</div>

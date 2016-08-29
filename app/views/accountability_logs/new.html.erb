@@ -1,0 +1,17 @@
+<div class="main-div">
+  <h1>Create a New Accountability Log</h1>
+
+  <%= form_for @accountability_log, remote: true do |f| %>
+    <fieldset class="form-group">
+      <%= f.label :dueby, class: 'form-control-label' %>
+      <%= f.date_select :dueby %>
+    </fieldset>
+
+    <fieldset class="form-group">
+      <%= f.label :closingdate, class: 'form-control-label' %>
+      <%= f.date_select :closingdate %>
+    </fieldset>
+
+    <%= f.submit 'Create', class: 'btn btn-primary' %>
+  <% end %>
+</div>
