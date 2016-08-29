@@ -26,6 +26,20 @@ class SubmissionsController < ApplicationController
     respond_to :html
   end
 
+  def show
+    @submission = Submission.find_by_accountability_log_id_and_id(params[:accountability_log_id], params[:id])
+    if !@submission
+      respond_to do |format|
+        format.html { not_found }
+        format.json { head status: :not_found }
+      end
+    end
+    if session[:user_id].nil? or ((session[:user_id] != @submission.user.id) and !User.find_by_id(session[:user_id]).is_admin)
+      head status: :forbidden and return
+    end
+    respond_with @submission
+  end
+
   def create
     if session[:user_id].nil?
       head status: :forbidden and return
@@ -33,7 +47,7 @@ class SubmissionsController < ApplicationController
     if !User.find_by_id(session[:user_id]).is_member
       head status: :forbidden and return
     end
-    if Submission.find_by_accountability_log_id_and_user_id(params[:accountability_log_id], params[:submission][:user_id])
+    if Submission.find_by_accountability_log_id_and_user_id(params[:accountability_log_id], session[:user_id])
       head status: :conflict and return
     end
     submission = Submission.new(submission_parameters_create)
@@ -59,6 +73,9 @@ class SubmissionsController < ApplicationController
   private
 
   def submission_parameters_create
-    params.require(:submission).permit(:accountability_log_id, :user_id, :binderstatus, :tasks, :goals)
+    parameters = params.require(:submission).permit(:binderstatus, :tasks, :goals)
+    parameters[:accountability_log_id] = params[:accountability_log_id]
+    parameters[:user_id] = session[:user_id]
+    return parameters
   end
 end

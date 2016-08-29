@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   resources :announcements
 
   resources :accountability_logs do
-    resources :submissions, only: [:index, :new, :create, :destroy]
+    resources :submissions, only: [:index, :new, :show, :create, :destroy]
   end
 
   resources :documents

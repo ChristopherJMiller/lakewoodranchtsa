@@ -43,11 +43,11 @@ RSpec.describe SubmissionsController, type: :controller do
     end
 
     let(:valid_parameters) do
-      {binderstatus: 'Binder', tasks: 'Tasks', goals: 'Goals', user_id: user_member, accountability_log_id: accountability_log.id}
+      {binderstatus: 'Binder', tasks: 'Tasks', goals: 'Goals'}
     end
 
     let(:invalid_parameters) do
-      {binderstatus: nil, tasks: 'Tasks', goals: 'Goals', user_id: user_member, accountability_log_id: accountability_log.id}
+      {binderstatus: nil, tasks: 'Tasks', goals: 'Goals'}
     end
 
     describe 'GET #index' do
@@ -70,6 +70,66 @@ RSpec.describe SubmissionsController, type: :controller do
       it 'assigns a new submission as @submission' do
         get :new, {accountability_log_id: accountability_log.id}
         expect(assigns(:submission)).to be_a_new(Submission)
+      end
+    end
+
+    describe 'GET #show' do
+      context 'with valid parameters' do
+        context 'as a site admin' do
+          before(:each) do
+            get :show, {accountability_log_id: submission.accountability_log.id, id: submission.id}, valid_session_admin
+          end
+
+          it 'returns HTTP status 200 (OK)' do
+            expect(response).to have_http_status(:ok)
+          end
+
+          it 'assigns the requested submission as @submission' do
+            expect(assigns(:submission)).to eq(submission)
+          end
+        end
+
+        context 'as the requested user' do
+          before(:each) do
+            get :show, {accountability_log_id: submission.accountability_log.id, id: submission.id}, {user_id: submission.user.id}
+          end
+
+          it 'returns HTTP status 200 (OK)' do
+            expect(response).to have_http_status(:ok)
+          end
+
+          it 'assigns the requested submission as @submission' do
+            expect(assigns(:submission)).to eq(submission)
+          end
+        end
+
+        context 'as a normal user' do
+          before(:each) do
+            get :show, {accountability_log_id: submission.accountability_log.id, id: submission.id}, {user_id: different_user.id}
+          end
+
+          it 'returns HTTP status 403 (Forbidden)' do
+            expect(response).to have_http_status(:forbidden)
+          end
+        end
+
+        context 'when logged out' do
+          before(:each) do
+            get :show, {accountability_log_id: submission.accountability_log.id, id: submission.id}
+          end
+
+          it 'returns HTTP status 403 (Forbidden)' do
+            expect(response).to have_http_status(:forbidden)
+          end
+        end
+      end
+
+      context 'with invalid parameters' do
+        it 'returns HTTP status 404 (Not Found)' do
+          expect {
+            get :show, {accountability_log_id: submission.accountability_log.id, id: -1}
+          }.to raise_error(ActionController::RoutingError)
+        end
       end
     end
 
