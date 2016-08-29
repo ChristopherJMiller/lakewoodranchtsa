@@ -2,7 +2,12 @@
   <td class='log_posted'><%= format_date accountability_log.created_at %></td>
   <td class='log_dueby'><%= format_date accountability_log.dueby %></td>
   <td class='log_closing'><%= format_date accountability_log.closingdate %></td>
-  <td class='log_create'><%= link_to 'Create Submission', new_accountability_log_submission_path(accountability_log.id), class: 'btn btn-info' %></td>
+  <% submission = Submission.find_by_accountability_log_id_and_user_id(accountability_log.id, session[:user_id]) %>
+  <% if submission.nil? %>
+    <td class='log_create'><%= link_to 'Create Submission', new_accountability_log_submission_path(accountability_log.id), class: 'btn btn-info' %></td>
+  <% else %>
+    <td class='log_create'><%= link_to 'View Submission', accountability_log_submission_path(accountability_log.id, submission.id), class: 'btn btn-primary' %></td>
+  <% end %>
   <% if current_user.is_admin %>
     <td class='log_view'><%= link_to 'View', accountability_log_path(accountability_log.id), class: 'btn btn-primary' %></td>
   <% end %>
