@@ -7,5 +7,20 @@
     <% end %>
   <% end %>
   <h1>Accountability Logs</h1>
-  <%= render @accountability_logs or 'No accountability logs have been posted.' %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Posted</th>
+        <th>Due By</th>
+        <th>Final Closing Date</th>
+        <th></th>
+        <% if current_user.is_admin %>
+          <th></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render @accountability_logs or 'No accountability logs have been posted.' %>
+    </tbody>
+  </table>
 </div>
