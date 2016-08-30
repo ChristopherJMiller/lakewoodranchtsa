@@ -61,6 +61,21 @@ class UsersController < ApplicationController
     end
   end
 
+  def change_rank
+    user = User.find_by_id(params[:id])
+    if !user
+      head status: :not_found and return
+    end
+    if session[:user_id].nil? or User.find_by_id(session[:user_id]).rank < 2
+      head status: :forbidden and return
+    end
+    if user.update(user_parameters_update_rank)
+      head status: :ok
+    else
+      render json: {error: user.errors}, status: :bad_request
+    end
+  end
+
   def change_password
     user = User.find_by_id(params[:user_id])
     if !user
@@ -96,7 +111,11 @@ class UsersController < ApplicationController
   end
 
   def user_parameters_update
-    params.require(:user).permit(:name, :rank)
+    params.require(:user).permit(:name)
+  end
+
+  def user_parameters_update_rank
+    params.require(:user).permit(:rank)
   end
 
   def user_parameters_change_password

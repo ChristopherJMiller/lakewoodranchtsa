@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     put '/change_password', to: 'users#change_password'
   end
 
+  put '/change_rank', to: 'users#change_rank'
+
   resources :sign_up_sheets do
     resources :attendees, only: [:index, :create, :destroy]
   end
