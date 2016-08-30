@@ -1,0 +1,26 @@
+<div class="main-div">
+  <% if logged_in %>
+    <% if User.find_by_id(session[:user_id]).is_admin %>
+      <%= link_to new_accountability_log_path, class: 'btn btn-info pull-xs-right' do %>
+        <i class="fa fa-plus"></i> Create a New Accountability Log
+      <% end %>
+    <% end %>
+  <% end %>
+  <h1>Accountability Logs</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Posted</th>
+        <th>Due By</th>
+        <th>Final Closing Date</th>
+        <th></th>
+        <% if current_user.is_admin %>
+          <th></th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render @accountability_logs or 'No accountability logs have been posted.' %>
+    </tbody>
+  </table>
+</div>
