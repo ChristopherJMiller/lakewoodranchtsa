@@ -54,22 +54,10 @@ class UsersController < ApplicationController
     if (session[:user_id].nil? or user.id != session[:user_id]) and (User.find_by_id(session[:user_id]).nil? or User.find_by_id(session[:user_id]).rank < 2)
       head status: :forbidden and return
     end
-    if user.update(user_parameters_update)
-      head status: :ok
-    else
-      render json: {error: user.errors}, status: :bad_request
-    end
-  end
-
-  def change_rank
-    user = User.find_by_id(params[:id])
-    if !user
-      head status: :not_found and return
-    end
-    if session[:user_id].nil? or User.find_by_id(session[:user_id]).rank < 2
+    if params[:user][:rank].present? and !User.find_by_id(session[:user_id]).is_admin
       head status: :forbidden and return
     end
-    if user.update(user_parameters_update_rank)
+    if user.update(user_parameters_update)
       head status: :ok
     else
       render json: {error: user.errors}, status: :bad_request
@@ -111,11 +99,7 @@ class UsersController < ApplicationController
   end
 
   def user_parameters_update
-    params.require(:user).permit(:name)
-  end
-
-  def user_parameters_update_rank
-    params.require(:user).permit(:rank)
+    params.require(:user).permit(:name, :rank)
   end
 
   def user_parameters_change_password
