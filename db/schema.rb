@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160824015456) do
+ActiveRecord::Schema.define(version: 20160825005626) do
+
+  create_table "accountability_logs", force: :cascade do |t|
+    t.date     "dueby"
+    t.date     "closingdate"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "announcements", force: :cascade do |t|
     t.string   "title"
@@ -54,6 +61,19 @@ ActiveRecord::Schema.define(version: 20160824015456) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "submissions", force: :cascade do |t|
+    t.integer  "accountability_log_id"
+    t.integer  "user_id"
+    t.text     "binderstatus"
+    t.text     "tasks"
+    t.text     "goals"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "submissions", ["accountability_log_id"], name: "index_submissions_on_accountability_log_id"
+  add_index "submissions", ["user_id"], name: "index_submissions_on_user_id"
 
   create_table "team_members", force: :cascade do |t|
     t.integer  "user_id"

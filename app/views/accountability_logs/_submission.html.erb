@@ -1,0 +1,19 @@
+<%
+submission = Submission.find_by_accountability_log_id_and_user_id(params[:id], user.id)
+%>
+<% if !submission.nil? %>
+  <tr>
+<% else %>
+  <tr class='text-muted'>
+<% end %>
+  <% if !submission.nil? %>
+    <td class='submission_name'><%= user.name %></td>
+    <td class='submission_timestamp'><%= format_time submission.created_at %></td>
+    <td class='submission_view'><%= link_to 'View Submission', accountability_log_submission_path(submission.accountability_log, submission.id), class: 'btn btn-primary btn-sm' %></td>
+  <% else %>
+    <td class='submission_name'><%= user.name %> <i class="fa fa-clock-o" aria-hidden="true"></i></td>
+    <td></td>
+    <td></td>
+  <% end %>
+  <td class='submission_view_user'><%= link_to 'View User', user_path(user.id), class: 'btn btn-secondary btn-sm' %></td>
+</tr>

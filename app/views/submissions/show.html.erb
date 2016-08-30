@@ -1,0 +1,11 @@
+<div class='main-div'>
+  <h1>Submission for Accountability Log #<%= params[:accountability_log_id] %></h1>
+  <h3 class='text-muted'>by <%= @submission.user.name %></h3>
+  <hr>
+  <h4>Binder Status</h4>
+  <%= simple_format @submission.binderstatus %>
+  <h4>Tasks</h4>
+  <%= simple_format @submission.tasks %>
+  <h4>Goals</h4>
+  <%= simple_format @submission.goals %>
+</div>

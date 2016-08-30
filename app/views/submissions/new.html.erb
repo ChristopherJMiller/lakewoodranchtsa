@@ -1,0 +1,22 @@
+<div class="main-div">
+  <h1>Create a Submission for Accountability Log #<%= params[:accountability_log_id] %></h1>
+
+  <%= form_for @submission, url: accountability_log_submissions_path(params[:accountability_log_id]), remote: true do |f| %>
+    <fieldset class="form-group">
+      <%= f.label :binderstatus, class: 'form-control-label' %>
+      <%= f.text_area :binderstatus, cols: 20, rows: 10, class: 'form-control', placeholder: 'Event Description' %>
+    </fieldset>
+
+    <fieldset class="form-group">
+      <%= f.label :tasks, class: 'form-control-label' %>
+      <%= f.text_area :tasks, cols: 20, rows: 10, class: 'form-control', placeholder: 'Event Description' %>
+    </fieldset>
+
+    <fieldset class="form-group">
+      <%= f.label :goals, class: 'form-control-label' %>
+      <%= f.text_area :goals, cols: 20, rows: 10, class: 'form-control', placeholder: 'Event Description' %>
+    </fieldset>
+
+    <%= f.submit 'Create', class: 'btn btn-primary' %>
+  <% end %>
+</div>
