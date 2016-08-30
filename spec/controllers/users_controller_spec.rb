@@ -10,11 +10,19 @@ RSpec.describe UsersController, type: :controller do
   end
 
   let(:valid_parameters_update) do
-    {name: 'John Smith', rank: 3}
+    {name: 'John Smith'}
   end
 
   let(:invalid_parameters_update) do
     {name: nil}
+  end
+
+  let(:valid_parameters_update_rank) do
+    {rank: 3}
+  end
+
+  let(:invalid_parameters_update_rank) do
+    {rank: nil}
   end
 
   let(:valid_parameters_change_password) do
@@ -29,6 +37,10 @@ RSpec.describe UsersController, type: :controller do
     FactoryGirl.create(:user)
   end
 
+  let(:user_admin) do
+    FactoryGirl.create(:user, email: 'admin@test.com', rank: 3)
+  end
+
 
   let(:unverified_user) do
     FactoryGirl.create(:user, email: 'user3@gmail.com', verified: false)
@@ -36,6 +48,10 @@ RSpec.describe UsersController, type: :controller do
 
   let(:valid_session) do
     {user_id: user.id}
+  end
+
+  let(:valid_session_admin) do
+    {user_id: user_admin.id}
   end
 
   let(:invalid_session) do
@@ -151,6 +167,50 @@ RSpec.describe UsersController, type: :controller do
     context 'with an invalid user' do
       it 'returns HTTP status 404 (Not Found)' do
         put :update, {id: 10, user: valid_parameters_update}, valid_session
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
+
+  describe 'PUT #change_rank' do
+    context 'with a valid user' do
+        context 'with valid parameters' do
+          context 'as a site admin' do
+            before(:each) do
+              put :change_rank, {id: user.id, user: valid_parameters_update_rank}, valid_session_admin
+            end
+
+            it 'returns HTTP status 200 (OK)' do
+              expect(response).to have_http_status(:ok)
+            end
+
+            it 'updates the requested user' do
+              user.reload
+              expect(user.rank).to eq(valid_parameters_update_rank[:rank])
+            end
+          end
+          context 'not as a site admin' do
+            before(:each) do
+              put :change_rank, {id: user.id, user: valid_parameters_update_rank}, valid_session
+            end
+
+            it 'returns HTTP status 403 (Forbidden)' do
+              expect(response).to have_http_status(:forbidden)
+            end
+          end
+        end
+
+        context 'with invalid parameters' do
+          it 'returns HTTP status 400 (Bad Request)' do
+            put :change_rank, {id: user.id, user: invalid_parameters_update_rank}, valid_session_admin
+            expect(response).to have_http_status(:bad_request)
+          end
+        end
+      end
+
+    context 'with an invalid user' do
+      it 'returns HTTP status 404 (Not Found)' do
+        put :change_rank, {id: 10, user: valid_parameters_update_rank}, valid_session_admin
         expect(response).to have_http_status(:not_found)
       end
     end
