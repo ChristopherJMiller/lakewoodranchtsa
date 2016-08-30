@@ -22,7 +22,7 @@ $(document).on 'turbolinks:load', ->
     $('input').attr('disabled', false)
     errors = xhr.responseJSON.error
     for form of errors
-      fieldSet = $(this).find("#submission_#{form}").parent()
+      fieldSet = $(this).find("#accountability_logs_#{form}").parent()
       fieldSet.addClass 'form-group has-danger'
       for key of errors[form]
         error = form.capitalizeFirstLetter().replace(/_/g, ' ') + ' ' + errors[form][key]
