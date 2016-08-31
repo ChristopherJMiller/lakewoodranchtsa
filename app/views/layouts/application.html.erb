@@ -13,9 +13,9 @@
 </head>
 <body>
   <nav class="navbar navbar-dark bg-faded nav-margin-bottom" style="background-color: #0a442e;">
-    <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">&#9776;</button>
+    <button class="navbar-toggler hidden-sm-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar" style="color: white;">&#9776;</button>
     <div class="collapse navbar-toggleable-xs" id="exCollapsingNavbar">
-      <a class="navbar-brand" href="/">Lakewood Ranch TSA</a>
+      <a class="navbar-brand hidden-sm-down" href="/">Lakewood Ranch TSA</a>
       <ul class="nav navbar-nav">
         <li class="nav-item">
           <%= link_to announcements_path, class: 'nav-link' do %>
@@ -52,6 +52,7 @@
       </div>
       <div class='hidden-md-up'>
         <% if logged_in then %>
+
           <li class='nav-item'>
             <%= link_to 'Log Out', {controller: :sessions, action: :destroy}, method: 'delete', remote: true, class: 'nav-link', id: 'navbar_logout' %>
           </li>
