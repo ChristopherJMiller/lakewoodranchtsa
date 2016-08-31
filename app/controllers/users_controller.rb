@@ -8,10 +8,14 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by_id(params[:id])
-    if !@user
-      head status: :not_found and return
+    if @user
+      respond_with @user
+    else
+      respond_to do |format|
+        format.html { not_found }
+        format.json { head status: :not_found }
+      end
     end
-    respond_with @user
   end
 
   def new
