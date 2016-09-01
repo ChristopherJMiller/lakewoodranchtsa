@@ -1,0 +1,8 @@
+<div class="media">
+  <div class="media-body">
+    <h4 class="media-heading"><%= team_member.team.name %>
+    <br>
+    <small class="text-muted"><%= team_member.team.event.name %></small>
+    <%= link_to 'View', event_team_path(team_member.team.event, team_member.team), class: 'btn btn-primary pull-xs-right' %></h4>
+  </div>
+</div>
