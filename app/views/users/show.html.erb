@@ -15,7 +15,9 @@
       </div>
     </div>
     <div class='col-sm-12 col-md-8 col-md-pull-4'>
-      <p>Filler</p>
+      <h2>Current Teams</h2>
+      <hr>
+      <%= render partial: 'team', collection: TeamMember.where('user_id = ?', @user.id), as: :team_member or 'This user is not on any teams.'%>
     </div>
   </div>
 </div>
