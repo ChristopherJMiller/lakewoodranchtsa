@@ -179,7 +179,7 @@ RSpec.describe UsersController, type: :controller do
 
     context 'with an invalid user' do
       it 'returns HTTP status 404 (Not Found)' do
-        put :update, {id: 10, user: valid_parameters_update}, valid_session
+        put :update, {id: 10, user: valid_parameters_update}, valid_session_admin
         expect(response).to have_http_status(:not_found)
       end
     end

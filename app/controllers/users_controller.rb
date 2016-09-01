@@ -51,16 +51,21 @@ class UsersController < ApplicationController
   end
 
   def update
+    if !logged_in
+      head status: :forbidden and return
+    end
+
+    # Nonadmin users shouldn't be able to change other users.
+    if !User.find_by_id(session[:user_id]).is_admin and (params[:user][:rank].present? or params[:id].to_i != session[:user_id])
+      head status: :forbidden and return
+    end
+
     user = User.find_by_id(params[:id])
+
     if !user
       head status: :not_found and return
     end
-    if (session[:user_id].nil? or user.id != session[:user_id]) and (User.find_by_id(session[:user_id]).nil? or User.find_by_id(session[:user_id]).rank < 2)
-      head status: :forbidden and return
-    end
-    if params[:user][:rank].present? and !User.find_by_id(session[:user_id]).is_admin
-      head status: :forbidden and return
-    end
+
     if user.update(user_parameters_update)
       head status: :ok
     else
