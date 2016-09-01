@@ -10,7 +10,7 @@ String::capitalizeFirstLetter = () ->
 $(document).on 'turbolinks:load', ->
   $('[name="user[rank]"]').change ->
     $(this).parent().submit()
-  $('#user_search').change ->
+  $('#user_search').keyup ->
     text = $(this).val()
     re =  RegExp(text ,"i");
     $(".user_name").filter ->
