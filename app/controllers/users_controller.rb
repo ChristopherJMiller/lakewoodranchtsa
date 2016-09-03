@@ -56,7 +56,7 @@ class UsersController < ApplicationController
     end
 
     # Nonadmin users shouldn't be able to change other users.
-    if !User.find_by_id(session[:user_id]).is_admin and (params[:user][:rank].present? or params[:id].to_i != session[:user_id])
+    if !current_user.is_admin and (params[:user][:rank].present? or params[:id].to_i != session[:user_id])
       head status: :forbidden and return
     end
 
@@ -64,6 +64,10 @@ class UsersController < ApplicationController
 
     if !user
       head status: :not_found and return
+    end
+
+    if current_user.is_officer && user.is_admin
+      head status: :forbidden and return
     end
 
     if user.update(user_parameters_update)

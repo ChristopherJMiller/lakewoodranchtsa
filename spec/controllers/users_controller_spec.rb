@@ -41,6 +41,9 @@ RSpec.describe UsersController, type: :controller do
     FactoryGirl.create(:user, email: 'admin@test.com', rank: 3)
   end
 
+  let(:user_advisor) do
+    FactoryGirl.create(:user, email: 'advisor@test.com', rank: 8)
+  end
 
   let(:unverified_user) do
     FactoryGirl.create(:user, email: 'user3@gmail.com', verified: false)
@@ -52,6 +55,10 @@ RSpec.describe UsersController, type: :controller do
 
   let(:valid_session_admin) do
     {user_id: user_admin.id}
+  end
+
+  let(:valid_session_advisor) do
+    {user_id: user_advisor.id}
   end
 
   let(:invalid_session) do
@@ -158,6 +165,30 @@ RSpec.describe UsersController, type: :controller do
               put :update, {id: user.id, user: valid_parameters_update_rank}, valid_session_admin
               user.reload
               expect(user.rank).to eq(valid_parameters_update_rank[:rank])
+            end
+
+            context 'when updating another admin' do
+              it 'returns HTTP status 403 (Forbidden)' do
+                put :update, {id: user_admin.id, user: valid_parameters_update}, valid_session_admin
+                expect(response).to have_http_status(:forbidden)
+              end
+            end
+          end
+
+          context 'as a site adivsor' do
+            context 'when updating officers' do
+              before(:each) do
+                put :update, {id: user_admin.id, user: valid_parameters_update}, valid_session_advisor
+              end
+
+              it 'returns HTTP status 200 (OK)' do
+                expect(response).to have_http_status(:ok)
+              end
+
+              it 'updates the requested user' do
+                user_admin.reload
+                expect(user_admin.name).to eq(valid_parameters_update[:name])
+              end
             end
           end
         end
