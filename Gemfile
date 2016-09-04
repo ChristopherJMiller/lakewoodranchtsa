@@ -20,8 +20,10 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
-# Use chartjs on the asset pipeline
-gem 'chart-js-rails'
+# Use chartkick on the asset pipeline
+gem "chartkick"
+
+gem "dateslices"
 
 #Use mysql2 as the database adapter
 gem 'mysql2'

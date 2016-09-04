@@ -27,6 +27,8 @@ Rails.application.routes.draw do
 
   resources :documents
 
+  get '/admin/dashboard', to: 'pages#dashboard'
+
   get 'log_in', to: 'sessions#new'
   get 'register', to: 'users#new'
   get 'log_out', to: 'sessions#destroy'
