@@ -18,7 +18,7 @@
       <h4 class='title-center'>Total Number of Points Earned</h4>
       <h1 class='display-1 title-center'><%= Team.count %></h1>
     </div>
-    <div class='col-xs'>
+    <div class='col-xs-12'>
       <h4>Member Sign Ups</h4>
       <%= line_chart User.group_by_month(:created_at) %>
     </div>
