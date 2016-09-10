@@ -1,0 +1,11 @@
+<tr>
+  <td><%= team.id %></td>
+  <% event = Event.find_by_id(team.event_id) %>
+  <td>
+    <%= link_to event_team_path(event, team) do %>
+      <%= team.name %>
+    <% end %>
+  </td>
+  <td><%= event.name %></td>
+  <td><%= format_time team.created_at %></td>
+</tr>

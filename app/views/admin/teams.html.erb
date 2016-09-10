@@ -1,0 +1,16 @@
+<div class='main-div'>
+  <h1>All Teams</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Team Name</th>
+        <th>Event</th>
+        <th>Created At</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: 'team', collection: @teams or 'No teams created.' %>
+    </tbody>
+  </table>
+</div>

@@ -27,7 +27,10 @@ Rails.application.routes.draw do
 
   resources :documents
 
-  get '/admin/dashboard', to: 'pages#dashboard'
+  namespace :admin do
+    get 'dashboard'
+    get 'teams'
+  end
 
   get 'log_in', to: 'sessions#new'
   get 'register', to: 'users#new'
