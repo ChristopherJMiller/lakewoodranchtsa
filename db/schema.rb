@@ -41,15 +41,12 @@ ActiveRecord::Schema.define(version: 20160904001348) do
   add_index "attendees", ["user_id"], name: "index_attendees_on_user_id"
 
   create_table "awards", force: :cascade do |t|
-    t.integer  "user_id"
     t.string   "name"
     t.integer  "value"
     t.boolean  "verified"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
-
-  add_index "awards", ["user_id"], name: "index_awards_on_user_id"
 
   create_table "documents", force: :cascade do |t|
     t.string   "title"

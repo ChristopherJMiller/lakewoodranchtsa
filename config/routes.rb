@@ -3,7 +3,6 @@ Rails.application.routes.draw do
 
   resources :users, only: [:index, :show, :new, :create, :edit, :update] do
     put '/change_password', to: 'users#change_password'
-    resources :awards
   end
 
   resources :sign_up_sheets do

@@ -141,7 +141,7 @@ RSpec.describe AccountabilityLogsController, type: :controller do
   end
 
   describe 'PUT #update' do
-    context 'with a valid accountability log' do
+    context 'with a valid event' do
       context 'as an admin' do
         context 'with valid parameters' do
           before(:each) do
