@@ -1,0 +1,17 @@
+<div class='main-div'>
+  <h3>Log In</h3>
+
+  <%= form_tag({controller: 'sessions', action: 'create'}, method: 'post', remote: true, id: 'navbar_login') do %>
+    <fieldset class="form-group">
+      <%= label_tag :email, 'Email', class: 'form-control-label' %>
+      <%= text_field_tag :email, '', class: 'form-control', placeholder: 'Email' %>
+    </fieldset>
+
+    <fieldset class="form-group">
+      <%= label_tag :password, 'Password', class: 'form-control-label' %>
+      <%= password_field_tag :password, '', class: 'form-control', placeholder: 'Password' %>
+    </fieldset>
+
+    <%= submit_tag "Log In", class: "btn btn-primary btn-block" %>
+  <% end %>
+</div>
