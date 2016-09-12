@@ -17,7 +17,10 @@ $(document).on 'turbolinks:load', ->
     $(this).children('fieldset').addClass 'form-group has-success'
     setTimeout redirect, 1000
   $('form[data-remote]').on 'ajax:error', (evt, xhr, status, error) ->
-    errors = xhr.responseJSON.error
+    errors = xhr.responseJSON.error if xhr.responseJSON?
+    if !xhr.responseJSON?
+      alert 'An error has occured, are you connected to the internet?'
+      return
     for form of errors
       fieldSet = $(this).find("##{form}").parent()
       fieldSet.addClass 'form-group has-danger'
