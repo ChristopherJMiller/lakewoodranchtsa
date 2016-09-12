@@ -8,6 +8,14 @@ String::capitalizeFirstLetter = () ->
   return this.charAt(0).toUpperCase() + this.slice(1);
 
 $(document).on 'turbolinks:load', ->
+  $('#attendee_search').keyup ->
+    text = $(this).val()
+    re =  RegExp(text ,"i");
+    $(".member_name").filter ->
+      if re.test($(this).html())
+        $(this).parent().fadeIn("fast")
+      else
+        $(this).parent().fadeOut("fast")
   $('form[data-remote]').on 'ajax:send', ->
     $(this).children('fieldset').attr 'class', 'form-group'
     $(this).children('fieldset').children('div').remove()
