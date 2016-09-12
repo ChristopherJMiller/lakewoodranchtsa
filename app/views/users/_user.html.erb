@@ -1,7 +1,7 @@
 <tr>
   <td class='user_name'><%= user.name %></td>
   <td class='user_rank'><%= rank_title user.rank %></td>
-  <% if logged_in && User.find_by_id(session[:user_id]).is_admin && (user.rank < 2 || User.find_by_id(session[:user_id]).rank > 6) %>
+  <% if logged_in && current_user.is_admin && (!user.is_admin || current_user.is_advisor) %>
     <td class='user_rank'>
       <%= form_for user, remote: true do |f| %>
         <fieldset class="form-group">
@@ -9,6 +9,8 @@
         </fieldset>
       <% end %>
     </td>
+  <% else %>
+    <td></td>
   <% end %>
   <td class='user_view'><%= link_to 'View', user_path(user.id), class: 'btn btn-primary' %></td>
 </tr>

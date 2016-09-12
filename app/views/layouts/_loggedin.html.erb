@@ -10,6 +10,9 @@
 %>
 <h3 class="dropdown-header"><%= user.rank_title %></h3>
 <% if user.is_admin %>
+  <%= link_to admin_dashboard_path, class: 'dropdown-item' do %>
+    <i class="fa fa-tachometer" aria-hidden="true"></i> Admin Dashboard
+  <% end %>
   <%= link_to sign_up_sheets_path, class: 'dropdown-item' do %>
     <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Sign In Sheets
   <% end %>

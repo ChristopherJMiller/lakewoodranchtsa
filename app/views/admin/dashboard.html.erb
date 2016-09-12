@@ -1,0 +1,24 @@
+<div class='main-div'>
+  <h1>Admin Dashboard</h1>
+  <hr>
+  <div class='row'>
+    <div class='col-lg-4 col-sm-12'>
+      <h4 class='title-center'>User Verification Rate</h4>
+      <%= pie_chart({"Verfied Users": User.where(verified: true).count, "Unverified Users": User.where(verified: false).count}) %>
+    </div>
+    <div class='col-lg-4 col-sm-12'>
+      <h4 class='title-center'>Total Userbase</h4>
+      <h1 class='display-1 title-center'><%= User.count %></h1>
+      <h4 class='title-center'>Total Number of Teams</h4>
+      <h1 class='display-1 title-center'><%= Team.count %></h1>
+    </div>
+    <div class='col-lg-4 col-sm-12'>
+      <h4 class='title-center'>Total Number of Meeting Attendees</h4>
+      <h1 class='display-1 title-center'><%= Attendee.count %></h1>
+    </div>
+    <div class='col-xs-12'>
+      <h4>Member Sign Ups</h4>
+      <%= line_chart User.group_by_month(:created_at) %>
+    </div>
+  </div>
+</div>

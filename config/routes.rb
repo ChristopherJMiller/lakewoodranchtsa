@@ -27,6 +27,11 @@ Rails.application.routes.draw do
 
   resources :documents
 
+  namespace :admin do
+    get 'dashboard'
+    get 'teams'
+  end
+
   get 'log_in', to: 'sessions#new'
   get 'register', to: 'users#new'
   get 'log_out', to: 'sessions#destroy'

@@ -54,9 +54,13 @@ class User < ActiveRecord::Base
     rank > 1
   end
 
+  def is_officer
+    rank > 1 && rank <= 6
+  end
+
   # Returns if the user is an advisor or not.
   def is_advisor
-    rank > 7
+    rank >= 7
   end
 
   def rank_title
