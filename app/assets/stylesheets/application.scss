@@ -53,6 +53,17 @@
    margin-right: 2.5%;
  }
 
+ @media (max-width: 554px) {
+   .nav-item {
+     float: none !important;
+     margin-left: 0 !important;
+   }
+
+   div.pull-xs-right {
+     float: left !important;
+   }
+ }
+
  /* Medium devices (desktops, 992px and up) @screen-md-min*/
  @media (min-width: 992px) {
    div.main-div {

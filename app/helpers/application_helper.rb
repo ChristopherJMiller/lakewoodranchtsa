@@ -24,4 +24,12 @@ module ApplicationHelper
     titles = ["Guest", "Member", "Sergeant-at-Arms", "Reporter", "Treasurer", "Secretary", "Vice President", "President", "Advisor"]
     titles[rank]
   end
+
+  def current_user_submission_count
+    session[:user_id] && Submission.where(user_id: session[:user_id]).count
+  end
+
+  def current_user_submission_todo
+    session[:user_id] && (AccountabilityLog.count - Submission.where(user_id: session[:user_id]).count)
+  end
 end
