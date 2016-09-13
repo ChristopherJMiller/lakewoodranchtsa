@@ -5,9 +5,9 @@ String::capitalizeFirstLetter = () ->
   return this.charAt(0).toUpperCase() + this.slice(1);
 
 $(document).on 'turbolinks:load', ->
-  $('#navbar_logout').parent().on 'ajax:success', ->
+  $('a[name="navbar_logout"]').parent().on 'ajax:success', ->
     setTimeout redirect, 250
-  $('#navbar_logout').parent().on 'ajax:error', ->
+  $('a[name="navbar_logout"]').parent().on 'ajax:error', ->
     alert 'An error has occured, are you connected to the internet?'
 
   $('#navbar_login').on 'ajax:send', ->

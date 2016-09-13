@@ -73,7 +73,7 @@
                 <i class='fa fa-cog' aria-hidden='true'></i> Account Settings
               <% end %>
               <li class='nav-item'>
-                <%= link_to 'Log Out', {controller: :sessions, action: :destroy}, method: 'delete', remote: true, class: 'nav-link', id: 'navbar_logout' %>
+                <%= link_to 'Log Out', {controller: :sessions, action: :destroy}, method: 'delete', remote: true, class: 'nav-link', name: 'navbar_logout' %>
               </li>
             <% else %>
               <li class='nav-item'>
