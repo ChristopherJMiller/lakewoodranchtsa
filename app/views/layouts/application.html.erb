@@ -39,36 +39,57 @@
         </li>
         <div class="btn-group pull-xs-right">
           <div class='hidden-sm-down'>
-        <a class="dropdown-toggle nav-link" href="#" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <%= (logged_in && User.find(session[:user_id]).name) || 'Guest' %>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right dropdown-width" aria-labelledby="userDropdown">
-          <% if logged_in then %>
-            <%= render 'layouts/loggedin' %>
-          <% else %>
-            <%= render 'layouts/loggedout' %>
-          <% end %>
+            <a class="dropdown-toggle nav-link" href="#" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <%= (logged_in && User.find(session[:user_id]).name) || 'Guest' %>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right dropdown-width" aria-labelledby="userDropdown">
+              <% if logged_in then %>
+                <%= render 'layouts/loggedin' %>
+              <% else %>
+                <%= render 'layouts/loggedout' %>
+              <% end %>
+            </div>
+          </div>
+          <div class='hidden-md-up'>
+            <% if logged_in then %>
+              <% if current_user.is_admin %>
+                <div class='dropdown-divider'></div>
+                <%= link_to admin_dashboard_path, class: 'nav-item nav-link' do %>
+                  <i class="fa fa-tachometer" aria-hidden="true"></i> Admin Dashboard
+                <% end %>
+                <%= link_to sign_up_sheets_path, class: 'nav-item nav-link' do %>
+                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Sign In Sheets
+                <% end %>
+                <div class='dropdown-divider'></div>
+              <% end %>
+              <%= link_to user_path(current_user.id), class: 'nav-item nav-link' do %>
+                <i class='fa fa-user' aria-hidden='true'></i> Your Profile
+              <% end %>
+              <%= link_to accountability_logs_path, class: 'nav-item nav-link' do %>
+                <i class="fa fa-file-text" aria-hidden="true"></i> Accountability Logs <% if current_user_submission_todo != 0 %><span class="label label-info"><%= current_user_submission_todo %></span><% end %>
+              <% end %>
+              <div class='dropdown-divider'></div>
+              <%= link_to edit_user_path(current_user.id), class: 'nav-item nav-link' do %>
+                <i class='fa fa-cog' aria-hidden='true'></i> Account Settings
+              <% end %>
+              <li class='nav-item'>
+                <%= link_to 'Log Out', {controller: :sessions, action: :destroy}, method: 'delete', remote: true, class: 'nav-link', name: 'navbar_logout' %>
+              </li>
+            <% else %>
+              <li class='nav-item'>
+                <%= link_to log_in_path, class: 'nav-link', id: 'navbar_login' do %>
+                  <i class="fa fa-sign-in"></i> Log In
+                <% end %>
+              </li>
+              <li class='nav-item'>
+                <%= link_to register_path, class: 'nav-link' do %>
+                  <i class="fa fa-pencil-square-o"></i> Register
+                <% end %>
+              </li>
+            <% end %>
+          </div>
         </div>
-      </div>
-      <div class='hidden-md-up'>
-        <% if logged_in then %>
-
-          <li class='nav-item'>
-            <%= link_to 'Log Out', {controller: :sessions, action: :destroy}, method: 'delete', remote: true, class: 'nav-link', id: 'navbar_logout' %>
-          </li>
-        <% else %>
-          <li class='nav-item'>
-            <%= link_to log_in_path, class: 'nav-link', id: 'navbar_login' do %>
-              <i class="fa fa-sign-in"></i> Log In
-            <% end %>
-          </li>
-          <li class='nav-item'>
-            <%= link_to register_path, class: 'nav-link' do %>
-              <i class="fa fa-pencil-square-o"></i> Register
-            <% end %>
-          </li>
-        <% end %>
-      </div>
+      </ul>
     </div>
   </nav>
   <%= yield %>

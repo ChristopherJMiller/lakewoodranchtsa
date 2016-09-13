@@ -8,6 +8,14 @@ String::capitalizeFirstLetter = () ->
   return this.charAt(0).toUpperCase() + this.slice(1);
 
 $(document).on 'turbolinks:load', ->
+  $('#attendee_search').keyup ->
+    text = $(this).val()
+    re =  RegExp(text ,"i");
+    $(".member_name").filter ->
+      if re.test($(this).html())
+        $(this).parent().fadeIn("fast")
+      else
+        $(this).parent().fadeOut("fast")
   $('form[data-remote]').on 'ajax:send', ->
     $(this).children('fieldset').attr 'class', 'form-group'
     $(this).children('fieldset').children('div').remove()
@@ -16,7 +24,10 @@ $(document).on 'turbolinks:load', ->
     setTimeout (window.location.href = window.location.href), 0
   $('form[data-remote]').on 'ajax:error', (evt, xhr, status, error) ->
     $('input').attr('disabled', false)
-    errors = xhr.responseJSON.error
+    errors = xhr.responseJSON.error if xhr.responseJSON?
+    if !xhr.responseJSON?
+      alert 'An error has occured, are you connected to the internet?'
+      return
     for form of errors
       fieldSet = $(this).find("#attendee_#{form}").parent()
       fieldSet.addClass 'form-group has-danger'

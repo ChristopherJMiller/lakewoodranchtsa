@@ -27,7 +27,10 @@ $(document).on 'turbolinks:load', ->
       setTimeout redirect, 2000
   $('form[data-remote]').on 'ajax:error', (evt, xhr, status, error) ->
     $('input').attr('disabled', false)
-    errors = xhr.responseJSON.error
+    errors = xhr.responseJSON.error if xhr.responseJSON?
+    if !xhr.responseJSON?
+      alert 'An error has occured, are you connected to the internet?'
+      return
     for form of errors
       fieldSet = $(this).find("#announcement_#{form}").parent()
       fieldSet.addClass 'form-group has-danger'

@@ -5,9 +5,9 @@ String::capitalizeFirstLetter = () ->
   return this.charAt(0).toUpperCase() + this.slice(1);
 
 $(document).on 'turbolinks:load', ->
-  $('#navbar_logout').parent().on 'ajax:success', ->
+  $('a[name="navbar_logout"]').parent().on 'ajax:success', ->
     setTimeout redirect, 250
-  $('#navbar_logout').parent().on 'ajax:error', ->
+  $('a[name="navbar_logout"]').parent().on 'ajax:error', ->
     alert 'An error has occured, are you connected to the internet?'
 
   $('#navbar_login').on 'ajax:send', ->
@@ -17,7 +17,10 @@ $(document).on 'turbolinks:load', ->
     $(this).children('fieldset').addClass 'form-group has-success'
     setTimeout redirect, 1000
   $('form[data-remote]').on 'ajax:error', (evt, xhr, status, error) ->
-    errors = xhr.responseJSON.error
+    errors = xhr.responseJSON.error if xhr.responseJSON?
+    if !xhr.responseJSON?
+      alert 'An error has occured, are you connected to the internet?'
+      return
     for form of errors
       fieldSet = $(this).find("##{form}").parent()
       fieldSet.addClass 'form-group has-danger'
