@@ -51,7 +51,7 @@ RSpec.describe TeamMembersController, type: :controller do
     end
 
     let(:valid_parameters_member) do
-      {user_id: user_member.id}
+      {user_id: user_member.id, admin: false}
     end
 
     let(:valid_update_parameters) do
@@ -63,7 +63,7 @@ RSpec.describe TeamMembersController, type: :controller do
     end
 
     let(:invalid_parameters) do
-      {user_id: -1}
+      {user_id: -1, admin: false}
     end
 
     let(:valid_session_existing_team_member) do

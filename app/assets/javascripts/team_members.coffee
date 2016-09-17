@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 redirect = () ->
-  window.location.replace '/team_members'
+  window.location.replace './'
 
 String::capitalizeFirstLetter = () ->
   return this.charAt(0).toUpperCase() + this.slice(1);
@@ -14,13 +14,18 @@ $(document).on 'turbolinks:load', ->
     $('input').attr('disabled', true)
   $('form[data-remote]').on 'ajax:success', ->
     if $(this).hasClass('new_team_member') || $(this).hasClass('button_to')
-      setTimeout (window.location.replace '../'), 0
+      setTimeout redirect, 0
     else
       setTimeout (window.location.href = window.location.href), 0
   $('form[data-remote]').on 'ajax:error', (evt, xhr, status, error) ->
     $('input').attr('disabled', false)
     errors = xhr.responseJSON.error if xhr.responseJSON?
-    if !xhr.responseJSON?
+    if xhr.status == 409
+      element = $(this).find("#team_member_user_id").parent()
+      element.addClass 'form-group has-danger'
+      element.append("<div><small class=\"text-danger\">This user is already part of this team</small></div>")
+      return
+    else if !xhr.responseJSON?
       alert 'An error has occured, are you connected to the internet?'
       return
     for form of errors

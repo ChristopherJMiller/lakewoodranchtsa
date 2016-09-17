@@ -71,9 +71,8 @@ class TeamMembersController < ApplicationController
   private
 
   def team_member_parameters_create
-    parameters = params.require(:team_member).permit(:user_id)
+    parameters = params.require(:team_member).permit(:user_id, :admin)
     parameters[:team_id] = params[:team_id]
-    parameters[:admin] = false
     return parameters
   end
 
