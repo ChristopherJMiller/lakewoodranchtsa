@@ -18,17 +18,17 @@ $(document).on 'turbolinks:load', ->
         $(this).parent().fadeIn("fast")
       else
         $(this).parent().fadeOut("fast")
-  $('form[data-remote]').on 'ajax:send', ->
+  $('#new_user').on 'ajax:send', ->
     $(this).children('fieldset').attr 'class', 'form-group'
     $(this).children('fieldset').children('div').remove()
     $( "input[name='commit']" ).prop("disabled",true);
-  $('form[data-remote]').on 'ajax:success', ->
+  $('#new_user').on 'ajax:success', ->
     $(this).children('fieldset').addClass 'form-group has-success'
     if $(this).hasClass('edit_user')
       setTimeout (window.location.href = window.location.href), 2000
     else
       setTimeout redirect, 2000
-  $('form[data-remote]').on 'ajax:error', (evt, xhr, status, error) ->
+  $('#new_user').on 'ajax:error', (evt, xhr, status, error) ->
     $( "input[name='commit']" ).prop("disabled",false);
     errors = xhr.responseJSON.error if xhr.responseJSON?
     if !xhr.responseJSON?

@@ -8,16 +8,16 @@ String::capitalizeFirstLetter = () ->
   return this.charAt(0).toUpperCase() + this.slice(1);
 
 $(document).on 'turbolinks:load', ->
-  $('form[data-remote]').on 'ajax:send', ->
+  $('#new_team_member').on 'ajax:send', ->
     $(this).children('fieldset').attr 'class', 'form-group'
     $(this).children('fieldset').children('div').remove()
     $('input').attr('disabled', true)
-  $('form[data-remote]').on 'ajax:success', ->
+  $('#new_team_member').on 'ajax:success', ->
     if $(this).hasClass('new_team_member') || $(this).hasClass('button_to')
       setTimeout redirect, 0
     else
       setTimeout (window.location.href = window.location.href), 0
-  $('form[data-remote]').on 'ajax:error', (evt, xhr, status, error) ->
+  $('#new_team_member').on 'ajax:error', (evt, xhr, status, error) ->
     $('input').attr('disabled', false)
     errors = xhr.responseJSON.error if xhr.responseJSON?
     if xhr.status == 409
