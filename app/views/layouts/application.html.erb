@@ -38,7 +38,7 @@
           <% end %>
         </li>
         <div class="btn-group pull-xs-right">
-          <div class='hidden-sm-down'>
+          <div class='hidden-xs-down'>
             <a class="dropdown-toggle nav-link" href="#" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <%= (logged_in && User.find(session[:user_id]).name) || 'Guest' %>
             </a>
@@ -50,7 +50,7 @@
               <% end %>
             </div>
           </div>
-          <div class='hidden-md-up'>
+          <div class='hidden-sm-up'>
             <% if logged_in then %>
               <% if current_user.is_admin %>
                 <div class='dropdown-divider'></div>
@@ -102,7 +102,8 @@
   <%= yield %>
   <footer class='footer'>
     <div class='container'>
-      <p class='pull-sm-right text-muted' style="margin: 20px 0;">Page Rendered in <%= sprintf('%.3f', (Time.now.to_f - @start_time) ) %> seconds</p>
+      <p class='text-muted' style='margin: 20px 0;float: left'>Lakewood Ranch TSA Version 0.4.0</p>
+      <p class='text-muted' style="margin: 20px 0;float: right">Page Rendered in <%= sprintf('%.3f', (Time.now.to_f - @start_time) ) %> seconds</p>
     </div>
   </footer>
 </body>
