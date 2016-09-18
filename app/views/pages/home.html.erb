@@ -12,7 +12,7 @@
 
   <h2>Recent Announcements</h2>
   <hr>
-  <div class="card-columns">
+  <div class="row">
     <%= render partial: 'announcement', collection: Announcement.last(3).reverse!, as: :announcement or 'No recent announcements.'%>
   </div>
 </div>

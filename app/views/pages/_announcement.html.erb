@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card col-xs-12 col-md-4">
   <div class="card-block">
     <h4 class="card-title"><%= announcement.title %><br><small class='text-muted'>by <%= announcement.user.name %></small></h4>
     <p class="card-text"><%= simple_format truncate(word_wrap(announcement.body), length: 100) %></p>
