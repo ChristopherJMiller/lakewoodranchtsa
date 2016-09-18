@@ -15,17 +15,17 @@ $(document).on 'turbolinks:load', ->
     $("#preview_title").html($("#announcement_title").val())
   $("#announcement_body").keyup ->
     $("#preview_body").html(markdown.toHTML($("#announcement_body").val()))
-  $('#new_announcement').on 'ajax:send', ->
+  $('form[data-remote]').on 'ajax:send', ->
     $(this).children('fieldset').attr 'class', 'form-group'
     $(this).children('fieldset').children('div').remove()
     $('input').attr('disabled', true)
-  $('#new_announcement').on 'ajax:success', ->
+  $('form[data-remote]').on 'ajax:success', ->
     $(this).children('fieldset').addClass 'form-group has-success'
     if $(this).hasClass('edit_event')
       setTimeout (window.location.href = window.location.href), 2000
     else
       setTimeout redirect, 2000
-  $('#new_announcement').on 'ajax:error', (evt, xhr, status, error) ->
+  $('form[data-remote]').on 'ajax:error', (evt, xhr, status, error) ->
     $('input').attr('disabled', false)
     errors = xhr.responseJSON.error if xhr.responseJSON?
     if !xhr.responseJSON?

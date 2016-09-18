@@ -16,13 +16,13 @@ $(document).on 'turbolinks:load', ->
         $(this).parent().fadeIn("fast")
       else
         $(this).parent().fadeOut("fast")
-  $('#new_attendee').on 'ajax:send', ->
+  $('form[data-remote]').on 'ajax:send', ->
     $(this).children('fieldset').attr 'class', 'form-group'
     $(this).children('fieldset').children('div').remove()
-  $('#new_attendee').on 'ajax:success', ->
+  $('form[data-remote]').on 'ajax:success', ->
     $("#checked_in").children('tbody').append("<tr><td>" + $(this).parent().parent().children('.member_name')[0].innerText + "</td></tr>")
     $(this).parent().parent().fadeOut("fast")
-  $('#new_attendee').on 'ajax:error', (evt, xhr, status, error) ->
+  $('form[data-remote]').on 'ajax:error', (evt, xhr, status, error) ->
     $('input').attr('disabled', false)
     errors = xhr.responseJSON.error if xhr.responseJSON?
     if !xhr.responseJSON?
