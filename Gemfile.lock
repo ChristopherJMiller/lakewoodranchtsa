@@ -46,6 +46,7 @@ GEM
     bootstrap (4.0.0.alpha3)
       autoprefixer-rails (>= 6.0.3)
       sass (>= 3.4.19)
+    breadcrumbs_on_rails (3.0.1)
     builder (3.2.2)
     byebug (9.0.5)
     chartkick (2.0.2)
@@ -195,6 +196,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootstrap
+  breadcrumbs_on_rails
   byebug
   chartkick
   coffee-rails (~> 4.1.0)

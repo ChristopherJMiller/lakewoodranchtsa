@@ -25,6 +25,8 @@ gem "chartkick"
 
 gem "dateslices"
 
+gem "breadcrumbs_on_rails"
+
 #Use mysql2 as the database adapter
 gem 'mysql2'
 
