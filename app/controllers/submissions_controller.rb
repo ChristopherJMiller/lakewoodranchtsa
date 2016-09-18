@@ -1,5 +1,13 @@
 class SubmissionsController < ApplicationController
   respond_to :html, :json
+  before_action :define_breadcrumb
+
+  def define_breadcrumb
+    add_breadcrumb "Accountability Logs", :accountability_logs_path
+    @accountability_log = AccountabilityLog.find_by_id(params[:accountability_log_id])
+    add_breadcrumb "Accountability Log #" + @accountability_log.id.to_s, accountability_log_path(@accountability_log)
+    add_breadcrumb "Submissions", accountability_log_path(@accountability_log)
+  end
 
   def index
     if session[:user_id].nil? or !User.find_by_id(session[:user_id]).is_admin
@@ -11,6 +19,7 @@ class SubmissionsController < ApplicationController
 
   def edit
     @submission = Submission.find_by_accountability_log_id_and_id(params[:accountability_log_id], params[:id])
+    add_breadcrumb "Edit Submission by " + @submission.user.name, edit_accountability_log_submission_path(@submission.accountability_log, @submission)
     if @submission
       respond_with @submission
     else
@@ -23,11 +32,13 @@ class SubmissionsController < ApplicationController
 
   def new
     @submission = Submission.new
+    add_breadcrumb "New Submission", new_accountability_log_submission_path(@accountability_log)
     respond_to :html
   end
 
   def show
     @submission = Submission.find_by_accountability_log_id_and_id(params[:accountability_log_id], params[:id])
+    add_breadcrumb "Submission by " + @submission.user.name, accountability_log_submission_path(@submission.accountability_log, @submission)
     if !@submission
       respond_to do |format|
         format.html { not_found }
