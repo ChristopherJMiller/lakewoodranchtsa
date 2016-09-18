@@ -92,12 +92,15 @@
       </ul>
     </div>
   </nav>
+  <% if !current_page?(root_path) %>
+    <div class='main-div'>
+      <ol class="breadcrumb">
+        <%= render_breadcrumbs :tag => :li, :separator => "" %>
+      </ol>
+    </div>
+  <% end %>
   <%= yield %>
-  <hr class='footer-line'>
-  <div class='main-div'>
-    <ol class="breadcrumb">
-      <%= render_breadcrumbs :tag => :li, :separator => "" %>
-    </ol>
+  <div class='footer'>
     <div class='pull-sm-right'>Page Rendered in <%= sprintf('%.3f', (Time.now.to_f - @start_time) ) %> seconds</div>
   </div>
 </body>
