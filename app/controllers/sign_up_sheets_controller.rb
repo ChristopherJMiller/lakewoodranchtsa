@@ -1,6 +1,8 @@
 class SignUpSheetsController < ApplicationController
   respond_to :html, :json
 
+  add_breadcrumb "Sign Up Sheets", :sign_up_sheets_path
+
   def index
     @sign_up_sheets = SignUpSheet.all
     respond_with @sign_up_sheets
@@ -8,6 +10,7 @@ class SignUpSheetsController < ApplicationController
 
   def show
     @sign_up_sheet = SignUpSheet.find_by_id(params[:id])
+    add_breadcrumb @sign_up_sheet.name, sign_up_sheet_path(@sign_up_sheet)
     if @sign_up_sheet
       respond_with @sign_up_sheet
     else
@@ -20,11 +23,13 @@ class SignUpSheetsController < ApplicationController
 
   def new
     @sign_up_sheet = SignUpSheet.new
+    add_breadcrumb "New Sign Up Sheet", new_sign_up_sheet_path
     respond_to :html
   end
 
   def edit
     @sign_up_sheet = SignUpSheet.find_by_id(params[:id])
+    add_breadcrumb "Edit " + @sign_up_sheet.name, edit_sign_up_sheet_path(@sign_up_sheet_path)
     if @sign_up_sheet
       respond_with @sign_up_sheet
     else
