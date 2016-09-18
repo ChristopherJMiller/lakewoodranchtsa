@@ -1,6 +1,8 @@
 class EventsController < ApplicationController
   respond_to :html, :json
 
+  add_breadcrumb "Events", :events_path
+
   def index
     @events = Event.all
     respond_with @events
@@ -8,6 +10,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find_by_id(params[:id])
+    add_breadcrumb @event.name, event_path(@event)
     if @event
       respond_with @event
     else
@@ -20,11 +23,13 @@ class EventsController < ApplicationController
 
   def new
     @event = Event.new
+    add_breadcrumb "New Event", new_event_path
     respond_to :html
   end
 
   def edit
     @event = Event.find_by_id(params[:id])
+    add_breadcrumb "Edit " + @event.name, new_event_path
     if @event
       respond_with @event
     else

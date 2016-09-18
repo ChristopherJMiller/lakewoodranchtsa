@@ -1,6 +1,8 @@
 class AnnouncementsController < ApplicationController
   respond_to :html, :json
 
+  add_breadcrumb "Announcements", :announcements_path
+
   def index
     @announcements = Announcement.all
     respond_with @announcements
@@ -8,6 +10,7 @@ class AnnouncementsController < ApplicationController
 
   def show
     @announcement = Announcement.find_by_id(params[:id])
+    add_breadcrumb @announcement.title, announcement_path(@announcement)
     if @announcement
       respond_with @announcement
     else
@@ -20,11 +23,13 @@ class AnnouncementsController < ApplicationController
 
   def new
     @announcement = Announcement.new
+    add_breadcrumb "New Announcement", new_announcement_path
     respond_to :html
   end
 
   def edit
     @announcement = Announcement.find_by_id(params[:id])
+    add_breadcrumb "Edit " + @announcement.title, edit_announcement_path(@announcement)
     if @announcement
       respond_with @announcement
     else

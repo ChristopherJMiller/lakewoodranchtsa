@@ -16,7 +16,7 @@ $(document).on 'turbolinks:load', ->
   $('#navbar_login').on 'ajax:success', ->
     $(this).children('fieldset').addClass 'form-group has-success'
     setTimeout redirect, 1000
-  $('form[data-remote]').on 'ajax:error', (evt, xhr, status, error) ->
+  $('#navbar_login').on 'ajax:error', (evt, xhr, status, error) ->
     errors = xhr.responseJSON.error if xhr.responseJSON?
     if !xhr.responseJSON?
       alert 'An error has occured, are you connected to the internet?'

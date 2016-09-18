@@ -6,7 +6,7 @@
       <% end %>
     <% end %>
   <% end %>
-  <h1>All Teams for <%= Team.find_by_id(params[:team_id]).name %></h1>
+  <h1>All Team Members for <%= Team.find_by_id(params[:team_id]).name %></h1>
   <table class="table table-striped">
     <tbody>
       <%= render @team_members %>

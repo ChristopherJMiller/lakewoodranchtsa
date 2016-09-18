@@ -1,5 +1,13 @@
 class TeamsController < ApplicationController
   respond_to :html, :json
+  before_action :define_breadcrumb
+
+  def define_breadcrumb
+    add_breadcrumb "Events", :events_path
+    @event = Event.find_by_id(params[:event_id])
+    add_breadcrumb @event.name, event_path(@event)
+    add_breadcrumb "Teams", event_teams_path(@event)
+  end
 
   def index
     @teams = Event.find_by_id(params[:event_id]).teams.all
@@ -8,6 +16,7 @@ class TeamsController < ApplicationController
 
   def show
     @team = Team.find_by_id(params[:id])
+    add_breadcrumb @team.name, event_team_path(@team.event, @team)
     if @team
       respond_with @team
     else
@@ -20,11 +29,13 @@ class TeamsController < ApplicationController
 
   def new
     @team = Team.new
+    add_breadcrumb "New Team", new_event_team_path(@team.event)
     respond_to :html
   end
 
   def edit
     @team = Team.find_by_id(params[:id])
+    add_breadcrumb "Edit" + @team.name, edit_event_team_path(@team.event, @team)
     if @team
       respond_with @team
     else

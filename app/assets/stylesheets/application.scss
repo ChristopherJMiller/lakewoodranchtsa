@@ -16,6 +16,23 @@
  @import "bootstrap";
  @import "font-awesome";
 
+ html {
+    position: relative;
+    min-height: 100%;
+  }
+  body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+  }
+  .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    background-color: #f5f5f5;
+  }
+
  .dropdown-width {
    width: 300px;
    top: 120%;
@@ -42,6 +59,10 @@
    border-bottom: 10px solid #ffffff;
    border-left: 10px solid transparent;
    content: '';
+ }
+
+ hr.footer-line {
+   width: 100% !important;
  }
 
  nav.nav-margin-bottom {

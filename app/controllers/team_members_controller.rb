@@ -1,5 +1,15 @@
 class TeamMembersController < ApplicationController
   respond_to :html, :json
+  before_action :define_breadcrumb
+
+  def define_breadcrumb
+    add_breadcrumb "Events", :events_path
+    @team = Team.find_by_event_id_and_id(params[:event_id], params[:team_id])
+    add_breadcrumb @team.event.name, event_path(@team.event)
+    add_breadcrumb "Teams", event_teams_path(@team.event)
+    add_breadcrumb @team.name, event_teams_path(@team.event)
+    add_breadcrumb "Team Members", event_team_team_members_path(@team.event, @team)
+  end
 
   def index
     @team_members = Team.find_by_id(params[:team_id]).team_members.all
@@ -8,6 +18,7 @@ class TeamMembersController < ApplicationController
 
   def edit
     @team_member = TeamMember.find_by_team_id_and_id(params[:team_id], params[:id])
+    add_breadcrumb "Edit " + @team_member.user.name, edit_event_team_team_member_path(@team.event, @team, @team_member)
     if @team_member
       respond_with @team_member
     else
@@ -20,6 +31,7 @@ class TeamMembersController < ApplicationController
 
   def new
     @team_member = TeamMember.new
+    add_breadcrumb "New Team Member", new_event_team_team_member_path(@team.event, @team)
     respond_to :html
   end
 
@@ -71,9 +83,8 @@ class TeamMembersController < ApplicationController
   private
 
   def team_member_parameters_create
-    parameters = params.require(:team_member).permit(:user_id)
+    parameters = params.require(:team_member).permit(:user_id, :admin)
     parameters[:team_id] = params[:team_id]
-    parameters[:admin] = false
     return parameters
   end
 

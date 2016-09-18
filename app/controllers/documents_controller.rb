@@ -1,6 +1,8 @@
 class DocumentsController < ApplicationController
   respond_to :html, :json
 
+  add_breadcrumb "Documents", :documents_path
+
   def index
     @documents = Document.all
     respond_with @documents
@@ -20,11 +22,13 @@ class DocumentsController < ApplicationController
 
   def new
     @document = Document.new
+    add_breadcrumb "New Document", new_document_path
     respond_to :html
   end
 
   def edit
     @document = Document.find_by_id(params[:id])
+    add_breadcrumb "Edit " + @document.title, edit_document_path(@document)
     if @document
       respond_with @document
     else

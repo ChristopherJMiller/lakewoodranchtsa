@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   respond_to :html, :json
 
+  add_breadcrumb "Users", :users_path
+
   def index
     @users = User.all
     respond_with @users
@@ -8,6 +10,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by_id(params[:id])
+    add_breadcrumb @user.name, user_path(@user)
     if @user
       respond_with @user
     else
@@ -20,11 +23,14 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    add_breadcrumb "Register", new_user_path
     respond_to :html
   end
 
   def edit
     @user = User.find_by_id(params[:id])
+    add_breadcrumb @user.name, user_path(@user)
+    add_breadcrumb "Settings", edit_user_path(@user)
     if @user
       if @user.id != session[:user_id]
         head status: :forbidden and return

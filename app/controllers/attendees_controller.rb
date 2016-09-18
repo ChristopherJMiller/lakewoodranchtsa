@@ -1,5 +1,12 @@
 class AttendeesController < ApplicationController
   respond_to :html, :json
+  before_action :define_breadcrumb
+
+  def define_breadcrumb
+    add_breadcrumb "Sign Up Sheets", :sign_up_sheets_path
+    @sign_up_sheet = SignUpSheet.find_by_id(params[:sign_up_sheet_id])
+    add_breadcrumb @sign_up_sheet.name, sign_up_sheet_path(@sign_up_sheet)
+  end
 
   def index
     @attendees = SignUpSheet.find_by_id(params[:sign_up_sheet_id]).attendees.all

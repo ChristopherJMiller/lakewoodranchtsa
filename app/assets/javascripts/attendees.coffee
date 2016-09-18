@@ -19,9 +19,9 @@ $(document).on 'turbolinks:load', ->
   $('form[data-remote]').on 'ajax:send', ->
     $(this).children('fieldset').attr 'class', 'form-group'
     $(this).children('fieldset').children('div').remove()
-    $('input').attr('disabled', true)
   $('form[data-remote]').on 'ajax:success', ->
-    setTimeout (window.location.href = window.location.href), 0
+    $("#checked_in").children('tbody').append("<tr><td>" + $(this).parent().parent().children('.member_name')[0].innerText + "</td></tr>")
+    $(this).parent().parent().fadeOut("fast")
   $('form[data-remote]').on 'ajax:error', (evt, xhr, status, error) ->
     $('input').attr('disabled', false)
     errors = xhr.responseJSON.error if xhr.responseJSON?
