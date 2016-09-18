@@ -100,8 +100,10 @@
     </div>
   <% end %>
   <%= yield %>
-  <div class='footer'>
-    <div class='pull-sm-right'>Page Rendered in <%= sprintf('%.3f', (Time.now.to_f - @start_time) ) %> seconds</div>
-  </div>
+  <footer class='footer'>
+    <div class='container'>
+      <p class='pull-sm-right text-muted' style="margin: 20px 0;">Page Rendered in <%= sprintf('%.3f', (Time.now.to_f - @start_time) ) %> seconds</p>
+    </div>
+  </footer>
 </body>
 </html>
