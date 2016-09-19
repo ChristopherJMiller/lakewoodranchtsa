@@ -1,12 +1,12 @@
 <div class="card card-block">
   <h4 class="card-title"><%= document.title %>
   <% if logged_in && current_user.is_admin %>
-    <a class="btn btn-secondary pull-xs-right" data-toggle="collapse" href="#adminOptions" aria-expanded="false" aria-controls="adminOptions">
+    <button class="btn btn-secondary pull-xs-right" type="button" data-toggle="collapse" data-target="#<%= document.id %>" aria-expanded="false" aria-controls="<%= document.id %>">
       <i class="fa fa-cog" aria-hidden="true"></i>
-    </a>
+    </button>
   <% end %></h4>
   <%= link_to 'View', document_path(document), class: 'btn btn-primary', target: "_blank" %>
-  <div class="collapse" id="adminOptions">
+  <div class="collapse" id="<%= document.id %>">
     <hr>
     <%= link_to 'Edit Document', edit_document_path(document), class: 'btn btn-sm btn-info' %>
     <%= button_to 'Remove Document', { action: 'destroy', id: document.id }, method: :delete, remote: true, class: 'btn btn-sm btn-danger', data: { confirm: "Are you sure?" } %>
