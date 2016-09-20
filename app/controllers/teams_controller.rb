@@ -29,7 +29,7 @@ class TeamsController < ApplicationController
 
   def new
     @team = Team.new
-    add_breadcrumb "New Team", new_event_team_path(@team.event)
+    add_breadcrumb "New Team", new_event_team_path(@event)
     respond_to :html
   end
 
