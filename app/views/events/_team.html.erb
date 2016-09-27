@@ -1,0 +1,4 @@
+<tr>
+  <td class='team_name'><%= team.name %></td>
+  <td class='team_view'><%= link_to 'View', event_team_path(Event.find_by_id(params[:id]), team), class: 'btn btn-primary' %></td>
+</tr>

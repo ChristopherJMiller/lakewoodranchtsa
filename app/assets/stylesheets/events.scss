@@ -5,3 +5,15 @@
 .card-max-width {
   max-width: 20rem;
 }
+
+.btn-outline-warning {
+  color: #f0ad4e;
+  background-image: none;
+  background-color: transparent;
+  border-color: #f0ad4e;
+}
+
+.btn-outline-warning:hover {
+  color: white;
+  background-color: #f0ad4e;
+}
