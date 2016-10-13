@@ -12,6 +12,16 @@ module ApplicationHelper
     date.to_formatted_s(:long)
   end
 
+  def report_action_exist?
+    begin
+      current_page?(action: 'report')
+    rescue
+      return false
+    end
+
+    true
+  end
+
   def markdown
     Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true)
   end

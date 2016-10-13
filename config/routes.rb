@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :sign_up_sheets do
     resources :attendees, only: [:index, :create, :destroy]
+    get '/report', to: 'sign_up_sheets#report'
   end
 
   get '/verify_email/:token', to: 'users#verify_email'
