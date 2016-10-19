@@ -1,3 +1,20 @@
 // Place all the styles related to the events controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.card-max-width {
+  width: 20rem;
+  float: left;
+}
+
+.btn-outline-warning {
+  color: #f0ad4e;
+  background-image: none;
+  background-color: transparent;
+  border-color: #f0ad4e;
+}
+
+.btn-outline-warning:hover {
+  color: white;
+  background-color: #f0ad4e;
+}

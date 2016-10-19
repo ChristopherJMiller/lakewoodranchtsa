@@ -40,6 +40,18 @@ class SignUpSheetsController < ApplicationController
     end
   end
 
+  def report
+    @sign_up_sheet = SignUpSheet.find_by_id(params[:sign_up_sheet_id])
+    if @sign_up_sheet
+      respond_with @sign_up_sheet
+    else
+      respond_to do |format|
+        format.html { not_found }
+        format.json { head status: :not_found }
+      end
+    end
+  end
+
   def create
     if session[:user_id].nil?
       head status: :forbidden and return
