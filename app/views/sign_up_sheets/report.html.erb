@@ -3,6 +3,7 @@
   <h1 class="display-3"><%= @sign_up_sheet.name %></h1>
   <p class="lead"><%= format_date @sign_up_sheet.date %></p>
   <h2>Attendees</h2>
+  <h2><small class="text-muted">Attendee Count: <%= @sign_up_sheet.attendees.count %></small></h2>
   <table class="table table-striped table-bordered table-sm">
     <tbody>
       <%= render partial: 'attendee_report', collection: @sign_up_sheet.attendees, as: :attendee or 'No attendees have signed up.'%>
