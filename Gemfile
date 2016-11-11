@@ -11,7 +11,7 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'
 end
 # Use bootstrap for styling
-gem 'bootstrap'
+gem 'bootstrap', '~> 4.0.0.alpha5'
 # Use font awesome for icons
 gem "font-awesome-rails"
 # Use Uglifier as compressor for JavaScript assets
