@@ -96,7 +96,7 @@
     <% if !current_page?(root_path) %>
       <div class='main-div'>
         <ol class="breadcrumb">
-          <%= render_breadcrumbs :tag => :li, :separator => "" %>
+          <%= render_breadcrumbs options: {:tag => :li} %>
         </ol>
       </div>
     <% end %>
