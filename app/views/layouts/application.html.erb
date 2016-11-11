@@ -38,7 +38,7 @@
               <i class="fa fa-book" aria-hidden="true"></i> Documents
             <% end %>
           </li>
-          <div class="btn-group pull-xs-right">
+          <div class="btn-group float-sm-right">
             <div class='hidden-xs-down'>
               <a class="dropdown-toggle nav-link" href="#" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <%= (logged_in && User.find(session[:user_id]).name) || 'Guest' %>
