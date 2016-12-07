@@ -19,8 +19,8 @@ class SubmissionsController < ApplicationController
 
   def edit
     @submission = Submission.find_by_accountability_log_id_and_id(params[:accountability_log_id], params[:id])
-    add_breadcrumb "Edit Submission by " + @submission.user.name, edit_accountability_log_submission_path(@submission.accountability_log, @submission)
     if @submission
+      add_breadcrumb "Edit Submission by " + @submission.user.name, edit_accountability_log_submission_path(@submission.accountability_log, @submission)
       respond_with @submission
     else
       respond_to do |format|
@@ -38,13 +38,13 @@ class SubmissionsController < ApplicationController
 
   def show
     @submission = Submission.find_by_accountability_log_id_and_id(params[:accountability_log_id], params[:id])
-    add_breadcrumb "Submission by " + @submission.user.name, accountability_log_submission_path(@submission.accountability_log, @submission)
     if !@submission
       respond_to do |format|
         format.html { not_found }
         format.json { head status: :not_found }
       end
     end
+    add_breadcrumb "Submission by " + @submission.user.name, accountability_log_submission_path(@submission.accountability_log, @submission)
     if session[:user_id].nil? or ((session[:user_id] != @submission.user.id) and !User.find_by_id(session[:user_id]).is_admin)
       head status: :forbidden and return
     end

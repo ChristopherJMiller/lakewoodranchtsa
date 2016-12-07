@@ -28,8 +28,8 @@ class DocumentsController < ApplicationController
 
   def edit
     @document = Document.find_by_id(params[:id])
-    add_breadcrumb "Edit " + @document.title, edit_document_path(@document)
     if @document
+      add_breadcrumb "Edit " + @document.title, edit_document_path(@document)
       respond_with @document
     else
       respond_to do |format|

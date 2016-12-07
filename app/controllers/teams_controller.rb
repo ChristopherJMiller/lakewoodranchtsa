@@ -16,8 +16,8 @@ class TeamsController < ApplicationController
 
   def show
     @team = Team.find_by_id(params[:id])
-    add_breadcrumb @team.name, event_team_path(@team.event, @team)
     if @team
+      add_breadcrumb @team.name, event_team_path(@team.event, @team)
       respond_with @team
     else
       respond_to do |format|
@@ -35,8 +35,8 @@ class TeamsController < ApplicationController
 
   def edit
     @team = Team.find_by_id(params[:id])
-    add_breadcrumb "Edit" + @team.name, edit_event_team_path(@team.event, @team)
     if @team
+      add_breadcrumb "Edit" + @team.name, edit_event_team_path(@team.event, @team)
       respond_with @team
     else
       respond_to do |format|

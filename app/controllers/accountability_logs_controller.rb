@@ -11,9 +11,9 @@ class AccountabilityLogsController < ApplicationController
 
   def show
     @accountability_log = AccountabilityLog.find_by(id: params[:id])
-    add_breadcrumb 'Accountability Log #' + @accountability_log.id.to_s, accountability_log_path(@accountability_log)
-    add_breadcrumb 'Submissions', accountability_log_path(@accountability_log)
     if @accountability_log
+      add_breadcrumb 'Accountability Log #' + @accountability_log.id.to_s, accountability_log_path(@accountability_log)
+      add_breadcrumb 'Submissions', accountability_log_path(@accountability_log)
       respond_with @accountability_log
     else
       respond_to do |format|
@@ -31,8 +31,8 @@ class AccountabilityLogsController < ApplicationController
 
   def edit
     @accountability_log = AccountabilityLog.find_by(id: params[:id])
-    add_breadcrumb 'Edit Accountability Log #' + @accountability_log.id.to_s, edit_accountability_log_path(@accountability_log)
     if @accountability_log
+      add_breadcrumb 'Edit Accountability Log #' + @accountability_log.id.to_s, edit_accountability_log_path(@accountability_log)
       respond_with @accountability_log
     else
       respond_to do |format|

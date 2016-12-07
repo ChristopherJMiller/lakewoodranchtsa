@@ -10,8 +10,8 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find_by_id(params[:id])
-    add_breadcrumb @event.name, event_path(@event)
     if @event
+      add_breadcrumb @event.name, event_path(@event)
       respond_with @event
     else
       respond_to do |format|
@@ -29,8 +29,8 @@ class EventsController < ApplicationController
 
   def edit
     @event = Event.find_by_id(params[:id])
-    add_breadcrumb "Edit " + @event.name, new_event_path
     if @event
+      add_breadcrumb "Edit " + @event.name, new_event_path
       respond_with @event
     else
       respond_to do |format|

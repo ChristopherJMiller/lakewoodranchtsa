@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe AnnouncementsController, type: :controller do
-
   let(:user) do
     FactoryGirl.create(:user, email: 'normaluser@test.com')
   end
@@ -44,8 +43,8 @@ RSpec.describe AnnouncementsController, type: :controller do
 
   describe 'GET #show' do
     context 'with a valid announcement' do
-      before(:each) do
-        get :show, {id: announcement.id}
+      before do
+        get :show, id: announcement.id
       end
 
       it 'returns HTTP status 200 (OK)' do
@@ -59,9 +58,9 @@ RSpec.describe AnnouncementsController, type: :controller do
 
     context 'with an invalid announcement' do
       it 'returns HTTP status 404 (Not Found)' do
-        expect {
-          get :show, {id: -1}
-        }.to raise_error(ActionController::RoutingError)
+        expect do
+          get :show, id: -1
+        end.to raise_error(ActionController::RoutingError)
       end
     end
   end
@@ -75,8 +74,8 @@ RSpec.describe AnnouncementsController, type: :controller do
 
   describe 'GET #edit' do
     context 'with a valid announcement' do
-      before(:each) do
-        get :edit, {id: announcement.id}
+      before do
+        get :edit, id: announcement.id
       end
 
       it 'returns HTTP status 200 (OK)' do
@@ -90,9 +89,9 @@ RSpec.describe AnnouncementsController, type: :controller do
 
     context 'with an invalid event' do
       it 'returns HTTP status 404 (Not Found)' do
-        expect {
-          get :edit, {id: -1}
-        }.to raise_error(ActionController::RoutingError)
+        expect do
+          get :edit, id: -1
+        end.to raise_error(ActionController::RoutingError)
       end
     end
   end
@@ -107,9 +106,9 @@ RSpec.describe AnnouncementsController, type: :controller do
           end
 
           it 'creates a new announcement' do
-            expect {
+            expect do
               post :create, {announcement: valid_parameters}, valid_session_admin
-            }.to change(Announcement, :count).by(1)
+            end.to change(Announcement, :count).by(1)
           end
         end
 
@@ -131,7 +130,7 @@ RSpec.describe AnnouncementsController, type: :controller do
 
     context 'while logged out' do
       it 'returns HTTP status 403 (Forbidden)' do
-        post :create, {announcement: valid_parameters}
+        post :create, announcement: valid_parameters
         expect(response).to have_http_status(:forbidden)
       end
     end
@@ -141,7 +140,7 @@ RSpec.describe AnnouncementsController, type: :controller do
     context 'with a valid announcement' do
       context 'as an admin' do
         context 'with valid parameters' do
-          before(:each) do
+          before do
             put :update, {id: announcement.id, announcement: valid_parameters}, valid_session_admin
           end
 
@@ -149,9 +148,13 @@ RSpec.describe AnnouncementsController, type: :controller do
             expect(response).to have_http_status(:ok)
           end
 
-          it 'updates the requested announcement' do
+          it 'updates the requested announcement title' do
             announcement.reload
             expect(announcement.title).to eq(valid_parameters[:title])
+          end
+
+          it 'updates the requested announcement body' do
+            announcement.reload
             expect(announcement.body).to eq(valid_parameters[:body])
           end
         end
@@ -190,9 +193,9 @@ RSpec.describe AnnouncementsController, type: :controller do
 
         it 'deletes the requested announcement' do
           announcement_to_delete = FactoryGirl.create(:announcement)
-          expect {
+          expect do
             delete :destroy, {id: announcement_to_delete.id}, valid_session_admin
-          }.to change(Announcement, :count).by(-1)
+          end.to change(Announcement, :count).by(-1)
         end
       end
 
@@ -206,7 +209,7 @@ RSpec.describe AnnouncementsController, type: :controller do
 
     context 'with an invalid announcement' do
       it 'returns HTTP status 404 (Not Found)' do
-        delete :destroy, {id: 1}
+        delete :destroy, id: 1
         expect(response).to have_http_status(:not_found)
       end
     end

@@ -10,8 +10,8 @@ class SignUpSheetsController < ApplicationController
 
   def show
     @sign_up_sheet = SignUpSheet.find_by_id(params[:id])
-    add_breadcrumb @sign_up_sheet.name, sign_up_sheet_path(@sign_up_sheet)
     if @sign_up_sheet
+      add_breadcrumb @sign_up_sheet.name, sign_up_sheet_path(@sign_up_sheet)
       respond_with @sign_up_sheet
     else
       respond_to do |format|
@@ -29,8 +29,8 @@ class SignUpSheetsController < ApplicationController
 
   def edit
     @sign_up_sheet = SignUpSheet.find_by_id(params[:id])
-    add_breadcrumb "Edit " + @sign_up_sheet.name, edit_sign_up_sheet_path(@sign_up_sheet_path)
     if @sign_up_sheet
+      add_breadcrumb "Edit " + @sign_up_sheet.name, edit_sign_up_sheet_path(@sign_up_sheet)
       respond_with @sign_up_sheet
     else
       respond_to do |format|

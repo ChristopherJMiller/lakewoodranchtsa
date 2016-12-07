@@ -10,8 +10,8 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by_id(params[:id])
-    add_breadcrumb @user.name, user_path(@user)
     if @user
+      add_breadcrumb @user.name, user_path(@user)
       respond_with @user
     else
       respond_to do |format|
@@ -29,9 +29,9 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find_by_id(params[:id])
-    add_breadcrumb @user.name, user_path(@user)
-    add_breadcrumb "Settings", edit_user_path(@user)
     if @user
+      add_breadcrumb @user.name, user_path(@user)
+      add_breadcrumb "Settings", edit_user_path(@user)
       if @user.id != session[:user_id]
         head status: :forbidden and return
       else
