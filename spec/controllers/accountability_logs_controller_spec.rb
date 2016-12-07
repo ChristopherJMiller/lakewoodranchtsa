@@ -47,8 +47,8 @@ RSpec.describe AccountabilityLogsController, type: :controller do
 
   describe 'GET #show' do
     context 'with a valid accountability log' do
-      before(:each) do
-        get :show, {id: accountability_log.id}
+      before do
+        get :show, id: accountability_log.id
       end
 
       it 'returns HTTP status 200 (OK)' do
@@ -62,9 +62,9 @@ RSpec.describe AccountabilityLogsController, type: :controller do
 
     context 'with an invalid accountabilitylog' do
       it 'returns HTTP status 404 (Not Found)' do
-        expect {
-          get :show, {id: -1}
-        }.to raise_error(ActionController::RoutingError)
+        expect do
+          get :show, id: -1
+        end.to raise_error(ActionController::RoutingError)
       end
     end
   end
@@ -78,8 +78,8 @@ RSpec.describe AccountabilityLogsController, type: :controller do
 
   describe 'GET #edit' do
     context 'with a valid accountability log' do
-      before(:each) do
-        get :edit, {id: accountability_log.id}
+      before do
+        get :edit, id: accountability_log.id
       end
 
       it 'returns HTTP status 200 (OK)' do
@@ -93,9 +93,9 @@ RSpec.describe AccountabilityLogsController, type: :controller do
 
     context 'with an invalid accountabilitylog' do
       it 'returns HTTP status 404 (Not Found)' do
-        expect {
-          get :edit, {id: -1}
-        }.to raise_error(ActionController::RoutingError)
+        expect do
+          get :edit, id: -1
+        end.to raise_error(ActionController::RoutingError)
       end
     end
   end
@@ -110,9 +110,9 @@ RSpec.describe AccountabilityLogsController, type: :controller do
           end
 
           it 'creates a new accountabilitylog' do
-            expect {
+            expect do
               post :create, {accountability_log: valid_parameters}, valid_session_admin
-            }.to change(AccountabilityLog, :count).by(1)
+            end.to change(AccountabilityLog, :count).by(1)
           end
         end
 
@@ -134,7 +134,7 @@ RSpec.describe AccountabilityLogsController, type: :controller do
 
     context 'while logged out' do
       it 'returns HTTP status 403 (Forbidden)' do
-        post :create, {accountability_log: valid_parameters}
+        post :create, accountability_log: valid_parameters
         expect(response).to have_http_status(:forbidden)
       end
     end
@@ -144,7 +144,7 @@ RSpec.describe AccountabilityLogsController, type: :controller do
     context 'with a valid event' do
       context 'as an admin' do
         context 'with valid parameters' do
-          before(:each) do
+          before do
             put :update, {id: accountability_log.id, accountability_log: valid_parameters}, valid_session_admin
           end
 
@@ -152,9 +152,13 @@ RSpec.describe AccountabilityLogsController, type: :controller do
             expect(response).to have_http_status(:ok)
           end
 
-          it 'updates the requested accountability log' do
+          it 'updates the requested accountability log due by date' do
             accountability_log.reload
             expect(accountability_log.dueby.to_s(:db)).to eq(valid_parameters[:dueby])
+          end
+
+          it 'updates the requested accountability log closing date' do
+            accountability_log.reload
             expect(accountability_log.closingdate.to_s(:db)).to eq(valid_parameters[:closingdate])
           end
         end
@@ -186,7 +190,6 @@ RSpec.describe AccountabilityLogsController, type: :controller do
   describe 'DELETE #destroy' do
     context 'with a valid accountability log' do
       context 'as an admin' do
-
         it 'returns HTTP status 200 (OK)' do
           delete :destroy, {id: accountability_log.id}, valid_session_admin
           expect(response).to have_http_status(:ok)
@@ -194,9 +197,9 @@ RSpec.describe AccountabilityLogsController, type: :controller do
 
         it 'deletes the requested event' do
           accountability_log_to_remove = FactoryGirl.create(:accountability_log)
-          expect {
+          expect do
             delete :destroy, {id: accountability_log_to_remove.id}, valid_session_admin
-          }.to change { AccountabilityLog.count }.by(-1)
+          end.to change { AccountabilityLog.count }.by(-1)
         end
       end
 
@@ -210,7 +213,7 @@ RSpec.describe AccountabilityLogsController, type: :controller do
 
     context 'with an invalid event' do
       it 'returns HTTP status 404 (Not Found)' do
-        delete :destroy, {id: 1}
+        delete :destroy, id: 1
         expect(response).to have_http_status(:not_found)
       end
     end

@@ -1,5 +1,5 @@
+# Accountability Log Model
 class AccountabilityLog < ActiveRecord::Base
-
   validates :dueby, presence: true
   validates :closingdate, presence: true
 
