@@ -1,6 +1,6 @@
 <div class="main-div">
   <% if logged_in %>
-    <% if current_user.is_admin %>
+    <% if current_user.admin? %>
       <%= link_to new_event_team_team_member_path(params[:event_id], params[:team_id], params[:id]), class: 'btn btn-info pull-xs-right' do %>
         <i class="fa fa-plus"></i> Add a Team Member
       <% end %>

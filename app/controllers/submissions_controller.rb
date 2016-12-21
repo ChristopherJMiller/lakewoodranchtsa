@@ -10,7 +10,7 @@ class SubmissionsController < ApplicationController
   end
 
   def index
-    if session[:user_id].nil? or !User.find_by_id(session[:user_id]).is_admin
+    if session[:user_id].nil? or !User.find_by_id(session[:user_id]).admin?
       head status: :forbidden and return
     end
     @submissions = AccountabilityLog.find_by_id(params[:accountability_log_id]).submissions
@@ -45,7 +45,7 @@ class SubmissionsController < ApplicationController
       end
     end
     add_breadcrumb "Submission by " + @submission.user.name, accountability_log_submission_path(@submission.accountability_log, @submission)
-    if session[:user_id].nil? or ((session[:user_id] != @submission.user.id) and !User.find_by_id(session[:user_id]).is_admin)
+    if session[:user_id].nil? or ((session[:user_id] != @submission.user.id) and !User.find_by_id(session[:user_id]).admin?)
       head status: :forbidden and return
     end
     respond_with @submission
@@ -55,7 +55,7 @@ class SubmissionsController < ApplicationController
     if session[:user_id].nil?
       head status: :forbidden and return
     end
-    if !User.find_by_id(session[:user_id]).is_member
+    if !User.find_by_id(session[:user_id]).member?
       head status: :forbidden and return
     end
     if Submission.find_by_accountability_log_id_and_user_id(params[:accountability_log_id], session[:user_id])
@@ -74,7 +74,7 @@ class SubmissionsController < ApplicationController
     if !submission
       head status: :not_found and return
     end
-    if session[:user_id].nil? or (Submission.find_by_accountability_log_id_and_user_id(params[:accountability_log_id], session[:user_id]).nil? and !User.find_by_id(session[:user_id]).is_admin)
+    if session[:user_id].nil? or (Submission.find_by_accountability_log_id_and_user_id(params[:accountability_log_id], session[:user_id]).nil? and !User.find_by_id(session[:user_id]).admin?)
       head status: :forbidden and return
     end
     submission.destroy

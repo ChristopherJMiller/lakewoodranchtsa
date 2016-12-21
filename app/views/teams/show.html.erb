@@ -1,14 +1,14 @@
 <div class='main-div'>
   <div class="jumbotron">
     <% current_user_in_team = !@team.team_members.find_by_user_id(current_user).nil? %>
-    <% if !session[:user_id].nil? and current_user.is_admin %>
-      <%= link_to 'View Team Members', event_team_team_members_path(params[:event_id], params[:id]), class: 'btn btn-secondary pull-xs-right' %>
+    <% if !session[:user_id].nil? and current_user.admin? %>
+      <%= link_to 'View Team Members', event_team_team_members_path(params[:event_id], params[:id]), class: 'btn btn-secondary float-xs-right' %>
     <% end %>
-    <% else if current_user_in_team && @team.team_members.find_by_user_id(current_user).admin %>
-      <%= link_to 'Edit Team', edit_event_team_path(params[:event_id], params[:id]), class: 'btn btn-secondary pull-xs-right' %>
+    <% else if current_user_in_team && @team.team_members.find_by_user_id(current_user).admin? %>
+      <%= link_to 'Edit Team', edit_event_team_path(params[:event_id], params[:id]), class: 'btn btn-secondary float-xs-right' %>
     <% end %>
     <% if current_user_in_team %>
-      <%= button_to 'Leave Team', {team_id: @team.id, id: TeamMember.find_by_user_id(session[:user_id]).id, controller: :team_members, action: :destroy}, remote: true, method: :delete, class: 'btn btn-danger pull-xs-right' %>
+      <%= button_to 'Leave Team', {team_id: @team.id, id: TeamMember.find_by_user_id(session[:user_id]).id, controller: :team_members, action: :destroy}, remote: true, method: :delete, class: 'btn btn-danger float-xs-right' %>
     <% end %>
     <h1 class="display-3"><%= @team.name %></h1>
     <% if @team.full %>

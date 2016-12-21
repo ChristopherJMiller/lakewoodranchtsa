@@ -43,7 +43,7 @@ class AnnouncementsController < ApplicationController
 
   def create
     return head status: :forbidden if session[:user_id].nil?
-    return head status: :forbidden unless User.find_by(id: session[:user_id]).is_admin
+    return head status: :forbidden unless User.find_by(id: session[:user_id]).admin?
     announcement = Announcement.new(announcement_parameters_create)
     if announcement.save
       head status: :created, location: announcement_path(announcement)
@@ -55,7 +55,7 @@ class AnnouncementsController < ApplicationController
   def update
     announcement = Announcement.find_by(id: params[:id])
     return head status: :not_found unless announcement
-    if session[:user_id].nil? || !User.find_by(id: session[:user_id]).is_admin
+    if session[:user_id].nil? || !User.find_by(id: session[:user_id]).admin?
       return head status: :forbidden
     end
     if announcement.update(announcement_parameters_update)
@@ -68,7 +68,7 @@ class AnnouncementsController < ApplicationController
   def destroy
     announcement = Announcement.find_by(id: params[:id])
     return head status: :not_found unless announcement
-    if session[:user_id].nil? || !User.find_by(id: session[:user_id]).is_admin
+    if session[:user_id].nil? || !User.find_by(id: session[:user_id]).admin?
       return head status: :forbidden
     end
     announcement.destroy

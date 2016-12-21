@@ -44,7 +44,7 @@ class AccountabilityLogsController < ApplicationController
 
   def create
     return head status: :forbidden if session[:user_id].nil?
-    return head status: :forbidden unless User.find_by(id: session[:user_id]).is_admin
+    return head status: :forbidden unless User.find_by(id: session[:user_id]).admin?
     accountability_log = AccountabilityLog.new(accountability_log_parameters_create)
     if accountability_log.save
       head status: :created, location: accountability_log_path(accountability_log)
@@ -56,7 +56,7 @@ class AccountabilityLogsController < ApplicationController
   def update
     accountability_log = AccountabilityLog.find_by(id: params[:id])
     return head status: :not_found unless accountability_log
-    if session[:user_id].nil? || !User.find_by(id: session[:user_id]).is_admin
+    if session[:user_id].nil? || !User.find_by(id: session[:user_id]).admin?
       return head status: :forbidden
     end
     if accountability_log.update(accountability_log_parameters_update)
@@ -69,7 +69,7 @@ class AccountabilityLogsController < ApplicationController
   def destroy
     accountability_log = AccountabilityLog.find_by(id: params[:id])
     return head status: :not_found unless accountability_log
-    if session[:user_id].nil? || !User.find_by(id: session[:user_id]).is_admin
+    if session[:user_id].nil? || !User.find_by(id: session[:user_id]).admin?
       return head status: :forbidden
     end
     AccountabilityLog.destroy(accountability_log.id)

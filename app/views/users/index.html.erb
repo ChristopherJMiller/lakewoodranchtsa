@@ -1,6 +1,6 @@
 <div class="main-div">
   <input type="text" id="user_search" class="form-control" placeholder="Search by Name">
-  <% if logged_in && User.find_by_id(session[:user_id]).is_admin %>
+  <% if logged_in && User.find_by_id(session[:user_id]).admin? %>
     <h1>Guest Users</h1>
     <table class="table table-striped">
       <tbody>

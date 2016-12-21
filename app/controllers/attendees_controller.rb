@@ -16,7 +16,7 @@ class AttendeesController < ApplicationController
 
   def create
     return head status: :forbidden if session[:user_id].nil?
-    return head status: :forbidden unless User.find_by(id: session[:user_id]).is_admin
+    return head status: :forbidden unless User.find_by(id: session[:user_id]).admin?
     if Attendee.find_by(sign_up_sheet_id: params[:sign_up_sheet_id], user_id: params[:attendee][:user_id])
       return head status: :conflict
     end
@@ -31,7 +31,7 @@ class AttendeesController < ApplicationController
   def destroy
     attendee = Attendee.find_by(sign_up_sheet_id: params[:sign_up_sheet_id], id: params[:id])
     return head status: :not_found unless attendee
-    if session[:user_id].nil? || (Attendee.find_by(sign_up_sheet_id: params[:sign_up_sheet_id], user_id: session[:user_id]).nil? && !User.find_by(id: session[:user_id]).is_admin) || (!User.find_by(id: session[:user_id]).is_admin && !Attendee.find_by(sign_up_sheet_id: params[:sign_up_sheet_id], user_id: session[:user_id]).user.is_member)
+    if session[:user_id].nil? || (Attendee.find_by(sign_up_sheet_id: params[:sign_up_sheet_id], user_id: session[:user_id]).nil? && !User.find_by(id: session[:user_id]).admin?) || (!User.find_by(id: session[:user_id]).admin? && !Attendee.find_by(sign_up_sheet_id: params[:sign_up_sheet_id], user_id: session[:user_id]).user.member?)
       return head status: :forbidden
     end
     attendee.destroy

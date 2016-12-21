@@ -47,7 +47,7 @@ class TeamsController < ApplicationController
   end
 
   def create
-    if session[:user_id].nil? or !User.find_by_id(session[:user_id]).is_admin
+    if session[:user_id].nil? or !User.find_by_id(session[:user_id]).admin?
       head status: :forbidden and return
     end
     team = Team.new(team_parameters_create)
@@ -64,7 +64,7 @@ class TeamsController < ApplicationController
     if !team
       head status: :not_found and return
     end
-    if session[:user_id].nil? or (TeamMember.find_by_team_id_and_user_id(params[:team_id], params[:user_id]).nil? and !User.find_by_id(session[:user_id]).is_admin)
+    if session[:user_id].nil? or (TeamMember.find_by_team_id_and_user_id(params[:team_id], params[:user_id]).nil? and !User.find_by_id(session[:user_id]).admin?)
       head status: :forbidden and return
     end
     if team.update(team_parameters_update)
@@ -79,7 +79,7 @@ class TeamsController < ApplicationController
     if !team
       head status: :not_found and return
     end
-    if session[:user_id].nil? or !User.find_by_id(session[:user_id]).is_admin
+    if session[:user_id].nil? or !User.find_by_id(session[:user_id]).admin?
       head status: :forbidden and return
     end
     Team.destroy(team.id)

@@ -7,7 +7,7 @@ class AdminController < ApplicationController
 
   def check_if_admin
     return head status: :forbidden unless logged_in
-    return head status: :forbidden unless current_user.is_admin
+    return head status: :forbidden unless current_user.admin?
   end
 
   def teams

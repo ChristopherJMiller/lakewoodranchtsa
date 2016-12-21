@@ -2,7 +2,7 @@
   <td class='team_name'><%= team_member.user.name %></td>
   <td class='team_rank'><%= team_member.admin ? "Admin" : "Member" %></td>
   <td class='team_view'><%= link_to 'View', user_path(team_member.user), class: 'btn btn-primary' %></td>
-  <% if logged_in && (current_user.is_admin || (!TeamMember.find_by_team_id_and_id(team_member.team, current_user).nil? && TeamMember.find_by_team_id_and_user_id(team_member.team, current_user.id).is_admin)) %>
+  <% if logged_in && (current_user.admin? || (!TeamMember.find_by_team_id_and_id(team_member.team, current_user).nil? && TeamMember.find_by_team_id_and_user_id(team_member.team, current_user.id).admin?)) %>
     <td class='team_edit'><%= link_to 'Edit', edit_event_team_team_member_path(team_member.team.event.id, team_member.team.id, team_member.id), class: 'btn btn-warning' %></td>
   <% end %>
 </tr>

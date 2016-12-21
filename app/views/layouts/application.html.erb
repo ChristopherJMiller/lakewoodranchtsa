@@ -53,7 +53,7 @@
             </div>
             <div class='hidden-sm-up'>
               <% if logged_in then %>
-                <% if current_user.is_admin %>
+                <% if current_user.admin? %>
                   <div class='dropdown-divider'></div>
                   <%= link_to admin_dashboard_path, class: 'nav-item nav-link' do %>
                     <i class="fa fa-tachometer" aria-hidden="true"></i> Admin Dashboard

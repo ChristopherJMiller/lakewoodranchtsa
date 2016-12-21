@@ -1,8 +1,8 @@
 <div class='main-div'>
     <h1 class="display-3">
       <%= @event.name %>
-      <% if logged_in && current_user.is_admin %>
-        <% if User.find_by_id(session[:user_id]).is_admin %>
+      <% if logged_in && current_user.admin? %>
+        <% if User.find_by_id(session[:user_id]).admin? %>
           <%= link_to edit_event_path(@event), class: 'btn btn-warning btn-lg pull-xs-right' do %>
             <i class="fa fa-cog"></i>
           <% end %>
@@ -16,7 +16,7 @@
     <h2 class='p-t-2'>
       Teams
       <% if logged_in %>
-        <% if User.find_by_id(session[:user_id]).is_admin %>
+        <% if User.find_by_id(session[:user_id]).admin? %>
           <%= link_to new_event_team_path(@event), class: 'btn btn-info pull-xs-right' do %>
             <i class="fa fa-plus"></i> Create a New Team
           <% end %>

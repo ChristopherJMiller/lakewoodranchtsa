@@ -43,7 +43,7 @@ class EventsController < ApplicationController
 
   def create
     return head status: :forbidden if session[:user_id].nil?
-    return head status: :forbidden unless User.find_by(id: session[:user_id]).is_admin
+    return head status: :forbidden unless User.find_by(id: session[:user_id]).admin?
     event = Event.new(event_parameters_create)
     if event.save
       head status: :created, location: event_path(event)
@@ -55,7 +55,7 @@ class EventsController < ApplicationController
   def update
     event = Event.find_by(id: params[:id])
     return head status: :not_found unless event
-    if session[:user_id].nil? || !User.find_by(id: session[:user_id]).is_admin
+    if session[:user_id].nil? || !User.find_by(id: session[:user_id]).admin?
       return head status: :forbidden
     end
     if event.update(event_parameters_update)
@@ -68,7 +68,7 @@ class EventsController < ApplicationController
   def destroy
     event = Event.find_by(id: params[:id])
     return head status: :not_found unless event
-    if session[:user_id].nil? || !User.find_by(id: session[:user_id]).is_admin
+    if session[:user_id].nil? || !User.find_by(id: session[:user_id]).admin?
       return head status: :forbidden
     end
     Event.destroy(event.id)

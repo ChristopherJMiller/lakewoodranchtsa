@@ -30,7 +30,7 @@ class TeamMembersController < ApplicationController
     if session[:user_id].nil?
       head status: :forbidden and return
     end
-    if !User.find_by_id(session[:user_id]).is_admin or Team.find_by_id(params[:team_id]).full
+    if !User.find_by_id(session[:user_id]).admin? or Team.find_by_id(params[:team_id]).full
       head status: :forbidden and return
     end
     if TeamMember.find_by_team_id_and_user_id(params[:team_id], params[:team_member][:user_id])
@@ -49,7 +49,7 @@ class TeamMembersController < ApplicationController
     if !team_member
       head status: :not_found and return
     end
-    if session[:user_id].nil? or (TeamMember.find_by_team_id_and_user_id(params[:team_id], session[:user_id]).nil? and !User.find_by_id(session[:user_id]).is_admin) or ((!TeamMember.find_by_team_id_and_user_id(params[:team_id], session[:user_id]).nil? and !TeamMember.find_by_team_id_and_user_id(params[:team_id], session[:user_id]).admin) and !User.find_by_id(session[:user_id]).is_admin) then
+    if session[:user_id].nil? or (TeamMember.find_by_team_id_and_user_id(params[:team_id], session[:user_id]).nil? and !User.find_by_id(session[:user_id]).admin?) or ((!TeamMember.find_by_team_id_and_user_id(params[:team_id], session[:user_id]).nil? and !TeamMember.find_by_team_id_and_user_id(params[:team_id], session[:user_id]).admin) and !User.find_by_id(session[:user_id]).admin?) then
       head status: :forbidden and return
     end
     if team_member.update(team_member_parameters_update)
@@ -64,7 +64,7 @@ class TeamMembersController < ApplicationController
     if !team_member
       head status: :not_found and return
     end
-    if session[:user_id].nil? or (TeamMember.find_by_team_id_and_user_id(params[:team_id], session[:user_id]).nil? and !User.find_by_id(session[:user_id]).is_admin) or (!User.find_by_id(session[:user_id]).is_admin and !TeamMember.find_by_team_id_and_user_id(params[:team_id], session[:user_id]).user.is_member)
+    if session[:user_id].nil? or (TeamMember.find_by_team_id_and_user_id(params[:team_id], session[:user_id]).nil? and !User.find_by_id(session[:user_id]).admin?) or (!User.find_by_id(session[:user_id]).admin? and !TeamMember.find_by_team_id_and_user_id(params[:team_id], session[:user_id]).user.member?)
       head status: :forbidden and return
     end
     team_member.destroy

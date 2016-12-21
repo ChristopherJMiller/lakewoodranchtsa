@@ -56,7 +56,7 @@ class SignUpSheetsController < ApplicationController
     if session[:user_id].nil?
       head status: :forbidden and return
     end
-    if !User.find_by_id(session[:user_id]).is_admin
+    if !User.find_by_id(session[:user_id]).admin?
       head status: :forbidden and return
     end
     sign_up_sheet = SignUpSheet.new(sign_up_sheet_parameters_create)
@@ -72,7 +72,7 @@ class SignUpSheetsController < ApplicationController
     if !sign_up_sheet
       head status: :not_found and return
     end
-    if session[:user_id].nil? or !User.find_by_id(session[:user_id]).is_admin
+    if session[:user_id].nil? or !User.find_by_id(session[:user_id]).admin?
       head status: :forbidden and return
     end
     if sign_up_sheet.update(sign_up_sheet_parameters_update)
@@ -87,7 +87,7 @@ class SignUpSheetsController < ApplicationController
     if !sign_up_sheet
       head status: :not_found and return
     end
-    if session[:user_id].nil? or !User.find_by_id(session[:user_id]).is_admin
+    if session[:user_id].nil? or !User.find_by_id(session[:user_id]).admin?
       head status: :forbidden and return
     end
     sign_up_sheet.destroy

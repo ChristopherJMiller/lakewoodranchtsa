@@ -42,7 +42,7 @@ class DocumentsController < ApplicationController
 
   def create
     return head status: :forbidden if session[:user_id].nil?
-    return head status: :forbidden unless User.find_by(id: session[:user_id]).is_admin
+    return head status: :forbidden unless User.find_by(id: session[:user_id]).admin?
     document = Document.new(document_parameters_create)
     if document.save
       head status: :created, location: document_path(document)
@@ -54,7 +54,7 @@ class DocumentsController < ApplicationController
   def update
     document = Document.find_by(id: params[:id])
     return head status: :not_found unless document
-    if session[:user_id].nil? || !User.find_by(id: session[:user_id]).is_admin
+    if session[:user_id].nil? || !User.find_by(id: session[:user_id]).admin?
       return head status: :forbidden
     end
     if document.update(document_parameters_update)
@@ -67,7 +67,7 @@ class DocumentsController < ApplicationController
   def destroy
     document = Document.find_by(id: params[:id])
     return head status: :not_found unless document
-    if session[:user_id].nil? || !User.find_by(id: session[:user_id]).is_admin
+    if session[:user_id].nil? || !User.find_by(id: session[:user_id]).admin?
       return head status: :forbidden
     end
     Document.destroy(document.id)
