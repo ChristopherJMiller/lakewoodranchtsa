@@ -47,8 +47,8 @@ RSpec.describe SignUpSheetsController, type: :controller do
 
   describe 'GET #show' do
     context 'with a valid sign up sheet' do
-      before(:each) do
-        get :show, {id: sign_up_sheet.id}
+      before do
+        get :show, id: sign_up_sheet.id
       end
 
       it 'returns HTTP status 200 (OK)' do
@@ -62,9 +62,9 @@ RSpec.describe SignUpSheetsController, type: :controller do
 
     context 'with an invalid sign up sheet' do
       it 'returns HTTP status 404 (Not Found)' do
-        expect {
-          get :show, {id: -1}
-        }.to raise_error(ActionController::RoutingError)
+        expect do
+          get :show, id: -1
+        end.to raise_error(ActionController::RoutingError)
       end
     end
   end
@@ -78,8 +78,8 @@ RSpec.describe SignUpSheetsController, type: :controller do
 
   describe 'GET #edit' do
     context 'with a valid sign up sheet' do
-      before(:each) do
-        get :edit, {id: sign_up_sheet.id}
+      before do
+        get :edit, id: sign_up_sheet.id
       end
 
       it 'returns HTTP status 200 (OK)' do
@@ -93,9 +93,9 @@ RSpec.describe SignUpSheetsController, type: :controller do
 
     context 'with an invalid sign up sheet' do
       it 'returns HTTP status 404 (Not Found)' do
-        expect {
-          get :edit, {id: -1}
-        }.to raise_error(ActionController::RoutingError)
+        expect do
+          get :edit, id: -1
+        end.to raise_error(ActionController::RoutingError)
       end
     end
   end
@@ -110,9 +110,9 @@ RSpec.describe SignUpSheetsController, type: :controller do
           end
 
           it 'creates a new sign up sheet' do
-            expect {
+            expect do
               post :create, {sign_up_sheet: valid_parameters}, valid_session_admin
-            }.to change(SignUpSheet, :count).by(1)
+            end.to change(SignUpSheet, :count).by(1)
           end
         end
 
@@ -134,7 +134,7 @@ RSpec.describe SignUpSheetsController, type: :controller do
 
     context 'while logged out' do
       it 'returns HTTP status 403 (Forbidden)' do
-        post :create, {sign_up_sheet: valid_parameters}
+        post :create, sign_up_sheet: valid_parameters
         expect(response).to have_http_status(:forbidden)
       end
     end
@@ -144,7 +144,7 @@ RSpec.describe SignUpSheetsController, type: :controller do
     context 'with a valid sign up sheet' do
       context 'as an admin' do
         context 'with valid parameters' do
-          before(:each) do
+          before do
             put :update, {id: sign_up_sheet.id, sign_up_sheet: valid_parameters}, valid_session_admin
           end
 
@@ -152,9 +152,13 @@ RSpec.describe SignUpSheetsController, type: :controller do
             expect(response).to have_http_status(:ok)
           end
 
-          it 'updates the requested sign up sheet' do
+          it 'updates the requested sign up sheet name' do
             sign_up_sheet.reload
             expect(sign_up_sheet.name).to eq(valid_parameters[:name])
+          end
+
+          it 'updates the requested sign up sheet date' do
+            sign_up_sheet.reload
             expect(sign_up_sheet.date).to eq(valid_parameters[:date].to_date)
           end
         end
@@ -186,7 +190,7 @@ RSpec.describe SignUpSheetsController, type: :controller do
   describe 'DELETE #destroy' do
     context 'with a valid sign up sheet' do
       context 'as an admin' do
-        before(:each) do
+        before do
           Attendee.create(sign_up_sheet_id: sign_up_sheet.id, user_id: user.id)
         end
 
@@ -196,9 +200,9 @@ RSpec.describe SignUpSheetsController, type: :controller do
         end
 
         it 'deletes the requested sign up sheet' do
-          expect {
+          expect do
             delete :destroy, {id: sign_up_sheet.id}, valid_session_admin
-          }.to change(SignUpSheet, :count).by(-1)
+          end.to change(SignUpSheet, :count).by(-1)
         end
       end
 
@@ -212,7 +216,7 @@ RSpec.describe SignUpSheetsController, type: :controller do
 
     context 'with an invalid sign up sheet' do
       it 'returns HTTP status 404 (Not Found)' do
-        delete :destroy, {id: 1}
+        delete :destroy, id: 1
         expect(response).to have_http_status(:not_found)
       end
     end

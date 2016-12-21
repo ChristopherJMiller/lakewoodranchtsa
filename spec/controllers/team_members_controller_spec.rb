@@ -1,116 +1,115 @@
 require 'rails_helper'
 
 RSpec.describe TeamMembersController, type: :controller do
+  let(:user) do
+    FactoryGirl.create(:user)
+  end
 
-    let(:user) do
-      FactoryGirl.create(:user)
+  let(:user_member) do
+    FactoryGirl.create(:user, rank: 1, email: 'member@test.com')
+  end
+
+  let(:user_admin) do
+    FactoryGirl.create(:user, rank: 2, email: 'admin@test.com')
+  end
+
+  let(:different_user) do
+    FactoryGirl.create(:user, rank: 1, email: 'test2@test.com')
+  end
+
+  let(:team_member) do
+    FactoryGirl.create(:team_member, user_id: user_member.id, admin: false)
+  end
+
+  let(:team_member_admin) do
+    FactoryGirl.create(:team_member, team_id: team_member.team.id, user_id: different_user.id, admin: true)
+  end
+
+  let(:event) do
+    FactoryGirl.create(:event)
+  end
+
+  let(:team) do
+    FactoryGirl.create(:team)
+  end
+
+  let(:valid_session) do
+    {user_id: user.id}
+  end
+
+  let(:valid_session_member) do
+    {user_id: user_member.id}
+  end
+
+  let(:valid_session_admin) do
+    {user_id: user_admin.id}
+  end
+
+  let(:valid_parameters) do
+    {user_id: user.id}
+  end
+
+  let(:valid_parameters_member) do
+    {user_id: user_member.id, admin: false}
+  end
+
+  let(:valid_update_parameters) do
+    {admin: true}
+  end
+
+  let(:invalid_update_parameters) do
+    {admin: nil}
+  end
+
+  let(:invalid_parameters) do
+    {user_id: -1, admin: false}
+  end
+
+  let(:valid_session_existing_team_member) do
+    {user_id: team_member_admin.user.id}
+  end
+
+  let(:valid_session_existing_member_not_admin) do
+    {user_id: team_member.user.id}
+  end
+
+  describe 'GET #index' do
+    it 'assigns all members of a team to @team_members' do
+      get :index, event_id: team_member.team.event.id, team_id: team_member.team.id
+      expect(assigns(:team_members)).to eq([team_member])
     end
+  end
 
-    let(:user_member) do
-      FactoryGirl.create(:user, rank: 1, email: 'member@test.com')
+  describe 'GET #new' do
+    it 'assigns a new team member as @team_member' do
+      get :new, event_id: team_member.team.event.id, team_id: team_member.team.id, id: team_member.id
+      expect(assigns(:team_member)).to be_a_new(TeamMember)
     end
+  end
 
-    let(:user_admin) do
-      FactoryGirl.create(:user, rank: 2, email: 'admin@test.com')
-    end
+  describe 'GET #edit' do
+    context 'with a valid team member' do
+      before do
+        get :edit, event_id: team_member.team.event.id, team_id: team_member.team.id, id: team_member.id
+      end
 
-    let(:different_user) do
-      FactoryGirl.create(:user, rank: 1, email: 'test2@test.com')
-    end
+      it 'returns HTTP status 200 (OK)' do
+        expect(response).to have_http_status(:ok)
+      end
 
-    let(:team_member) do
-      FactoryGirl.create(:team_member, user_id: user_member.id, admin: false)
-    end
-
-    let(:team_member_admin) do
-      FactoryGirl.create(:team_member, team_id: team_member.team.id, user_id: different_user.id, admin: true)
-    end
-
-    let(:event) do
-      FactoryGirl.create(:event)
-    end
-
-    let(:team) do
-      FactoryGirl.create(:team)
-    end
-
-    let(:valid_session) do
-      {user_id: user.id}
-    end
-
-    let(:valid_session_member) do
-      {user_id: user_member.id}
-    end
-
-    let(:valid_session_admin) do
-      {user_id: user_admin.id}
-    end
-
-    let(:valid_parameters) do
-      {user_id: user.id}
-    end
-
-    let(:valid_parameters_member) do
-      {user_id: user_member.id, admin: false}
-    end
-
-    let(:valid_update_parameters) do
-      {admin: true}
-    end
-
-    let(:invalid_update_parameters) do
-      {admin: nil}
-    end
-
-    let(:invalid_parameters) do
-      {user_id: -1, admin: false}
-    end
-
-    let(:valid_session_existing_team_member) do
-      {user_id: team_member_admin.user.id}
-    end
-
-    let(:valid_session_existing_member_not_admin) do
-      {user_id: team_member.user.id}
-    end
-
-    describe 'GET #index' do
-      it 'assigns all members of a team to @team_members' do
-        get :index, {event_id: team_member.team.event.id, team_id: team_member.team.id}
-        expect(assigns(:team_members)).to eq([team_member])
+      it 'assigns the requested team member as @team_member' do
+        expect(assigns(:team_member)).to eq(team_member)
       end
     end
 
-    describe 'GET #new' do
-      it 'assigns a new team member as @team_member' do
-        get :new, {event_id: team_member.team.event.id, team_id: team_member.team.id, id: team_member.id}
-        expect(assigns(:team_member)).to be_a_new(TeamMember)
+    context 'with an invalid team' do
+      it 'returns HTTP status 404 (Not Found)' do
+        expect do
+          get :edit, event_id: team_member.team.event.id, team_id: team_member.team.id, id: -1
+        end.to raise_error(ActionController::RoutingError)
       end
     end
-
-    describe 'GET #edit' do
-      context 'with a valid team member' do
-        before(:each) do
-          get :edit, {event_id: team_member.team.event.id, team_id: team_member.team.id, id: team_member.id}
-        end
-
-        it 'returns HTTP status 200 (OK)' do
-          expect(response).to have_http_status(:ok)
-        end
-
-        it 'assigns the requested team member as @team_member' do
-          expect(assigns(:team_member)).to eq(team_member)
-        end
-      end
-
-      context 'with an invalid team' do
-        it 'returns HTTP status 404 (Not Found)' do
-          expect {
-            get :edit, {event_id: team_member.team.event.id, team_id: team_member.team.id, id: -1}
-          }.to raise_error(ActionController::RoutingError)
-        end
-      end
-    end
+  end
 
   describe 'POST #create' do
     context 'with valid parameters' do
@@ -122,9 +121,9 @@ RSpec.describe TeamMembersController, type: :controller do
           end
 
           it 'creates a new team member' do
-            expect {
+            expect do
               post :create, {event_id: event.id, team_id: team.id, team_member: valid_parameters_member}, valid_session_admin
-            }.to change(TeamMember, :count).by(1)
+            end.to change(TeamMember, :count).by(1)
           end
         end
 
@@ -146,7 +145,7 @@ RSpec.describe TeamMembersController, type: :controller do
 
       context 'as a logged out user' do
         it 'returns HTTP status 403 (Forbidden)' do
-          post :create, {event_id: event.id, team_id: team.id, team_member: valid_parameters_member}
+          post :create, event_id: event.id, team_id: team.id, team_member: valid_parameters_member
           expect(response).to have_http_status(:forbidden)
         end
       end
@@ -164,7 +163,7 @@ RSpec.describe TeamMembersController, type: :controller do
     context 'with a valid member' do
       context 'with valid parameters' do
         context 'as a team admin' do
-          before (:each) do
+          before do
             put :update, {event_id: team_member.team.event.id, team_id: team_member.team.id, id: team_member.id, team_member: valid_update_parameters}, valid_session_existing_team_member
           end
 
@@ -186,7 +185,7 @@ RSpec.describe TeamMembersController, type: :controller do
         end
 
         context 'as a site admin' do
-          before (:each) do
+          before do
             put :update, {event_id: team_member.team.event.id, team_id: team_member.team.id, id: team_member.id, team_member: valid_update_parameters}, valid_session_admin
           end
 
@@ -227,9 +226,9 @@ RSpec.describe TeamMembersController, type: :controller do
 
         it 'deletes the requested member' do
           team_member_to_delete = FactoryGirl.create(:team_member, user_id: user_member.id)
-          expect {
+          expect do
             delete :destroy, {event_id: team_member_to_delete.team.event.id, team_id: team_member_to_delete.team.id, id: team_member_to_delete.id}, valid_session_admin
-          }.to change(TeamMember, :count).by(-1)
+          end.to change(TeamMember, :count).by(-1)
         end
       end
 
@@ -242,16 +241,16 @@ RSpec.describe TeamMembersController, type: :controller do
 
           it 'deletes the requested participant' do
             team_member_to_delete = FactoryGirl.create(:team_member, user_id: user_member.id)
-            expect {
-              delete :destroy, {event_id: team_member_to_delete.team.event.id, team_id: team_member_to_delete.team.id, id: team_member_to_delete.id}, {user_id: team_member_to_delete.user.id}
-            }.to change(TeamMember, :count).by(-1)
+            expect do
+              delete :destroy, {event_id: team_member_to_delete.team.event.id, team_id: team_member_to_delete.team.id, id: team_member_to_delete.id}, user_id: team_member_to_delete.user.id
+            end.to change(TeamMember, :count).by(-1)
           end
         end
 
         context 'not as the requested participant' do
           it 'returns HTTP status 403 (Forbidden)' do
             team_member_to_delete = FactoryGirl.create(:team_member)
-            delete :destroy, {event_id: team_member_to_delete.team.event.id, team_id: team_member_to_delete.team.id, id: team_member_to_delete.id}, {user_id: different_user.id}
+            delete :destroy, {event_id: team_member_to_delete.team.event.id, team_id: team_member_to_delete.team.id, id: team_member_to_delete.id}, user_id: different_user.id
             expect(response).to have_http_status(:forbidden)
           end
         end
