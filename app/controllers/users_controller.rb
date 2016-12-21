@@ -1,7 +1,8 @@
+# Controller for User routes
 class UsersController < ApplicationController
   respond_to :html, :json
 
-  add_breadcrumb "Users", :users_path
+  add_breadcrumb 'Users', :users_path
 
   def index
     @users = User.all
@@ -9,7 +10,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find_by_id(params[:id])
+    @user = User.find_by(id: params[:id])
     if @user
       add_breadcrumb @user.name, user_path(@user)
       respond_with @user
@@ -23,20 +24,17 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
-    add_breadcrumb "Register", new_user_path
+    add_breadcrumb 'Register', new_user_path
     respond_to :html
   end
 
   def edit
-    @user = User.find_by_id(params[:id])
+    @user = User.find_by(id: params[:id])
     if @user
       add_breadcrumb @user.name, user_path(@user)
-      add_breadcrumb "Settings", edit_user_path(@user)
-      if @user.id != session[:user_id]
-        head status: :forbidden and return
-      else
-        respond_with @user
-      end
+      add_breadcrumb 'Settings', edit_user_path(@user)
+      return head status: :forbidden unless @user.id == session[:user_id]
+      respond_with @user
     else
       respond_to do |format|
         format.html { not_found }
@@ -57,24 +55,17 @@ class UsersController < ApplicationController
   end
 
   def update
-    if !logged_in
-      head status: :forbidden and return
-    end
+    return head status: :forbidden unless logged_in
 
     # Nonadmin users shouldn't be able to change other users.
-    if !current_user.admin? and (params[:user][:rank].present? or params[:id].to_i != session[:user_id])
-      head status: :forbidden and return
+    if !current_user.admin? && (params[:user][:rank].present? || params[:id].to_i != session[:user_id])
+      return head status: :forbidden
     end
 
-    user = User.find_by_id(params[:id])
+    user = User.find_by(id: params[:id])
 
-    if !user
-      head status: :not_found and return
-    end
-
-    if current_user.officer? && user.admin?
-      head status: :forbidden and return
-    end
+    return head status: :not_found unless user
+    return head status: :forbidden if current_user.officer? && user.admin?
 
     if user.update(user_parameters_update)
       head status: :ok
@@ -84,12 +75,11 @@ class UsersController < ApplicationController
   end
 
   def change_password
-    user = User.find_by_id(params[:user_id])
-    if !user
-      head status: :not_found and return
-    end
-    if user.id != session[:user_id] or session[:user_id].nil?
-      head status: :forbidden and return
+    user = User.find_by(id: params[:user_id])
+    return head status: :not_found unless user
+
+    if user.id != session[:user_id] || session[:user_id].nil?
+      return head status: :forbidden
     end
     if user.update(user_parameters_change_password)
       head status: :ok
@@ -99,7 +89,7 @@ class UsersController < ApplicationController
   end
 
   def verify_email
-    user = User.find_by_verify_token(params[:token])
+    user = User.find_by(verify_token: params[:token])
     if user
       user.update_attribute(:verified, true)
       respond_to :html
@@ -114,7 +104,7 @@ class UsersController < ApplicationController
     parameters = params.require(:user).permit(:name, :email, :password, :password_confirmation)
     parameters[:verified] = false
     parameters[:rank] = 0
-    return parameters
+    parameters
   end
 
   def user_parameters_update
