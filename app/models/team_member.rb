@@ -1,3 +1,4 @@
+# A member of a specific team for a certain event
 class TeamMember < ActiveRecord::Base
   belongs_to :user
   belongs_to :team
@@ -8,7 +9,7 @@ class TeamMember < ActiveRecord::Base
 
   validates :admin, inclusion: [true, false]
 
-  def is_admin
+  def admin?
     admin
   end
 end
