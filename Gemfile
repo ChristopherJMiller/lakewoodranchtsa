@@ -38,9 +38,9 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 # Use dateslices for dating
-gem "dateslices"
+gem 'dateslices'
 # Use breadcrumbs_on_rails for page breadcrumbs
-gem "breadcrumbs_on_rails"
+gem 'breadcrumbs_on_rails'
 # Use redcarpet for Markdown Parser
 gem 'redcarpet'
 # Use markdownjs for markdown rendering
