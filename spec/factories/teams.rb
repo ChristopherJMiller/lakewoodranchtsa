@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :team do
-    name "Test Team"
+    name 'Test Team'
     closed false
     association :event
   end
