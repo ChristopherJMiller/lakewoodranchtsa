@@ -1,7 +1,8 @@
+# Controller for Announcements
 class AnnouncementsController < ApplicationController
   respond_to :html, :json
 
-  add_breadcrumb "Announcements", :announcements_path
+  add_breadcrumb 'Announcements', :announcements_path
 
   def index
     @announcements = Announcement.all
@@ -9,9 +10,9 @@ class AnnouncementsController < ApplicationController
   end
 
   def show
-    @announcement = Announcement.find_by_id(params[:id])
-    add_breadcrumb @announcement.title, announcement_path(@announcement)
+    @announcement = Announcement.find_by(id: params[:id])
     if @announcement
+      add_breadcrumb @announcement.title, announcement_path(@announcement)
       respond_with @announcement
     else
       respond_to do |format|
@@ -23,14 +24,14 @@ class AnnouncementsController < ApplicationController
 
   def new
     @announcement = Announcement.new
-    add_breadcrumb "New Announcement", new_announcement_path
+    add_breadcrumb 'New Announcement', new_announcement_path
     respond_to :html
   end
 
   def edit
-    @announcement = Announcement.find_by_id(params[:id])
-    add_breadcrumb "Edit " + @announcement.title, edit_announcement_path(@announcement)
+    @announcement = Announcement.find_by(id: params[:id])
     if @announcement
+      add_breadcrumb 'Edit ' + @announcement.title, edit_announcement_path(@announcement)
       respond_with @announcement
     else
       respond_to do |format|
@@ -41,12 +42,8 @@ class AnnouncementsController < ApplicationController
   end
 
   def create
-    if session[:user_id].nil?
-      head status: :forbidden and return
-    end
-    if !User.find_by_id(session[:user_id]).is_admin
-      head status: :forbidden and return
-    end
+    return head status: :forbidden if session[:user_id].nil?
+    return head status: :forbidden unless User.find_by(id: session[:user_id]).admin?
     announcement = Announcement.new(announcement_parameters_create)
     if announcement.save
       head status: :created, location: announcement_path(announcement)
@@ -56,12 +53,10 @@ class AnnouncementsController < ApplicationController
   end
 
   def update
-    announcement = Announcement.find_by_id(params[:id])
-    if !announcement
-      head status: :not_found and return
-    end
-    if session[:user_id].nil? or !User.find_by_id(session[:user_id]).is_admin
-      head status: :forbidden and return
+    announcement = Announcement.find_by(id: params[:id])
+    return head status: :not_found unless announcement
+    if session[:user_id].nil? || !User.find_by(id: session[:user_id]).admin?
+      return head status: :forbidden
     end
     if announcement.update(announcement_parameters_update)
       head status: :ok
@@ -71,12 +66,10 @@ class AnnouncementsController < ApplicationController
   end
 
   def destroy
-    announcement = Announcement.find_by_id(params[:id])
-    if !announcement
-      head status: :not_found and return
-    end
-    if session[:user_id].nil? or !User.find_by_id(session[:user_id]).is_admin
-      head status: :forbidden and return
+    announcement = Announcement.find_by(id: params[:id])
+    return head status: :not_found unless announcement
+    if session[:user_id].nil? || !User.find_by(id: session[:user_id]).admin?
+      return head status: :forbidden
     end
     announcement.destroy
     head status: :ok
@@ -85,13 +78,12 @@ class AnnouncementsController < ApplicationController
   private
 
   def announcement_parameters_update
-    parameters = params.require(:announcement).permit(:title, :body)
+    params.require(:announcement).permit(:title, :body)
   end
 
   def announcement_parameters_create
     parameters = params.require(:announcement).permit(:title, :body)
-    parameters[:user] = User.find_by_id(session[:user_id])
-    return parameters
+    parameters[:user] = User.find_by(id: session[:user_id])
+    parameters
   end
-
 end

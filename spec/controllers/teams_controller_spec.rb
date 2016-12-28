@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe TeamsController, type: :controller do
-
   let(:event) do
     FactoryGirl.create(:event)
   end
@@ -10,7 +9,7 @@ RSpec.describe TeamsController, type: :controller do
     FactoryGirl.create(:team)
   end
 
-  let (:team_member) do
+  let(:team_member) do
     FactoryGirl.create(:team_member)
   end
 
@@ -56,15 +55,15 @@ RSpec.describe TeamsController, type: :controller do
 
   describe 'GET #index' do
     it 'assigns all teams as @teams' do
-      get :index, {event_id: team.event.id}
+      get :index, event_id: team.event.id
       expect(assigns(:teams)).to eq([team])
     end
   end
 
   describe 'GET #show' do
     context 'with a valid team' do
-      before(:each) do
-        get :show, {event_id: team.event.id, id: team.id}
+      before do
+        get :show, event_id: team.event.id, id: team.id
       end
 
       it 'returns HTTP status 200 (OK)' do
@@ -78,24 +77,24 @@ RSpec.describe TeamsController, type: :controller do
 
     context 'with an invalid team' do
       it 'returns HTTP status 404 (Not Found)' do
-        expect {
-          get :show, {event_id: team.event.id, id: -1}
-        }.to raise_error(ActionController::RoutingError)
+        expect do
+          get :show, event_id: team.event.id, id: -1
+        end.to raise_error(ActionController::RoutingError)
       end
     end
   end
 
   describe 'GET #new' do
     it 'assigns a new team as @team' do
-      get :new, {event_id: team.event.id}
+      get :new, event_id: team.event.id
       expect(assigns(:team)).to be_a_new(Team)
     end
   end
 
   describe 'GET #edit' do
     context 'with a valid team' do
-      before(:each) do
-        get :edit, {event_id: team.event.id, id: team.id}
+      before do
+        get :edit, event_id: team.event.id, id: team.id
       end
 
       it 'returns HTTP status 200 (OK)' do
@@ -109,9 +108,9 @@ RSpec.describe TeamsController, type: :controller do
 
     context 'with an invalid team' do
       it 'returns HTTP status 404 (Not Found)' do
-        expect {
-          get :edit, {event_id: team.event.id, id: -1}
-        }.to raise_error(ActionController::RoutingError)
+        expect do
+          get :edit, event_id: team.event.id, id: -1
+        end.to raise_error(ActionController::RoutingError)
       end
     end
   end
@@ -126,9 +125,9 @@ RSpec.describe TeamsController, type: :controller do
           end
 
           it 'creates a new team' do
-            expect {
+            expect do
               post :create, {event_id: event.id, team: valid_parameters}, valid_session_admin
-            }.to change(Team, :count).by(1)
+            end.to change(Team, :count).by(1)
           end
         end
 
@@ -150,7 +149,7 @@ RSpec.describe TeamsController, type: :controller do
 
     context 'while logged out' do
       it 'returns HTTP status 403 (Forbidden)' do
-        post :create, {event_id: event.id, team: valid_parameters}
+        post :create, event_id: event.id, team: valid_parameters
         expect(response).to have_http_status(:forbidden)
       end
     end
@@ -160,7 +159,7 @@ RSpec.describe TeamsController, type: :controller do
     context 'with a valid team' do
       context 'as an admin' do
         context 'with valid parameters' do
-          before(:each) do
+          before do
             put :update, {event_id: team.event.id, id: team.id, team: valid_parameters}, valid_session_admin
           end
 
@@ -210,7 +209,6 @@ RSpec.describe TeamsController, type: :controller do
   describe 'DELETE #destroy' do
     context 'with a valid team' do
       context 'as an admin' do
-
         it 'returns HTTP status 200 (OK)' do
           delete :destroy, {event_id: team.event.id, id: team.id}, valid_session_admin
           expect(response).to have_http_status(:ok)
@@ -218,9 +216,9 @@ RSpec.describe TeamsController, type: :controller do
 
         it 'deletes the requested team' do
           team_to_remove = FactoryGirl.create(:team)
-          expect {
+          expect do
             delete :destroy, {event_id: team_to_remove.event.id, id: team_to_remove.id}, valid_session_admin
-          }.to change { Team.count }.by(-1)
+          end.to change { Team.count }.by(-1)
         end
       end
 
@@ -234,7 +232,7 @@ RSpec.describe TeamsController, type: :controller do
 
     context 'with an invalid team' do
       it 'returns HTTP status 404 (Not Found)' do
-        delete :destroy, {event_id: team.event.id, id: -1}
+        delete :destroy, event_id: team.event.id, id: -1
         expect(response).to have_http_status(:not_found)
       end
     end

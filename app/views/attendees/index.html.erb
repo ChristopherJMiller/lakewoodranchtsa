@@ -5,7 +5,7 @@
       <p class="lead"><%= format_date SignUpSheet.find_by_id(params[:sign_up_sheet_id]).date %></p>
     </div>
   </div>
-  <% if logged_in && User.find_by_id(session[:user_id]).is_admin %>
+  <% if logged_in && User.find_by_id(session[:user_id]).admin? %>
   <input type="text" id="attendee_search" class="form-control" placeholder="Search by Name">
   <h1>Check In</h1>
   <table class="table table-striped">

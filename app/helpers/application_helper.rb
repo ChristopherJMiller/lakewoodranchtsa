@@ -1,11 +1,11 @@
+# Helper functions for use across Application
 module ApplicationHelper
-
   def logged_in
-    session[:user_id] && User.find_by_id(session[:user_id])
+    session[:user_id] && User.find_by(id: session[:user_id])
   end
 
   def current_user
-    session[:user_id] && User.find_by_id(session[:user_id])
+    session[:user_id] && User.find_by(id: session[:user_id])
   end
 
   def format_date(date)
@@ -31,7 +31,7 @@ module ApplicationHelper
   end
 
   def rank_title(rank)
-    titles = ["Guest", "Member", "Sergeant-at-Arms", "Reporter", "Treasurer", "Secretary", "Vice President", "President", "Advisor"]
+    titles = ['Guest', 'Member', 'Sergeant-at-Arms', 'Reporter', 'Treasurer', 'Secretary', 'Vice President', 'President', 'Advisor']
     titles[rank]
   end
 

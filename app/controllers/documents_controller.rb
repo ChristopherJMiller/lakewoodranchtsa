@@ -1,7 +1,8 @@
+# Controller for site wide documents
 class DocumentsController < ApplicationController
   respond_to :html, :json
 
-  add_breadcrumb "Documents", :documents_path
+  add_breadcrumb 'Documents', :documents_path
 
   def index
     @documents = Document.all
@@ -9,7 +10,7 @@ class DocumentsController < ApplicationController
   end
 
   def show
-    @document = Document.find_by_id(params[:id])
+    @document = Document.find_by(id: params[:id])
     if @document
       redirect_to @document.link
     else
@@ -22,14 +23,14 @@ class DocumentsController < ApplicationController
 
   def new
     @document = Document.new
-    add_breadcrumb "New Document", new_document_path
+    add_breadcrumb 'New Document', new_document_path
     respond_to :html
   end
 
   def edit
-    @document = Document.find_by_id(params[:id])
-    add_breadcrumb "Edit " + @document.title, edit_document_path(@document)
+    @document = Document.find_by(id: params[:id])
     if @document
+      add_breadcrumb 'Edit ' + @document.title, edit_document_path(@document)
       respond_with @document
     else
       respond_to do |format|
@@ -40,12 +41,8 @@ class DocumentsController < ApplicationController
   end
 
   def create
-    if session[:user_id].nil?
-      head status: :forbidden and return
-    end
-    if !User.find_by_id(session[:user_id]).is_admin
-      head status: :forbidden and return
-    end
+    return head status: :forbidden if session[:user_id].nil?
+    return head status: :forbidden unless User.find_by(id: session[:user_id]).admin?
     document = Document.new(document_parameters_create)
     if document.save
       head status: :created, location: document_path(document)
@@ -55,12 +52,10 @@ class DocumentsController < ApplicationController
   end
 
   def update
-    document = Document.find_by_id(params[:id])
-    if !document
-      head status: :not_found and return
-    end
-    if session[:user_id].nil? or !User.find_by_id(session[:user_id]).is_admin
-      head status: :forbidden and return
+    document = Document.find_by(id: params[:id])
+    return head status: :not_found unless document
+    if session[:user_id].nil? || !User.find_by(id: session[:user_id]).admin?
+      return head status: :forbidden
     end
     if document.update(document_parameters_update)
       head status: :ok
@@ -70,12 +65,10 @@ class DocumentsController < ApplicationController
   end
 
   def destroy
-    document = Document.find_by_id(params[:id])
-    if !document
-      head status: :not_found and return
-    end
-    if session[:user_id].nil? or !User.find_by_id(session[:user_id]).is_admin
-      head status: :forbidden and return
+    document = Document.find_by(id: params[:id])
+    return head status: :not_found unless document
+    if session[:user_id].nil? || !User.find_by(id: session[:user_id]).admin?
+      return head status: :forbidden
     end
     Document.destroy(document.id)
     head status: :ok

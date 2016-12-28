@@ -1,5 +1,5 @@
 <h3 class="dropdown-header"><%= current_user.rank_title %></h3>
-<% if current_user.is_admin %>
+<% if current_user.admin? %>
   <%= link_to admin_dashboard_path, class: 'dropdown-item' do %>
     <i class="fa fa-tachometer" aria-hidden="true"></i> Admin Dashboard
   <% end %>

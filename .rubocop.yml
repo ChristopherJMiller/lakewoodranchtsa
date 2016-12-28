@@ -1,0 +1,19 @@
+require: rubocop-rspec
+
+AllCops:
+  Exclude:
+    - db/schema.rb
+    - db/migrate/*
+    - bin/*
+
+Rails:
+  Enabled: true
+
+Rails/HttpPositionalArguments:
+  Enabled: false
+
+Metrics:
+  Enabled: false
+
+Style/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space

@@ -47,8 +47,8 @@ RSpec.describe DocumentsController, type: :controller do
 
   describe 'GET #show' do
     context 'with a valid document' do
-      before(:each) do
-        get :show, {id: document.id}
+      before do
+        get :show, id: document.id
       end
 
       it 'returns HTTP status 302 (FOUND)' do
@@ -62,9 +62,9 @@ RSpec.describe DocumentsController, type: :controller do
 
     context 'with an invalid document' do
       it 'returns HTTP status 404 (Not Found)' do
-        expect {
-          get :show, {id: -1}
-        }.to raise_error(ActionController::RoutingError)
+        expect do
+          get :show, id: -1
+        end.to raise_error(ActionController::RoutingError)
       end
     end
   end
@@ -78,8 +78,8 @@ RSpec.describe DocumentsController, type: :controller do
 
   describe 'GET #edit' do
     context 'with a valid event' do
-      before(:each) do
-        get :edit, {id: document.id}
+      before do
+        get :edit, id: document.id
       end
 
       it 'returns HTTP status 200 (OK)' do
@@ -93,9 +93,9 @@ RSpec.describe DocumentsController, type: :controller do
 
     context 'with an invalid document' do
       it 'returns HTTP status 404 (Not Found)' do
-        expect {
-          get :edit, {id: -1}
-        }.to raise_error(ActionController::RoutingError)
+        expect do
+          get :edit, id: -1
+        end.to raise_error(ActionController::RoutingError)
       end
     end
   end
@@ -110,9 +110,9 @@ RSpec.describe DocumentsController, type: :controller do
           end
 
           it 'creates a new document' do
-            expect {
+            expect do
               post :create, {document: valid_parameters}, valid_session_admin
-            }.to change(Document, :count).by(1)
+            end.to change(Document, :count).by(1)
           end
         end
 
@@ -134,7 +134,7 @@ RSpec.describe DocumentsController, type: :controller do
 
     context 'while logged out' do
       it 'returns HTTP status 403 (Forbidden)' do
-        post :create, {document: valid_parameters}
+        post :create, document: valid_parameters
         expect(response).to have_http_status(:forbidden)
       end
     end
@@ -144,7 +144,7 @@ RSpec.describe DocumentsController, type: :controller do
     context 'with a valid document' do
       context 'as an admin' do
         context 'with valid parameters' do
-          before(:each) do
+          before do
             put :update, {id: document.id, document: valid_parameters}, valid_session_admin
           end
 
@@ -152,9 +152,13 @@ RSpec.describe DocumentsController, type: :controller do
             expect(response).to have_http_status(:ok)
           end
 
-          it 'updates the requested document' do
+          it 'updates the requested document title' do
             document.reload
             expect(document.title).to eq(valid_parameters[:title])
+          end
+
+          it 'updates the requested document link' do
+            document.reload
             expect(document.link).to eq(valid_parameters[:link])
           end
         end
@@ -186,7 +190,6 @@ RSpec.describe DocumentsController, type: :controller do
   describe 'DELETE #destroy' do
     context 'with a valid document' do
       context 'as an admin' do
-
         it 'returns HTTP status 200 (OK)' do
           delete :destroy, {id: document.id}, valid_session_admin
           expect(response).to have_http_status(:ok)
@@ -194,9 +197,9 @@ RSpec.describe DocumentsController, type: :controller do
 
         it 'deletes the requested event' do
           document_to_remove = FactoryGirl.create(:document)
-          expect {
+          expect do
             delete :destroy, {id: document_to_remove.id}, valid_session_admin
-          }.to change { Document.count }.by(-1)
+          end.to change { Document.count }.by(-1)
         end
       end
 
@@ -210,7 +213,7 @@ RSpec.describe DocumentsController, type: :controller do
 
     context 'with an invalid document' do
       it 'returns HTTP status 404 (Not Found)' do
-        delete :destroy, {id: 1}
+        delete :destroy, id: 1
         expect(response).to have_http_status(:not_found)
       end
     end

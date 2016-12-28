@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe SessionsController, type: :controller do
-  let(:valid_parameters) {
+  let(:valid_parameters) do
     {name: 'John Doe', email: 'test@test.com', password: 'password1234', password_confirmation: 'password1234', verified: true}
-  }
+  end
 
-  let(:invalid_parameters) {
+  let(:invalid_parameters) do
     {name: 'John Doe', email: 'test@test.com', password: 'password12345', password_confirmation: 'password1234', verified: true}
-  }
+  end
 
   describe 'POST #create' do
     context 'with valid parameters' do
@@ -22,7 +22,7 @@ RSpec.describe SessionsController, type: :controller do
 
       it 'creates a new session' do
         post :create, valid_parameters
-        expect(session[:user_id]).to_not be_nil
+        expect(session[:user_id]).not_to be_nil
       end
     end
 

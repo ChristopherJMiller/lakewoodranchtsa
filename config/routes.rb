@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   namespace :admin do
     get 'dashboard'
     get 'teams'
+    get 'attendance'
   end
 
   get 'log_in', to: 'sessions#new'

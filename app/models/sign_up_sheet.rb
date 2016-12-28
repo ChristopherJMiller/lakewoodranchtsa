@@ -1,6 +1,7 @@
+# Sign Up Sheet for Meetings
 class SignUpSheet < ActiveRecord::Base
   validates :name, presence: true
-  validates :name, length: { maximum: 128 }
+  validates :name, length: {maximum: 128}
 
   validates :date, presence: true
 

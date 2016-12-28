@@ -83,26 +83,26 @@ RSpec.describe UsersController, type: :controller do
   describe 'POST #create' do
     context 'with valid parameters' do
       it 'creates a new user' do
-        expect {
-          post :create, {user: valid_parameters_create}
-        }.to change(User, :count).by(1)
+        expect do
+          post :create, user: valid_parameters_create
+        end.to change(User, :count).by(1)
       end
 
       it 'returns HTTP status 201 (Created)' do
-        post :create, {user: valid_parameters_create}
+        post :create, user: valid_parameters_create
         expect(response).to have_http_status(:created)
       end
 
       it 'sends an email' do
-        expect {
-          post :create, {user: valid_parameters_create}
-        }.to change { ActionMailer::Base.deliveries.count }.by(1)
-  end
+        expect do
+          post :create, user: valid_parameters_create
+        end.to change { ActionMailer::Base.deliveries.count }.by(1)
+      end
     end
 
     context 'with invalid parameters' do
       it 'returns HTTP status 400 (Bad Request)' do
-        post :create, {user: invalid_parameters_create}
+        post :create, user: invalid_parameters_create
         expect(response).to have_http_status(:bad_request)
       end
     end
@@ -110,7 +110,7 @@ RSpec.describe UsersController, type: :controller do
 
   describe 'GET #edit' do
     context 'with a valid user' do
-      before(:each) do
+      before do
         get :edit, {id: user.id}, valid_session
       end
 
@@ -125,9 +125,9 @@ RSpec.describe UsersController, type: :controller do
 
     context 'with an invalid user' do
       it 'returns HTTP status 404 (Not Found)' do
-        expect {
+        expect do
           get :edit, {id: 10}, valid_session
-        }.to raise_error(ActionController::RoutingError)
+        end.to raise_error(ActionController::RoutingError)
       end
     end
 
@@ -141,72 +141,72 @@ RSpec.describe UsersController, type: :controller do
 
   describe 'PUT #update' do
     context 'with a valid user' do
-        context 'with valid parameters' do
-          before(:each) do
-            put :update, {id: user.id, user: valid_parameters_update}, valid_session
-          end
-
-          it 'returns HTTP status 200 (OK)' do
-            expect(response).to have_http_status(:ok)
-          end
-
-          it 'updates the requested user' do
-            user.reload
-            expect(user.name).to eq(valid_parameters_update[:name])
-          end
-
-          it 'returns HTTP Status 403 (Forbidden) if it attempts to update a user\'s rank as a non-site admin' do
-            put :update, {id: user.id, user: valid_parameters_update_rank}, valid_session
-            expect(response).to have_http_status(:forbidden)
-          end
-
-          context 'as a site admin' do
-            it 'updates the rank if needed' do
-              put :update, {id: user.id, user: valid_parameters_update_rank}, valid_session_admin
-              user.reload
-              expect(user.rank).to eq(valid_parameters_update_rank[:rank])
-            end
-
-            context 'when updating another admin' do
-              it 'returns HTTP status 403 (Forbidden)' do
-                put :update, {id: user_admin.id, user: valid_parameters_update}, valid_session_admin
-                expect(response).to have_http_status(:forbidden)
-              end
-            end
-          end
-
-          context 'as a site adivsor' do
-            context 'when updating officers' do
-              before(:each) do
-                put :update, {id: user_admin.id, user: valid_parameters_update}, valid_session_advisor
-              end
-
-              it 'returns HTTP status 200 (OK)' do
-                expect(response).to have_http_status(:ok)
-              end
-
-              it 'updates the requested user' do
-                user_admin.reload
-                expect(user_admin.name).to eq(valid_parameters_update[:name])
-              end
-            end
-          end
+      context 'with valid parameters' do
+        before do
+          put :update, {id: user.id, user: valid_parameters_update}, valid_session
         end
 
-        context 'with invalid parameters' do
-          it 'returns HTTP status 400 (Bad Request)' do
-            put :update, {id: user.id, user: invalid_parameters_update}, valid_session
-            expect(response).to have_http_status(:bad_request)
-          end
+        it 'returns HTTP status 200 (OK)' do
+          expect(response).to have_http_status(:ok)
         end
-      end
 
-      context 'not as own user' do
-        it 'returns HTTP status 403 (Forbidden)' do
-          put :update, {id: user.id, user: valid_parameters_update}, invalid_session
+        it 'updates the requested user' do
+          user.reload
+          expect(user.name).to eq(valid_parameters_update[:name])
+        end
+
+        it 'returns HTTP Status 403 (Forbidden) if it attempts to update a user\'s rank as a non-site admin' do
+          put :update, {id: user.id, user: valid_parameters_update_rank}, valid_session
           expect(response).to have_http_status(:forbidden)
         end
+
+        context 'as a site admin' do
+          it 'updates the rank if needed' do
+            put :update, {id: user.id, user: valid_parameters_update_rank}, valid_session_admin
+            user.reload
+            expect(user.rank).to eq(valid_parameters_update_rank[:rank])
+          end
+
+          context 'when updating another admin' do
+            it 'returns HTTP status 403 (Forbidden)' do
+              put :update, {id: user_admin.id, user: valid_parameters_update}, valid_session_admin
+              expect(response).to have_http_status(:forbidden)
+            end
+          end
+        end
+
+        context 'as a site adivsor' do
+          context 'when updating officers' do
+            before do
+              put :update, {id: user_admin.id, user: valid_parameters_update}, valid_session_advisor
+            end
+
+            it 'returns HTTP status 200 (OK)' do
+              expect(response).to have_http_status(:ok)
+            end
+
+            it 'updates the requested user' do
+              user_admin.reload
+              expect(user_admin.name).to eq(valid_parameters_update[:name])
+            end
+          end
+        end
       end
+
+      context 'with invalid parameters' do
+        it 'returns HTTP status 400 (Bad Request)' do
+          put :update, {id: user.id, user: invalid_parameters_update}, valid_session
+          expect(response).to have_http_status(:bad_request)
+        end
+      end
+    end
+
+    context 'not as own user' do
+      it 'returns HTTP status 403 (Forbidden)' do
+        put :update, {id: user.id, user: valid_parameters_update}, invalid_session
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
 
     context 'with an invalid user' do
       it 'returns HTTP status 404 (Not Found)' do
@@ -218,35 +218,35 @@ RSpec.describe UsersController, type: :controller do
 
   describe 'PUT #change_password' do
     context 'with a valid user' do
-        context 'with valid parameters' do
-          before(:each) do
-            put :change_password, {user_id: user.id, user: valid_parameters_change_password}, valid_session
-          end
-
-          it 'returns HTTP status 200 (OK)' do
-            expect(response).to have_http_status(:ok)
-          end
-
-          it 'updates the requested user' do
-            user.reload
-            expect(user.authenticate(valid_parameters_change_password[:password])).to be_a(User)
-          end
+      context 'with valid parameters' do
+        before do
+          put :change_password, {user_id: user.id, user: valid_parameters_change_password}, valid_session
         end
 
-        context 'with invalid parameters' do
-          it 'returns HTTP status 400 (Bad Request)' do
-            put :change_password, {user_id: user.id, user: invalid_parameters_change_password}, valid_session
-            expect(response).to have_http_status(:bad_request)
-          end
+        it 'returns HTTP status 200 (OK)' do
+          expect(response).to have_http_status(:ok)
+        end
+
+        it 'updates the requested user' do
+          user.reload
+          expect(user.authenticate(valid_parameters_change_password[:password])).to be_a(User)
         end
       end
 
-      context 'not as own user' do
-        it 'returns HTTP status 403 (Forbidden)' do
-          put :change_password, {user_id: user.id, user: valid_parameters_change_password}, invalid_session
-          expect(response).to have_http_status(:forbidden)
+      context 'with invalid parameters' do
+        it 'returns HTTP status 400 (Bad Request)' do
+          put :change_password, {user_id: user.id, user: invalid_parameters_change_password}, valid_session
+          expect(response).to have_http_status(:bad_request)
         end
       end
+    end
+
+    context 'not as own user' do
+      it 'returns HTTP status 403 (Forbidden)' do
+        put :change_password, {user_id: user.id, user: valid_parameters_change_password}, invalid_session
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
 
     context 'with an invalid user' do
       it 'returns HTTP status 404 (Not Found)' do
@@ -259,23 +259,23 @@ RSpec.describe UsersController, type: :controller do
   describe 'GET #verify_email' do
     context 'with a valid token' do
       it 'returns HTTP status 200 (OK)' do
-        get :verify_email, {token: unverified_user.verify_token}
+        get :verify_email, token: unverified_user.verify_token
         expect(response).to have_http_status(:ok)
       end
 
       it 'sets the user as verified' do
-        expect {
-          get :verify_email, {token: unverified_user.verify_token}
+        expect do
+          get :verify_email, token: unverified_user.verify_token
           unverified_user.reload
-        }.to change{unverified_user.verified}.from(false).to(true)
+        end.to change { unverified_user.verified }.from(false).to(true)
       end
     end
 
     context 'with an invalid token' do
       it 'returns HTTP status 400 (Bad Request)' do
-        get :verify_email, {token: 'faketoken'}
+        get :verify_email, token: 'faketoken'
         expect(response).to have_http_status(:bad_request)
       end
     end
   end
-  end
+end

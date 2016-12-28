@@ -1,7 +1,7 @@
 <tr>
   <td class='user_name'><%= user.name %></td>
   <td class='user_rank'><%= rank_title user.rank %></td>
-  <% if logged_in && current_user.is_admin && (!user.is_admin || current_user.is_advisor) %>
+  <% if logged_in && current_user.admin? && (!user.admin? || current_user.advisor?) %>
     <td class='user_rank'>
       <%= form_for user, remote: true do |f| %>
         <fieldset class="form-group">
