@@ -1,10 +1,17 @@
 <tr>
-  <% attendance = user.attendees %>
+  <%
+    if params[:commit] == 'Search'
+      attendance = user.attendees.where(created_at: params[:search][:from].to_date..params[:search][:to].to_date)
+    else
+      attendance = user.attendees
+    end
+  %>
   <td>
     <%= link_to user_path(user) do %>
       <%= user.name %>
     <% end %>
   </td>
   <td><%= attendance.size %></td>
-  <td><%= '%.2f' % ((Float(attendance.size) / Float(SignUpSheet.count)) * 100) %>%</td>
+  <% percent = '%.2f' % ((Float(attendance.size) / Float(@sign_up_count)) * 100) %>
+  <td><%= percent == 'NaN' ? 0 : percent %>%</td>
 </tr>
