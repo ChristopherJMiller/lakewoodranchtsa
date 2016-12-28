@@ -15,4 +15,10 @@ class AdminController < ApplicationController
     add_breadcrumb 'All Teams', :admin_teams_path
     respond_with @teams
   end
+
+  def attendance
+    @users = User.all
+    add_breadcrumb 'Attendance Report', :admin_attendance_path
+    respond_with @users
+  end
 end

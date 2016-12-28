@@ -1,0 +1,15 @@
+<div class="main-div">
+  <%= render 'admin_head' %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Number of Meetings Attended</th>
+        <th>Attendance Percentage</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render partial: 'attendance', collection: @users, as: :user or 'No attandances gathered.' %>
+    </tbody>
+  </table>
+</div>

@@ -6,7 +6,7 @@
       <hr class="m-y-2">
       <p class="lead">
         <%= link_to 'View Check In Page', sign_up_sheet_attendees_path(@sign_up_sheet.id), class: 'btn btn-primary btn-lg' %>
-        <% if logged_in && User.find_by_id(session[:user_id]).is_admin %>
+        <% if logged_in && User.find_by_id(session[:user_id]).admin? %>
 
         <% end %>
       </p>

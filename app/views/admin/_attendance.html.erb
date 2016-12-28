@@ -1,0 +1,10 @@
+<tr>
+  <% attendance = user.attendees %>
+  <td>
+    <%= link_to user_path(user) do %>
+      <%= user.name %>
+    <% end %>
+  </td>
+  <td><%= attendance.size %></td>
+  <td><%= '%.2f' % ((Float(attendance.size) / Float(SignUpSheet.count)) * 100) %>%</td>
+</tr>
