@@ -16,7 +16,7 @@
       </tr>
     </thead>
     <tbody>
-      <%= render partial: 'attendance', collection: @users.sort { |u| u.attendees.size }, as: :user or 'No attandances gathered.' %>
+      <%= render partial: 'attendance', collection: @users.order(:name), as: :user or 'No attandances gathered.' %>
     </tbody>
   </table>
 </div>
