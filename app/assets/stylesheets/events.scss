@@ -5,6 +5,8 @@
 .card-max-width {
   width: 20rem;
   float: left;
+  flex-wrap: wrap;
+  flex: initial;
 }
 
 .btn-outline-warning {
