@@ -78,10 +78,10 @@ class EventsController < ApplicationController
   private
 
   def event_parameters_create
-    params.require(:event).permit(:name, :description, :max_members_per_team)
+    params.require(:event).permit(:name, :description, :max_members_per_team, :image_path)
   end
 
   def event_parameters_update
-    params.require(:event).permit(:name, :description, :max_members_per_team)
+    params.require(:event).permit(:name, :description, :max_members_per_team, :image_path)
   end
 end
