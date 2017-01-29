@@ -3,8 +3,8 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .card-max-width {
-  width: 17rem;
-  height: 16rem;
+  width: 15rem;
+  height: 17rem;
   float: left;
   flex-wrap: wrap;
   flex: initial;
@@ -29,8 +29,25 @@
 
 .event-btn {
   position: relative;
-  bottom: 10;
 }
+
+.btn-primary {
+  background-color: #333333;
+  border-color: #333333;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background-color: #262626;
+}
+
+.btn-primary:active, .btn-primary:active:focus {
+  background-color: #262626;
+}
+
+.btn-primary:active:hover {
+  background-color: #1a1a1a;
+}
+
 
 .text-center {
   text-align: center;
