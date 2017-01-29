@@ -1,5 +1,11 @@
-<div class="card card-block card-max-width m-r-1">
-  <h4 class="card-title"><%= event.name %></h4>
-  <p class="card-text"><%= event.description.truncate(100, separator: ' ') %></p>
-  <%= link_to 'View', event_path(event), class: 'btn btn-primary' %>
+<div class="card card-block card-max-width mr-1">
+  <% if event.image_path.blank? %>
+    <h4 class="card-title"><%= event.name %></h4>
+    <p class="card-text"><%= event.description.truncate(100, separator: ' ') %></p>
+    <%= link_to 'View', event_path(event), class: 'btn btn-primary' %>
+  <% else %>
+    <%= image_tag event.image_path, class: "img-fluid" %>
+    <p class="card-title text-center"><%= event.name %></p>
+      <%= link_to 'View', event_path(event), class: 'btn btn-primary btn-sm btn-block' %>
+  <% end %>
 </div>

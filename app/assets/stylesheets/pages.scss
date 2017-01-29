@@ -7,7 +7,6 @@
   width: 100%;
   justify-content: space-between;
   display: flex;
-  margin-bottom: 1em;
 }
 
 .center {
@@ -23,6 +22,102 @@
   text-align: center;
 }
 
+.text-center {
+  text-align: center;
+}
+
+
+.content-divide {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background-color: #0a442e;
+  color: white;
+  text-align: center;
+  font-size: 24px;
+  width: 100%;
+}
+
+.quote-img {
+  width: 7rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  vertical-align: bottom;
+}
+
+.quote-section {
+  margin-bottom: 1rem;
+}
+
+.officer-section {
+  background-color: #ddd;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.officer-portrait {
+  width: 9rem;
+  height: 9rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.officer-bio {
+  font-size: 14px;
+}
+
+.officer-symbol {
+  height: 10rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 nav {
   margin-bottom: 0  !important;
+}
+
+@media (min-width: 768px) {
+  .divider-right {
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: #EEE;
+    min-height: 10rem;
+  }
+
+  .divider-left {
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-left-color: #EEE;
+    min-height: 10rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .officer-section {
+    background-color: #ddd;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    margin-left: 16.6666667%;
+    margin-right: 16.6666667%;
+    width: auto;
+    box-shadow: 0 9px 0px 0px white, 0 -9px 0px 0px white, 12px 0 15px -4px #ddd, -12px 0 15px -4px #ddd;
+  }
+}
+
+@media only screen and (min-width : 768px) {
+    .is-table-row {
+        display: table;
+    }
+    .is-table-row [class*="col-"] {
+        float: none;
+        display: table-cell;
+        vertical-align: top;
+    }
 }

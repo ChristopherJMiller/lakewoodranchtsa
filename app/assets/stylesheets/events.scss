@@ -5,6 +5,8 @@
 .card-max-width {
   width: 20rem;
   float: left;
+  flex-wrap: wrap;
+  flex: initial;
 }
 
 .btn-outline-warning {
@@ -17,4 +19,13 @@
 .btn-outline-warning:hover {
   color: white;
   background-color: #f0ad4e;
+}
+
+.event-img {
+  width: inherit;
+  display: flex;
+}
+
+.text-center {
+  text-align: center;
 }

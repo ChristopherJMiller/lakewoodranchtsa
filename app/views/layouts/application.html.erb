@@ -66,9 +66,6 @@
                 <%= link_to user_path(current_user.id), class: 'nav-item nav-link' do %>
                   <i class='fa fa-user' aria-hidden='true'></i> Your Profile
                 <% end %>
-                <%= link_to accountability_logs_path, class: 'nav-item nav-link' do %>
-                  <i class="fa fa-file-text" aria-hidden="true"></i> Accountability Logs <% if current_user_submission_todo != 0 %><span class="label label-info"><%= current_user_submission_todo %></span><% end %>
-                <% end %>
                 <div class='dropdown-divider'></div>
                 <%= link_to edit_user_path(current_user.id), class: 'nav-item nav-link' do %>
                   <i class='fa fa-cog' aria-hidden='true'></i> Account Settings
@@ -105,7 +102,7 @@
   <% if !report_action_exist? %>
     <footer class='footer'>
       <div class='container'>
-        <p class='text-muted' style='margin: 20px 0;float: left'>Lakewood Ranch TSA Version 0.7.0</p>
+        <p class='text-muted' style='margin: 20px 0;float: left'>Lakewood Ranch TSA Version 0.8.0</p>
         <p class='text-muted' style="margin: 20px 0;float: right">Page Rendered in <%= sprintf('%.3f', (Time.now.to_f - @start_time) ) %> seconds</p>
       </div>
     </footer>
