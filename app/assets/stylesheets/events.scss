@@ -3,7 +3,8 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .card-max-width {
-  width: 20rem;
+  width: 17rem;
+  height: 16rem;
   float: left;
   flex-wrap: wrap;
   flex: initial;
@@ -24,6 +25,11 @@
 .event-img {
   width: inherit;
   display: flex;
+}
+
+.event-btn {
+  position: relative;
+  bottom: 10;
 }
 
 .text-center {
