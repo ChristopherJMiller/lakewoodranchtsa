@@ -9,7 +9,9 @@
         </fieldset>
       <% end %>
     </td>
+    <td class="user_edit"><%= link_to 'Edit', edit_user_path(user.id), class: 'btn btn-secondary' %></td>
   <% else %>
+  <td></td>
     <td></td>
   <% end %>
   <td class='user_view'><%= link_to 'View', user_path(user.id), class: 'btn btn-primary' %></td>
