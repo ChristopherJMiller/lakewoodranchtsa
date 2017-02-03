@@ -4,11 +4,15 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:email])
     errors = ActiveModel::Errors.new(self)
 
-    if user && user.authenticate(params[:password])
+    if user && user.authenticate(params[:password]) && !user.disabled?
       session[:user_id] = user.id
       head status: :created
     else
-      errors.add(:password, 'Invalid email and password combination')
+      if user && user.disabled?
+        errors.add(:email, 'This account is disabled')
+      else
+        errors.add(:password, 'Invalid email and password combination')
+      end
       render json: {error: errors}, status: :bad_request
     end
   end

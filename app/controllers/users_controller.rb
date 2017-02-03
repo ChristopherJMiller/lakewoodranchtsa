@@ -104,11 +104,12 @@ class UsersController < ApplicationController
     parameters = params.require(:user).permit(:name, :email, :password, :password_confirmation)
     parameters[:verified] = false
     parameters[:rank] = 0
+    parameters[:disabled] = false
     parameters
   end
 
   def user_parameters_update
-    params.require(:user).permit(:name, :rank)
+    params.require(:user).permit(:name, :rank, :disabled)
   end
 
   def user_parameters_change_password
