@@ -12,5 +12,24 @@ $(document).on 'turbolinks:load', ->
     prefix : '',
     suffix : ''
   }
-  statAwards = new CountUp "statesAwards", 0, 100, 0, 2.5, options
-  statAwards.start
+  firstPlace = new countUp "FirstPlace", 0, 43, 0, 2.5, options
+  topThree = new countUp "TopThree", 0, 141, 0, 2.5, options
+  topTen = new countUp "TopTen", 0, 290, 0, 2.5, options
+
+  isElementInViewport = (el) ->
+    rect = el[0].getBoundingClientRect()
+    rect.bottom < 900
+
+  onVisibilityChange = (callback) ->
+    console.log("Called")
+    visible = isElementInViewport($("#awardSection"))
+    if visible
+      callback()
+    return
+
+  $(window).on 'DOMContentLoaded load resize scroll', ->
+    onVisibilityChange (->
+      firstPlace.start()
+      topThree.start()
+      topTen.start()
+    )
