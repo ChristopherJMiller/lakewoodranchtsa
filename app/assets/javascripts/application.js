@@ -19,3 +19,4 @@
 //= require navbar
 //= require markdown
 //= require turbolinks
+//= require jquery.countdown
