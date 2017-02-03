@@ -20,3 +20,4 @@
 //= require markdown
 //= require turbolinks
 //= require jquery.countdown
+//= require countUp
