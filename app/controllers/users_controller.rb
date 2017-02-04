@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     if @user
       add_breadcrumb @user.name, user_path(@user)
       add_breadcrumb 'Settings', edit_user_path(@user)
-      return head status: :forbidden unless @user.id == session[:user_id]
+      return head status: :forbidden unless @user.id == session[:user_id] || current_user.admin?
       respond_with @user
     else
       respond_to do |format|
@@ -104,11 +104,12 @@ class UsersController < ApplicationController
     parameters = params.require(:user).permit(:name, :email, :password, :password_confirmation)
     parameters[:verified] = false
     parameters[:rank] = 0
+    parameters[:disabled] = false
     parameters
   end
 
   def user_parameters_update
-    params.require(:user).permit(:name, :rank)
+    params.require(:user).permit(:name, :rank, :disabled)
   end
 
   def user_parameters_change_password

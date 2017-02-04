@@ -38,6 +38,16 @@
               <i class="fa fa-book" aria-hidden="true"></i> Documents
             <% end %>
           </li>
+          <li class="nav-item">
+            <%= link_to courses_path, class: 'nav-link' do %>
+              <i class="fa fa-graduation-cap" aria-hidden="true"></i> Courses
+            <% end %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "https://ar.lrhstsa.com", class: 'nav-link' do %>
+              <i class="fa fa-bookmark" aria-hidden="true"></i> AR Design Brief
+            <% end %>
+          </li>
           <div class="btn-group float-sm-right">
             <div class='hidden-xs-down'>
               <a class="dropdown-toggle nav-link" href="#" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -90,7 +100,7 @@
         </ul>
       </div>
     </nav>
-    <% if !current_page?(root_path) %>
+    <% if !current_page?(root_path) && !current_page?(courses_path) %>
       <div class='main-div'>
         <ol class="breadcrumb">
           <%= render_breadcrumbs options: {:tag => :li} %>
@@ -102,7 +112,7 @@
   <% if !report_action_exist? %>
     <footer class='footer'>
       <div class='container'>
-        <p class='text-muted' style='margin: 20px 0;float: left'>Lakewood Ranch TSA Version 0.9.0</p>
+        <p class='text-muted' style='margin: 20px 0;float: left'>Lakewood Ranch TSA Version 1.0.0</p>
         <p class='text-muted' style="margin: 20px 0;float: right">Page Rendered in <%= sprintf('%.3f', (Time.now.to_f - @start_time) ) %> seconds</p>
       </div>
     </footer>

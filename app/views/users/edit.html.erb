@@ -7,6 +7,13 @@
       <%= f.text_field :name, class: 'form-control', placeholder: 'New Name' %>
     </fieldset>
 
+    <% if current_user.admin? %>
+      <fieldset class="form-group">
+        <%= f.label :disabled, class: 'form-control-label' %>
+        <%= f.check_box :disabled %>
+      </fieldset>
+    <% end %>
+
     <%= f.submit 'Update', class: 'btn btn-primary' %>
   <% end %>
 

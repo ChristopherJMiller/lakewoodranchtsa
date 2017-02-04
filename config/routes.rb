@@ -34,6 +34,8 @@ Rails.application.routes.draw do
     get 'attendance'
   end
 
+  get 'courses', to: 'pages#courses'
+
   get 'log_in', to: 'sessions#new'
   get 'register', to: 'users#new'
   get 'log_out', to: 'sessions#destroy'

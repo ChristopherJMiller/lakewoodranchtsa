@@ -2,6 +2,11 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.is-countdown {
+  background-color: transparent;
+  border: none;
+}
+
 .opening {
   height: 100%;
   width: 100%;
@@ -26,6 +31,13 @@
   text-align: center;
 }
 
+.course-info {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 10px;
+  height: 2.5rem;
+}
+
 
 .content-divide {
   padding-top: 0.5rem;
@@ -47,6 +59,14 @@
 
 .quote-section {
   margin-bottom: 1rem;
+}
+
+.gray-section {
+  background-color: #ddd;
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  width: 100%;
 }
 
 .officer-section {

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   it 'will be a valid user' do
-    user = User.new(name: 'John Doe', email: 'test@test.com', password: 'password1234', password_confirmation: 'password1234', verified: true, verify_token: '', rank: 0)
+    user = User.new(name: 'John Doe', email: 'test@test.com', password: 'password1234', password_confirmation: 'password1234', verified: true, verify_token: '', rank: 0, disabled: false)
     expect(user).to be_valid
   end
   it 'will not be valid with a missing name' do
@@ -43,7 +43,11 @@ RSpec.describe User, type: :model do
     expect(user).not_to be_valid
   end
   it 'will not be valid with an undefined rank' do
-    user = User.new(name: 'John Doe', email: 'test@test.com', password: 'password1234', password_confirmation: 'password1234', verified: '', verify_token: '', rank: nil)
+    user = User.new(name: 'John Doe', email: 'test@test.com', password: 'password1234', password_confirmation: 'password1234', verified: true, verify_token: '', rank: nil)
+    expect(user).not_to be_valid
+  end
+  it 'will not be valid with an undefined disabled' do
+    user = User.new(name: 'John Doe', email: 'test@test.com', password: 'password1234', password_confirmation: 'password1234', verified: true, verify_token: '', rank: 0, disabled: nil)
     expect(user).not_to be_valid
   end
 end

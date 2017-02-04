@@ -34,6 +34,7 @@ class User < ActiveRecord::Base
   validates :email, uniqueness: true
   validates :password, length: {minimum: 8}, on: :create
   validates :verified, inclusion: [true, false]
+  validates :disabled, inclusion: [true, false]
 
   validates :rank, presence: true
 

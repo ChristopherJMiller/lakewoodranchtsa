@@ -45,6 +45,10 @@ gem 'breadcrumbs_on_rails'
 gem 'redcarpet'
 # Use markdownjs for markdown rendering
 gem 'markdownjs-rails'
+# Use countdown for home page count down
+gem 'jquery-countdown-rails'
+# Use countup for home page statistics
+gem 'countupjs-rails', '~> 1.3', '>= 1.3.2.3'
 
 ## Models
 
