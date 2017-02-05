@@ -6,6 +6,36 @@
       <% end %>
     <% end %>
   <% end %>
+  <div id="carouselControls" class="carousel slide" data-ride="carousel" style="vertical-align: middle">
+    <div class="carousel-inner" role="listbox" style="background-color: #eee">
+      <div class="carousel-item active">
+        <%= image_tag "projects/engineering.jpg", class: "d-block slide-photo" %>
+      </div>
+      <div class="carousel-item">
+        <%= image_tag "projects/children.jpg", class: "d-block slide-photo" %>
+      </div>
+      <div class="carousel-item">
+        <%= image_tag "projects/robot.jpg", class: "d-block slide-photo" %>
+      </div>
+      <div class="carousel-item">
+        <%= image_tag "projects/bio.jpg", class: "d-block slide-photo" %>
+      </div>
+      <div class="carousel-item">
+        <%= image_tag "projects/engineeringfinal.jpg", class: "d-block slide-photo" %>
+      </div>
+      <div class="carousel-item">
+        <%= image_tag "projects/chapter.jpg", class: "d-block slide-photo" %>
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
   <h1>All Events</h1>
   <div>
     <%= render @events %>
