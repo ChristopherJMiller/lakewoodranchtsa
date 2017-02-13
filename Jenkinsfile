@@ -5,8 +5,6 @@ node('basic') {
 
   stage('Checkout source') {
     checkout scm
-    sh 'git rev-parse HEAD > .git-commit-id'
-    commit_id = readFile('.git-commit-id').trim()
   }
 
   stage('Build image') {
