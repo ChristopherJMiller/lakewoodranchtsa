@@ -4,7 +4,7 @@ node('basic') {
   def tag
 
   stage('Checkout source') {
-    slackSend "[LRHSTSA] Build #{$env.BUILD_NUMBER} started (${env.BUILD_URL})"
+    slackSend "[LRHSTSA] Build #${env.BUILD_NUMBER} started (${env.BUILD_URL})"
     checkout scm
   }
 
