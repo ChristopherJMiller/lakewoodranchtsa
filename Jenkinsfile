@@ -19,7 +19,7 @@ node('basic') {
     sh 'git describe --tags > .git-tag'
     tag = readFile('.git-tag').trim()
     app.push "${tag}"
-    slackSend "[Testor Server] `lrhstsa/lakewoodranchtsa:${tag}` pushed to Docker Hub"
+    slackSend "[LRHSTSA] `lrhstsa/lakewoodranchtsa:${tag}` pushed to Docker Hub"
   }
 
   stage('Deploy to cluster') {

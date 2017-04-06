@@ -7,7 +7,7 @@
   <% if @announcement.created_at != @announcement.updated_at %>
     <small class='text-muted'>Last Updated: <%= format_time @announcement.updated_at %></small><br>
   <% end %>
-  <% if logged_in && User.find_by_id(session[:user_id]).is_admin %>
+  <% if logged_in && User.find_by_id(session[:user_id]).admin? %>
     <%= link_to edit_announcement_path(@announcement), class: 'btn btn-primary' do %>
       <i class="fa fa-cog"></i> Edit Announcement
     <% end %>
