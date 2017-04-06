@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $(document).on 'turbolinks:load', ->
-  $('#countdown').countdown {until: new Date(2017, 2, 4), layout: '{dn} {dl}, {hn} {hl}, {mn} {ml}, {sn} {sl}'}
+  $('#countdown').countdown {until: new Date(2017, 5, 21), layout: '{dn} {dl}, {hn} {hl}, {mn} {ml}, {sn} {sl}'}
   options = {
     useEasing : true,
     useGrouping : true,
