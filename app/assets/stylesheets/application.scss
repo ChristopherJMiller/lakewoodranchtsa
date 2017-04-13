@@ -26,6 +26,11 @@
     /* Margin bottom by footer height */
     margin-bottom: 60px;
   }
+
+  nav.navbar {
+    border-radius: 0;
+  }
+
   .footer {
     position: absolute;
     bottom: 0;

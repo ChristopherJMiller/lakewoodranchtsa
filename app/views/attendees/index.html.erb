@@ -10,7 +10,7 @@
   <h1>Check In</h1>
   <table class="table table-striped">
     <tbody>
-      <%= render partial: 'member', collection: User.where("rank > ?", 0).select {|user| @attendees.find_by_user_id(user.id).present? == false }, as: :member or 'No other members to check in.' %>
+      <%= render partial: 'member', collection: User.where("rank > ?", 0).where(disabled: false).select {|user| @attendees.find_by_user_id(user.id).present? == false }, as: :member or 'No other members to check in.' %>
     </tbody>
   </table>
   <hr>
