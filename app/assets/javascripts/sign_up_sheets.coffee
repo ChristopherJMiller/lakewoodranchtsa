@@ -14,8 +14,10 @@ $(document).on 'turbolinks:load', ->
     $('input').attr('disabled', true)
   $('form[data-remote]').on 'ajax:success', ->
     $(this).children('fieldset').addClass 'form-group has-success'
-    if $(this).hasClass('edit_event')
+    if $(this).hasClass('edit_sign_up_sheet')
       setTimeout (window.location.href = window.location.href), 2000
+    else if $(this).hasClass('remove_sheet')
+      setTimeout redirect, 1000
     else if $(this).hasClass('button_to')
       setTimeout (window.location.href = window.location.href), 0
     else

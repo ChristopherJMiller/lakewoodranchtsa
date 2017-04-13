@@ -14,4 +14,6 @@
 
     <%= f.submit 'Update', class: 'btn btn-primary' %>
   <% end %>
+  <hr>
+  <%= button_to 'Remove Sign Up Sheet', { action: 'destroy', id: @sign_up_sheet.id }, method: :delete, form_class: 'remove_sheet', remote: true, class: 'btn btn-danger', data: { confirm: "Are you sure?" } %>
 </div>
