@@ -49,6 +49,8 @@ gem 'markdownjs-rails'
 gem 'jquery-countdown-rails'
 # Use countup for home page statistics
 gem 'countupjs-rails', '~> 1.3', '>= 1.3.2.3'
+# Hover.css for hover effects for navbar
+gem 'hover-rails', '~> 2.0.2'
 
 ## Models
 

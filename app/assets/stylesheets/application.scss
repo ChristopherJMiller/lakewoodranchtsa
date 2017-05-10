@@ -17,6 +17,14 @@
 
  @import "bootstrap";
  @import "font-awesome";
+ @import "hover";
+
+ .hvr-overline-reveal:before {
+   background: white !important;
+   height: 2px;
+   -webkit-transition-duration: 0.2s;
+   transition-duration: 0.2s;
+ }
 
  html {
     position: relative;
@@ -29,6 +37,12 @@
 
   nav.navbar {
     border-radius: 0;
+    min-height: 4.5em;
+    line-height: 3em;
+  }
+
+  .nav-link {
+    color: white !important;
   }
 
   .footer {
