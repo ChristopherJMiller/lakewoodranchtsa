@@ -35,6 +35,26 @@
     margin-bottom: 60px;
   }
 
+  .btn-primary {
+    background-color: #27A39E;
+    border-color: #27A39E;
+  }
+
+  .btn-primary:hover {
+    background-color: #208682;
+    border-color: #208682;
+  }
+
+  .btn-primary:active {
+    background-color: #196865 !important;
+    border-color: #196865 !important;
+  }
+
+  .btn-primary:focus {
+    background-color: #196865;
+    border-color: #196865;
+  }
+
   nav.navbar {
     border-radius: 0;
     min-height: 4.5em;
