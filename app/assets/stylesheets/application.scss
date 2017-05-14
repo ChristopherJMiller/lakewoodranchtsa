@@ -35,6 +35,19 @@
     margin-bottom: 60px;
   }
 
+  div > a {
+    color: inherit;
+    text-decoration: inherit;
+  }
+
+  div > a:hover {
+    color: gray !important;
+  }
+
+  div > a:active {
+    color: black !important;
+  }
+
   .btn-primary {
     background-color: #27A39E;
     border-color: #27A39E;
