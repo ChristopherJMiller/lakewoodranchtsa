@@ -109,13 +109,6 @@
         </ul>
       </div>
     </nav>
-    <% if !current_page?(root_path) && !current_page?(courses_path) %>
-      <div class='main-div'>
-        <ol class="breadcrumb">
-          <%= render_breadcrumbs options: {:tag => :li} %>
-        </ol>
-      </div>
-    <% end %>
   <% end %>
   <%= yield %>
   <% if !report_action_exist? %>
