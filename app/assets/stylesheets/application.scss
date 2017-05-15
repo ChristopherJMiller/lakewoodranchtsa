@@ -35,13 +35,19 @@
     margin-bottom: 60px;
   }
 
+  a.officer-modal > div {
+    background-color: inherit;
+  }
+
   a.officer-modal {
     color: inherit;
     text-decoration: inherit;
   }
 
-  a.officer-modalhover {
+  a.officer-modal:hover {
     color: gray !important;
+    background-color: #eee !important;
+    margin-bottom: 5px;
   }
 
   a.officer-modal:active {
