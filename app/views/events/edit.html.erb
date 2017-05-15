@@ -22,6 +22,11 @@
       <%= f.text_field :image_path, class: 'form-control', placeholder: 'Image Path' %>
     </fieldset>
 
+    <fieldset class="form-group">
+      <%= f.label :cover_path, class: 'form-control-label' %>
+      <%= f.text_field :cover_path, class: 'form-control', placeholder: 'Image Path' %>
+    </fieldset>
+
     <%= f.submit 'Update', class: 'btn btn-primary' %>
   <% end %>
   <%= button_to 'Remove Event', { action: 'destroy', id: @event.id }, method: :delete, remote: true, class: 'btn btn-danger', data: { confirm: "Are you sure?" } %>

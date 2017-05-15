@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170203005422) do
+ActiveRecord::Schema.define(version: 20170514172738) do
 
   create_table "accountability_logs", force: :cascade do |t|
     t.date     "dueby"
@@ -40,17 +40,6 @@ ActiveRecord::Schema.define(version: 20170203005422) do
   add_index "attendees", ["sign_up_sheet_id"], name: "index_attendees_on_sign_up_sheet_id"
   add_index "attendees", ["user_id"], name: "index_attendees_on_user_id"
 
-  create_table "awards", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "name"
-    t.integer  "value"
-    t.boolean  "verified"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "awards", ["user_id"], name: "index_awards_on_user_id"
-
   create_table "documents", force: :cascade do |t|
     t.string   "title"
     t.string   "link"
@@ -65,6 +54,7 @@ ActiveRecord::Schema.define(version: 20170203005422) do
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.string   "image_path"
+    t.string   "cover_path"
   end
 
   create_table "sign_up_sheets", force: :cascade do |t|

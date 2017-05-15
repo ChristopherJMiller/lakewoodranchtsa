@@ -12,9 +12,9 @@ $(document).on 'turbolinks:load', ->
     prefix : '',
     suffix : ''
   }
-  firstPlace = new countUp "FirstPlace", 0, 43, 0, 2.5, options
-  topThree = new countUp "TopThree", 0, 141, 0, 2.5, options
-  topTen = new countUp "TopTen", 0, 290, 0, 2.5, options
+  firstPlace = new countUp "FirstPlace", 0, 46, 0, 2.5, options
+  topThree = new countUp "TopThree", 0, 152, 0, 2.5, options
+  topTen = new countUp "TopTen", 0, 317, 0, 2.5, options
 
   isElementInViewport = (el) ->
     rect = el[0].getBoundingClientRect()

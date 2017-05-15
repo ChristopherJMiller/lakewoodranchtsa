@@ -2,6 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.modal-dialog {
+  max-width: 900px;
+}
+
 .is-countdown {
   background-color: transparent;
   border: none;
@@ -42,7 +46,7 @@
 .content-divide {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  background-color: #0a442e;
+  background-color: #205541;
   color: white;
   text-align: center;
   font-size: 24px;
@@ -79,11 +83,11 @@
 }
 
 .officer-portrait {
-  width: 9rem;
-  height: 9rem;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  object-fit: cover;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .officer-bio {
@@ -95,8 +99,8 @@
 }
 
 .officer-symbol {
-  height: 10rem;
-  display: block;
+  width: 100%;
+  align: center;
   margin-left: auto;
   margin-right: auto;
 }

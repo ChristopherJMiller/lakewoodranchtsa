@@ -17,6 +17,14 @@
 
  @import "bootstrap";
  @import "font-awesome";
+ @import "hover";
+
+ .hvr-overline-reveal:before {
+   background: white !important;
+   height: 2px;
+   -webkit-transition-duration: 0.2s;
+   transition-duration: 0.2s;
+ }
 
  html {
     position: relative;
@@ -27,8 +35,59 @@
     margin-bottom: 60px;
   }
 
+  a.officer-modal > div {
+    background-color: inherit;
+  }
+
+  a.officer-modal {
+    color: inherit;
+    text-decoration: inherit;
+  }
+
+  a.officer-modal:hover {
+    color: gray !important;
+    background-color: #eee !important;
+    margin-bottom: 5px;
+  }
+
+  a.officer-modal:active {
+    color: black !important;
+  }
+
+  .btn-primary {
+    background-color: #27A39E;
+    border-color: #27A39E;
+  }
+
+  .btn-primary:hover {
+    background-color: #208682;
+    border-color: #208682;
+  }
+
+  .btn-primary:active {
+    background-color: #196865 !important;
+    border-color: #196865 !important;
+  }
+
+  .btn-primary:focus {
+    background-color: #196865;
+    border-color: #196865;
+  }
+
   nav.navbar {
     border-radius: 0;
+    min-height: 4.5em;
+    line-height: 3em;
+  }
+
+  .nav-link {
+    color: white !important;
+  }
+
+  .cover-photo {
+    width: 100%;
+    height: 30em;
+    overflow: hidden;
   }
 
   .footer {
@@ -43,6 +102,10 @@
  .dropdown-width {
    width: 300px;
    top: 120%;
+ }
+
+ .dropdown-item {
+   line-height: 1.5em;
  }
 
  .dropdown-menu:before {
