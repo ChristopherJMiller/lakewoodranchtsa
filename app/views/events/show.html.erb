@@ -1,9 +1,12 @@
+<div class="cover-photo mb-1">
+  <%= image_tag @event.cover_path %>
+</div>
 <div class='main-div'>
     <h1 class="display-3">
       <%= @event.name %>
       <% if logged_in && current_user.admin? %>
         <% if User.find_by_id(session[:user_id]).admin? %>
-          <%= link_to edit_event_path(@event), class: 'btn btn-warning btn-lg pull-xs-right' do %>
+          <%= link_to edit_event_path(@event), class: 'btn btn-warning btn-lg pull-right' do %>
             <i class="fa fa-cog"></i>
           <% end %>
         <% end %>
@@ -13,17 +16,18 @@
     <blockquote class="blockquote">
       <p class="m-b-0"><%= @event.description %></p>
     </blockquote>
+    <hr>
     <h2 class='p-t-2'>
       Teams
       <% if logged_in %>
+        <%= link_to event_teams_path(@event), class: 'btn btn-link m-b-0 pull-right' do %>
+          <i class="fa fa-external-link" aria-hidden="true"></i>
+        <% end %>
         <% if User.find_by_id(session[:user_id]).admin? %>
-          <%= link_to new_event_team_path(@event), class: 'btn btn-info pull-xs-right' do %>
+          <%= link_to new_event_team_path(@event), class: 'btn btn-info pull-right' do %>
             <i class="fa fa-plus"></i> Create a New Team
           <% end %>
         <% end %>
-      <% end %>
-      <%= link_to event_teams_path(@event), class: 'btn btn-link m-b-0' do %>
-        <i class="fa fa-external-link" aria-hidden="true"></i>
       <% end %>
     </h1>
     <table class="table table-striped">
