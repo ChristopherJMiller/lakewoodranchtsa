@@ -35,16 +35,16 @@
     margin-bottom: 60px;
   }
 
-  div > a {
+  a.officer-modal {
     color: inherit;
     text-decoration: inherit;
   }
 
-  div > a:hover {
+  a.officer-modalhover {
     color: gray !important;
   }
 
-  div > a:active {
+  a.officer-modal:active {
     color: black !important;
   }
 
@@ -96,6 +96,10 @@
  .dropdown-width {
    width: 300px;
    top: 120%;
+ }
+
+ .dropdown-item {
+   line-height: 1.5em;
  }
 
  .dropdown-menu:before {
