@@ -26,6 +26,10 @@ nav {
   background-color: #f0ad4e;
 }
 
+div.cover-photo > img {
+  width: 100%;
+}
+
 .event-img {
   width: inherit;
   display: flex;
@@ -34,24 +38,6 @@ nav {
 .event-btn {
   position: relative;
 }
-
-.btn-primary {
-  background-color: #333333;
-  border-color: #333333;
-}
-
-.btn-primary:hover, .btn-primary:focus {
-  background-color: #262626;
-}
-
-.btn-primary:active, .btn-primary:active:focus {
-  background-color: #262626;
-}
-
-.btn-primary:active:hover {
-  background-color: #1a1a1a;
-}
-
 
 .text-center {
   text-align: center;

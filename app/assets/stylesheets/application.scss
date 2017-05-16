@@ -40,18 +40,19 @@
   }
 
   a.officer-modal {
-    color: inherit;
+    color: white;
     text-decoration: inherit;
+    background-color: #27819E;
   }
 
   a.officer-modal:hover {
-    color: gray !important;
-    background-color: #eee !important;
+    color: #eee !important;
+    background-color: #206A82 !important;
     margin-bottom: 5px;
   }
 
   a.officer-modal:active {
-    color: black !important;
+    color: #bbb !important;
   }
 
   .btn-primary {
