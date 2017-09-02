@@ -7,7 +7,7 @@ gem 'rails', '4.2.7.1'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
 # Use puma as possible replacement for unicorn
-gem 'puma'
+gem 'puma', '~> 3.10.0'
 # Use MySQL2 for production database
 gem 'mysql2'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
