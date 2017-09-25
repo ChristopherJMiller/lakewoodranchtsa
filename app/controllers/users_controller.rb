@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     if @user
       add_breadcrumb @user.name, user_path(@user)
       add_breadcrumb 'Settings', edit_user_path(@user)
-      return head status: :forbidden unless @user.id == session[:user_id] || @user.admin?
+      return head status: :forbidden unless !logged_in || current_user.admin? || @user.id == session[:user_id]
       respond_with @user
     else
       respond_to do |format|
